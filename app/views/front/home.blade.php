@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('front.layout')
 
 @section('content')
     <h1>Home page</h1>
