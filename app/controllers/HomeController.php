@@ -15,9 +15,49 @@ class HomeController extends BaseController {
 	|
 	*/
 
-	public function showWelcome()
-	{
-		return View::make('hello');
-	}
+// 	public function showWelcome()
+// 	{
+// 		return View::make('hello');
+// 	}
 
+	public function showHome()
+	{
+		return View::make('home');
+	}
+	
+	public function showLoginPage()
+	{
+		return View::make('login');
+	}
+	
+	public function  showProfilePage()
+	{
+		return View::make('profile');
+	}
+	
+	public function doLogin()
+	{
+		$user = array(
+				'username' => Input::get('username'),
+				'password' => Input::get('password')
+		);
+		
+		if (Auth::attempt($user)) {
+			return Redirect::route('home')
+			->with('flash_notice', 'You are successfully logged in.');
+		}
+		
+		// authentication failure! lets go back to the login page
+		return Redirect::route('login')
+		->with('flash_error', 'Your username/password combination was incorrect.')
+		->withInput();
+	}
+	
+	public function  doLogout()
+	{
+		Auth::logout();
+		
+		return Redirect::route('home')
+		->with('flash_notice', 'You are successfully logged out.');
+	}
 }

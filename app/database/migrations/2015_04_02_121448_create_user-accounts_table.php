@@ -16,7 +16,7 @@ class CreateUserAccountsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('username',50)->unique()->dafault('');
-	        $table->string('password', 50)->dafault('');
+	        $table->string('password', 64)->dafault('');
 	        $table->integer('admin')->default(0);
 	        $table->string('fullname', 100)->dafault('');
 	        $table->string('creenname', 50)->dafault('');
@@ -25,6 +25,7 @@ class CreateUserAccountsTable extends Migration {
 	        $table->date('birthday')->dafault(date('1993-1-5'));
 	        $table->string('address')->dafault('');
 	        $table->string('phone')->dafault('');
+	        $table->rememberToken();
 			$table->timestamps();
 		});
 

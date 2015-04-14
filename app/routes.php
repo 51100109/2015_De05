@@ -11,7 +11,12 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showHome'));
+
+Route::get('login', array('as' => 'login', 'uses' => 'HomeController@showLoginPage'))->before('guest');
+
+Route::post('login', 'HomeController@doLogin');
+
+Route::get('logout', array('as' => 'logout', 'uses' => 'HomeController@doLogout'))->before('auth');
+
+Route::get('profile', array('as' => 'profile', 'uses' => 'HomeController@showProfilePage'))->before('auth');

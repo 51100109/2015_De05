@@ -11,7 +11,21 @@ class DatabaseSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
-		// $this->call('UserTableSeeder');
+		$this->call('UserTableSeeder');
+		
+	}
+
+}
+
+class UserTableSeeder extends Seeder {
+
+	public function run()
+	{
+
+		User::create( array(
+                'username' => 'nqa',
+                'password' => Hash::make('nguyenquocanh')
+        ));
 	}
 
 }

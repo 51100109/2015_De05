@@ -125,7 +125,6 @@ return array(
 		'Laracasts\Validation\ValidationServiceProvider',
 		'Artdarek\OAuth\OAuthServiceProvider',
 		'Cartalyst\Sentry\SentryServiceProvider',
-
 	),
 
 	/*
@@ -193,8 +192,7 @@ return array(
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
 		'OAuth' 			=> 'Artdarek\OAuth\Facade\OAuth',
-		'Sentry' 			=> 'Cartalyst\Sentry\Facades\Laravel\Sentry'
-
+		'Sentry' 			=> 'Cartalyst\Sentry\Facades\Laravel\Sentry',
 	),
 
 );
