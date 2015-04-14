@@ -14,6 +14,7 @@
                     <li><a href="{{ URL::to('profile') }}"><span>Profile</span></a></li>
                     <li><a href="{{ URL::to('logout') }}"><span>Logout ({{Auth::user()->username}})</span></a></li>
                 @else
+                	<li><a href="{{ URL::to('register') }}"><span>Register</span></a></li>
                     <li><a href="{{ URL::to('login') }}"><span>Login</span></a></li>
                 @endif
             </ul>

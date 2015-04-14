@@ -20,3 +20,7 @@ Route::post('login', 'HomeController@doLogin');
 Route::get('logout', array('as' => 'logout', 'uses' => 'HomeController@doLogout'))->before('auth');
 
 Route::get('profile', array('as' => 'profile', 'uses' => 'HomeController@showProfilePage'))->before('auth');
+
+Route::get('register',array('as' => 'register', 'uses' => 'HomeController@showRegisterPage'))->before('guest');
+
+Route::post('register_action', 'HomeController@storeRegisterInfo');

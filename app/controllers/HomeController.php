@@ -60,4 +60,46 @@ class HomeController extends BaseController {
 		return Redirect::route('home')
 		->with('flash_notice', 'You are successfully logged out.');
 	}
+	
+	public function showRegisterPage()
+	{
+			return View::make('front.register');
+	}
+	
+	
+
+	public function storeRegisterInfo()
+	{
+	$data =  Input::except(array('_token')) ;
+            $rule  =  array(
+                    'username'       => 'required|unique:user-accounts',
+                    'email'      => 'required|email|unique:user-accounts',
+                    'password'   => 'required|min:6|same:cpassword',
+                    'cpassword'  => 'required|min:6'
+                ) ;
+ 
+            $message = array(
+            		'cpassword.required' => 'The confirm password field is required.',
+            		'cpassword.min'      => 'The confirm password must be at least 6 characters',
+            		'password.same'      => 'The password and confirm password field must match.',
+            );
+            $validator = Validator::make($data,$rule,$message);
+
+
+ 
+            if ($validator->fails())
+            {
+                    return Redirect::to('register')
+                            ->withErrors($validator->messages());
+            }
+            else
+            {
+            		$insertData = Input::except(array('_token','cpassword'));
+            		$insertData['password'] = Hash::make($insertData['password']);
+                    User::saveFormData($insertData);
+ 
+                    return Redirect::to('register')
+                            ->with('flash_notice', 'Data inserted');;
+            }
+	}
 }
