@@ -93,3 +93,13 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+Route::filter('check-login', function(){
+	if(!Session::has('logined')) 
+		return Redirect::to('user/login');
+});
+
+Route::filter('check-admin', function(){
+	if(Session::get('admin')!=1) 
+		return Redirect::to('/');
+});

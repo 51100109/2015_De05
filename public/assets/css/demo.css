@@ -1,0 +1,14 @@
+form{
+	width: 300px;
+	margin-left: auto;
+	margin-right: auto;
+}
+form input{
+	margin-bottom: 10px;
+}
+form select{
+	margin-bottom: 10px;
+}
+h2{
+	color: blue;
+}

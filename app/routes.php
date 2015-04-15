@@ -24,3 +24,23 @@ Route::get('profile', array('as' => 'profile', 'uses' => 'HomeController@showPro
 Route::get('register',array('as' => 'register', 'uses' => 'HomeController@showRegisterPage'))->before('guest');
 
 Route::post('register_action', 'HomeController@storeRegisterInfo');
+
+
+
+Route::controller('user', 'UserController');
+
+Route::controller('admin', 'UserActivitiesController');
+
+Route::controller('operate-systems', 'OperateSystemsController');
+
+Route::controller('publishers', 'PublishersController');
+
+Route::controller('categories', 'CategoriesController');
+
+Route::controller('user-accounts', 'UserAccountsController');
+
+Route::controller('posts', 'PostsController');
+
+Route::controller('comments', 'CommentsController');
+
+Route::controller('softwares', 'SoftwaresController');
