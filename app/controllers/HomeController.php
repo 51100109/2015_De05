@@ -22,12 +22,12 @@ class HomeController extends BaseController {
 
 	public function showHome()
 	{
-		return View::make('front.home');
+		return View::make('front.views.home');
 	}
 	
 	public function showLoginPage()
 	{
-		return View::make('front.login');
+		return View::make('front.views.login');
 	}
 	
 	public function  showProfilePage()
@@ -63,7 +63,7 @@ class HomeController extends BaseController {
 	
 	public function showRegisterPage()
 	{
-			return View::make('front.register');
+			return View::make('front.views.register');
 	}
 	
 	
