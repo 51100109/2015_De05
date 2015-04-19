@@ -51,5 +51,4 @@ class HomeController extends BaseController {
 	{
 		return View::make('front.views.software',['software'=>$software]);
 	}
-	
 }
