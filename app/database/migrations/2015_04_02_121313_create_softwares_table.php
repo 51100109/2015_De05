@@ -15,10 +15,10 @@ class CreateSoftwaresTable extends Migration {
 		Schema::create('softwares', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('name',50)->dafault('');
-			$table->string('image')->dafault('');
-	        $table->string('description')->dafault('');
-	        $table->integer('filesize')->dafault(0);
+			$table->string('name',50)->default('');
+			$table->string('image')->default('');
+	        $table->mediumText('description')->default('');
+	        $table->integer('filesize')->default(0);
 	        $table->enum('language',['Tiếng anh','Tiếng Việt', 'Đa ngôn ngữ'])->default('Đa ngôn ngữ');
 	        $table->enum('license',['Miễn phí','Dùng thử'])->default('Miễn phí');
 	        $table->string('download')->dafault('');

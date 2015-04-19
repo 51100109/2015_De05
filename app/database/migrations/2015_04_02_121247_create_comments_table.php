@@ -16,7 +16,7 @@ class CreateCommentsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('id_user')->default(0);
-			$table->string('content')->dafault('');
+			$table->string('content')->default('');
 			$table->enum('target',['Phần mềm','Bài đăng'])->default('Phần mềm');
 	        $table->integer('id_target')->default(0);
 			$table->timestamps();

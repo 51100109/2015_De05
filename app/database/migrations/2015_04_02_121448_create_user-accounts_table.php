@@ -15,16 +15,16 @@ class CreateUserAccountsTable extends Migration {
 		Schema::create('user-accounts', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('username',50)->unique()->dafault('');
-	        $table->string('password', 64)->dafault('');
+			$table->string('username',50)->unique()->default('');
+	        $table->string('password', 64)->default('');
 	        $table->integer('admin')->default(0);
-	        $table->string('fullname', 100)->dafault('');
-	        $table->string('creenname', 50)->dafault('');
+	        $table->string('fullname', 100)->default('');
+	        $table->string('creenname', 50)->default('');
 	        $table->enum('gender',['Nam','Nữ'])->default('Nam');
-	        $table->string('email')->unique()->dafault('');
-	        $table->date('birthday')->dafault(date('1993-1-5'));
-	        $table->string('address')->dafault('');
-	        $table->string('phone')->dafault('');
+	        $table->string('email')->unique()->default('');
+	        $table->date('birthday')->default(date('1993-1-5'));
+	        $table->string('address')->default('');
+	        $table->string('phone')->default('');
 	        $table->rememberToken();
 			$table->timestamps();
 		});

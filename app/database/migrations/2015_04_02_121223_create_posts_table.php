@@ -16,8 +16,8 @@ class CreatePostsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('id_user')->default(0);
-			$table->string('title')->dafault('');
-	        $table->string('content')->dafault('');
+			$table->string('title')->default('');
+	        $table->string('content')->default('');
 			$table->timestamps();
 		});
 		

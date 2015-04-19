@@ -15,7 +15,7 @@ class CreateOperateSystemsTable extends Migration {
 		Schema::create('operate-systems', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('name')->unique()->dafault('');
+			$table->string('name')->unique()->default('');
 			$table->timestamps();
 		});
 		

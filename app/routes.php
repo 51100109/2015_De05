@@ -15,15 +15,24 @@ Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showHome'));
 
 Route::get('login', array('as' => 'login', 'uses' => 'HomeController@showLoginPage'))->before('guest');
 
-Route::post('login', 'HomeController@doLogin');
+Route::post('login', 'AuthController@doLogin');
 
-Route::get('logout', array('as' => 'logout', 'uses' => 'HomeController@doLogout'))->before('auth');
+Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@doLogout'))->before('auth');
 
 Route::get('profile', array('as' => 'profile', 'uses' => 'HomeController@showProfilePage'))->before('auth');
 
 Route::get('register',array('as' => 'register', 'uses' => 'HomeController@showRegisterPage'))->before('guest');
 
-Route::post('register_action', 'HomeController@storeRegisterInfo');
+Route::post('register_action', 'AuthController@storeRegisterInfo');
+
+Route::model('category', 'Category');
+
+Route::get('category/{category}', array('as' => 'category/{category}', 'uses' => 'HomeController@showCategory'));
+
+Route::model('software', 'Software');
+
+Route::get('software/{software}', array('as' => 'software/{software}', 'uses' => 'HomeController@showSoftware'));
+
 
 
 

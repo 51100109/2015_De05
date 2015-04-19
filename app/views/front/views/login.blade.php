@@ -26,6 +26,10 @@
         {{ Form::label('password', 'Password') }}<br/>
         {{ Form::password('password',array('class' => 'form-control')) }}
     </p>
+    <p>
+    	{{Form::checkbox('remember')}}
+    	{{ Form::label('remember', 'Ghi nhớ') }}
+    </p>
 	<p>Bạn chưa có tài khoản <a href="{{asset('register')}}">Đăng ký</a></p>
     <!-- submit button -->
     <p>{{ Form::submit('Đăng nhập',array('class' => 'btn btn-md btn-primary btn-block')) }}</p>

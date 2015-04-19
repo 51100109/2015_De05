@@ -22,7 +22,8 @@ class HomeController extends BaseController {
 
 	public function showHome()
 	{
-		return View::make('front.views.home');
+		$softwares = Software::all();
+		return View::make('front.views.home',['softwares'=>$softwares]);
 	}
 	
 	public function showLoginPage()
@@ -32,74 +33,23 @@ class HomeController extends BaseController {
 	
 	public function  showProfilePage()
 	{
-		return View::make('front.profile');
+		return View::make('front.views.profile');
 	}
-	
-	public function doLogin()
-	{
-		$user = array(
-				'username' => Input::get('username'),
-				'password' => Input::get('password')
-		);
-		
-		if (Auth::attempt($user)) {
-			return Redirect::route('home')
-			->with('flash_notice', 'You are successfully logged in.');
-		}
-		
-		// authentication failure! lets go back to the login page
-		return Redirect::route('login')
-		->with('flash_error', 'Your username/password combination was incorrect.')
-		->withInput();
-	}
-	
-	public function  doLogout()
-	{
-		Auth::logout();
-		
-		return Redirect::route('home')
-		->with('flash_notice', 'You are successfully logged out.');
-	}
-	
+
 	public function showRegisterPage()
 	{
-			return View::make('front.views.register');
+		return View::make('front.views.register');
 	}
 	
-	
-
-	public function storeRegisterInfo()
+	public function showCategory($category)
 	{
-	$data =  Input::except(array('_token')) ;
-            $rule  =  array(
-                    'username'       => 'required|unique:user-accounts',
-                    'email'      => 'required|email|unique:user-accounts',
-                    'password'   => 'required|min:6|same:cpassword',
-                    'cpassword'  => 'required|min:6'
-                ) ;
- 
-            $message = array(
-            		'cpassword.required' => 'The confirm password field is required.',
-            		'cpassword.min'      => 'The confirm password must be at least 6 characters',
-            		'password.same'      => 'The password and confirm password field must match.',
-            );
-            $validator = Validator::make($data,$rule,$message);
-
-
- 
-            if ($validator->fails())
-            {
-                    return Redirect::to('register')
-                            ->withErrors($validator->messages());
-            }
-            else
-            {
-            		$insertData = Input::except(array('_token','cpassword'));
-            		$insertData['password'] = Hash::make($insertData['password']);
-                    User::saveFormData($insertData);
- 
-                    return Redirect::to('register')
-                            ->with('flash_notice', 'Data inserted');;
-            }
+		$softwares = Software::where('id_category', '=', $category->id)->get();
+		return View::make('front.views.category',['softwares'=>$softwares,'categoryname'=>$category->name]);
 	}
+	
+	public function showSoftware($software)
+	{
+		return View::make('front.views.software',['software'=>$software]);
+	}
+	
 }
