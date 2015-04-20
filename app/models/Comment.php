@@ -11,5 +11,10 @@ class Comment extends Eloquent {
 	protected $fillable = ['id','id_user','content','target','id_target'];
 
 	public $table = 'comments';
+	
+	public static function saveData($data)
+	{
+		DB::table('comments')->insert($data);
+	}
 
 }

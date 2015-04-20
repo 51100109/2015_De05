@@ -1,7 +1,7 @@
 @extends('front.layouts.mainlayout')
 
 @section('title')
-Softsharing - Profile
+Profile - Softsharing
 @endsection
 
 @section('content')

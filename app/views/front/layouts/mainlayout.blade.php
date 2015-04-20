@@ -11,7 +11,7 @@
 			@yield("content")
 		</div>
 
-		<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+		<div class="col-xs-12 col-sm-3 sidebar-offcanvas" id="sidebar">
 			@include('front.includes.sidebar')
 		</div>		
 	</div>

@@ -1,80 +1,59 @@
-body {
-    background-color: #4B7399;
-    font-family: Verdana, Helvetica, Arial;
-    font-size: 14px;
+.detailBox {
+    border:1px solid #bbb;
+    margin-bottom:10px;
+}
+.titleBox {
+    background-color:#fdfdfd;
+    padding:10px;
+}
+.titleBox label{
+  color:#444;
+  margin:0;
+  display:inline-block;
 }
 
-a img {
-    border: none;
+.commentBox {
+    padding:10px;
+    border-top:1px dotted #bbb;
+}
+.commentBox .form-group:first-child, .actionBox .form-group:first-child {
+    width:80%;
+}
+.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
+    width:18%;
+}
+.actionBox .form-group * {
+    width:100%;
+}
+.commentList {
+    padding:0;
+    list-style:none;
+    max-height:300px;
+    overflow:auto;
+}
+.commentList li {
+    margin:0;
+    margin-top:10px;
+}
+.commentList li > div {
+    display:table-cell;
 }
 
-a {
-    color: #0000FF;
+.commentText p {
+    margin:0;
+}
+.sub-text {
+    color:#aaa;
+    font-family:verdana;
+    font-size:11px;
+}
+.actionBox {
+    border-top:1px dotted #bbb;
+    padding:10px;
 }
 
-.clear {
-    clear: both;
-    height: 0;
-    overflow: hidden;
-}
-
-#container {
-    width: 480px;
-    margin: 0 auto;
-    background-color: #FFF;
-    padding: 20px 40px;
-    border: solid 1px black;
-    margin-top: 20px;
-}
-
-#flash_notice, #flash_error {
-    padding: 5px 8px;
-    margin: 10px 0;
-}
-
-#flash_notice {
-    background-color: #CFC;
-    border: solid 1px #6C6;
-}
-
-#flash_error {
-    background-color: #FCC;
-    border: solid 1px #C66;
-}
-
-#nav {
-    position: relative;
-    overflow: hidden;
-    margin: 0 auto 0;
-    display: block;
-    background-color: #1F3D63;
-}
-
-#nav ul {
-    margin: 0;
-    padding: 0;
-}
-
-#nav ul li {
-    display: inline;
-}
-
-#nav li a {
-    float: left;
-    display: block;
-    padding: 12px 12px;
-    color: #fff;
-    border-right: 1px solid #fff;
-    text-decoration: none;
-}
-
-#nav li a:hover {
-    color: #236BB2;
-}
-
-input[type=text],
-input[type=password],
-textarea {
-    color: #888;
-    font: 12px Helvetica, Arial, sans-serif;
+.commentHead
+{
+	margin:0px;
+	font-weight: bold;
 }

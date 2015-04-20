@@ -1,7 +1,7 @@
 @extends('front.layouts.mainlayout')
 
 @section('title')
-Softsharing - {{$categoryname}}
+{{$categoryname}} - Softsharing
 @endsection
 
 @section('content')

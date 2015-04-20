@@ -30,7 +30,7 @@
         <div class="bg-danger">{{ Session::get('flash_error') }}</div>
     	@endif
     	@if (Session::has('flash_notice'))
-        <div class="bg-success">{{ Session::get('flash_notice') }}</div>
+        <div class="alert alert-success">{{ Session::get('flash_notice') }}</div>
     	@endif
 		
 		

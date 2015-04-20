@@ -33,6 +33,7 @@ Route::model('software', 'Software');
 
 Route::get('software/{software}', array('as' => 'software/{software}', 'uses' => 'HomeController@showSoftware'));
 
+Route::post('comment', 'ActionController@saveComment');
 
 
 

@@ -10,8 +10,6 @@
 		<div  class="center" >
 		@yield("content")		
 		</div>
-		<div class = "">
-		</div>
 	</div>
 </body>
 </html>
