@@ -71,6 +71,11 @@
 									<div class="commentText">
 										<p class="">{{{$comment->content}}}</p>
 										<span class="date sub-text">{{{$curTime}}}</span>
+										@if (Auth::check())
+											@if ($comment->id_user == $idUser)
+												<span class="date sub-text"><a style=" cursor: pointer;" onclick="deleteComment(<?php echo "'".$url."/".($comment->id)."'" ?>)">Delete</a></span>
+											@endif
+										@endif
 									</div>
 								</li>
 							@endforeach

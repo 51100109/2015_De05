@@ -11,6 +11,8 @@
 |
 */
 
+//---------------Frontend Group-------------------------------------
+
 Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showHome'));
 
 Route::get('login', array('as' => 'login', 'uses' => 'HomeController@showLoginPage'))->before('guest');
@@ -25,18 +27,32 @@ Route::get('register',array('as' => 'register', 'uses' => 'HomeController@showRe
 
 Route::post('register_action', 'AuthController@storeRegisterInfo');
 
+// Category view
 Route::model('category', 'Category');
 
 Route::get('category/{category}', array('as' => 'category/{category}', 'uses' => 'HomeController@showCategory'));
+//--------------------------------
 
+
+//view software
 Route::model('software', 'Software');
 
 Route::get('software/{software}', array('as' => 'software/{software}', 'uses' => 'HomeController@showSoftware'));
+//--------------------------------
 
-Route::post('comment', 'ActionController@saveComment');
+// Comment action
+Route::post('comment', 'ActionController@saveComment')->before('auth');
+
+Route::model('comment', 'Comment');
+
+//delete comment
+Route::get('comment/{comment}',array('as' => 'comment/{comment}', 'uses' => 'ActionController@deleteComment') )->before('auth');
+//--------------------------------
 
 
 
+
+//---------------Backend Group--------------------------------------------------
 Route::controller('user', 'UserController');
 
 Route::controller('admin', 'UserActivitiesController');

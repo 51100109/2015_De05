@@ -4,6 +4,10 @@ class ActionController extends BaseController {
 
 	public function saveComment()
 	{
+		if (!(Auth::check()))
+		{
+			return "Denied";
+		}
 		date_default_timezone_set("Asia/Ho_Chi_Minh");
 		$date=new DateTime();
 		
@@ -18,5 +22,22 @@ class ActionController extends BaseController {
 		Comment::saveData($data);
 		UserActivity::addActivity(Input::get('id_user'), 1,3,Input::get('id_target'),Input::get('content'));
 		
+	}
+	
+	public function deleteComment($comment)
+	{
+		if (Auth::check())
+		{
+			$idUser = Auth::user()->id;
+			if ($idUser == $comment->id_user)
+			{
+				$comment->delete();
+			}
+			return "No permission";
+		}
+		else
+		{
+			return "Denied";
+		}
 	}
 }

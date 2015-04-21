@@ -16,5 +16,5 @@ class Comment extends Eloquent {
 	{
 		DB::table('comments')->insert($data);
 	}
-
+	
 }
