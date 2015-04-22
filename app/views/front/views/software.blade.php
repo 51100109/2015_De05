@@ -9,5 +9,5 @@
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
           </p>
 		<h1>display $software here</h1>
-		@include('front.includes.comment',['isSoftware'=>true ,'software'=>$software])
+		@include('front.includes.comment',['isSoftware'=>1 ,'software'=>$software])
 @endsection

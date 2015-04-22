@@ -49,8 +49,22 @@ Route::model('comment', 'Comment');
 Route::get('comment/{comment}',array('as' => 'comment/{comment}', 'uses' => 'ActionController@deleteComment') )->before('auth');
 //--------------------------------
 
+// Post -----------------------------------
+Route::get('post', array('as' => 'post', 'uses' => 'HomeController@showpostList'));
 
+Route::get('post/new', array('as' => 'post/new', 'uses' => 'HomeController@showNewpostPage'))->before('auth');
 
+Route::post('post/new', 'ActionController@savePost')->before('auth');
+
+Route::model('post', 'Post');
+
+Route::get('post/{post}',array('as' => 'post/{post}', 'uses' => 'HomeController@showPost') );
+
+Route::get('post/edit/{post}', array('as' => 'post/edit/{post}', 'uses' => 'HomeController@showEditpostPage'))->before('auth');
+
+Route::post('post/edit/{post}','ActionController@saveEditPost')->before('auth');
+
+Route::get('post/delete/{post}','ActionController@deletePost')->before('auth');
 
 //---------------Backend Group--------------------------------------------------
 Route::controller('user', 'UserController');

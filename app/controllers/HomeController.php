@@ -51,5 +51,25 @@ class HomeController extends BaseController {
 	{
 		return View::make('front.views.software',['software'=>$software]);
 	}
+	
+	public function showNewpostPage()
+	{
+		return View::make('front.views.post.newpost');
+	}
+	
+	public function showpostList()
+	{
+		$posts = Post::all()->reverse();
+		return View::make('front.views.post.listpost',['posts'=>$posts]);
+	}
 
+	public function showPost($post)
+	{
+		return View::make('front.views.post.post',['post'=>$post]);
+	}
+	
+	public function showEditpostPage($post)
+	{
+		return View::make('front.views.post.editpost',['post'=>$post]);;
+	}
 }

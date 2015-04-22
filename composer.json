@@ -8,8 +8,10 @@
 		"laravel/framework": "4.2.*",
 		"laracasts/validation": "~1.0",
 		"artdarek/oauth-4-laravel": "dev-master",
-		"cartalyst/sentry": "2.1.*"
+		"cartalyst/sentry": "2.1.*",
+		"mews/purifier": "dev-master-l4"
 	},
+	"minimum-stability": "dev",
 	"require-dev": {
     	"way/generators": "~2.0"
 	},

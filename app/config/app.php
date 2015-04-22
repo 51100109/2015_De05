@@ -125,6 +125,7 @@ return array(
 		'Laracasts\Validation\ValidationServiceProvider',
 		'Artdarek\OAuth\OAuthServiceProvider',
 		'Cartalyst\Sentry\SentryServiceProvider',
+		'Mews\Purifier\PurifierServiceProvider',
 	),
 
 	/*
@@ -193,6 +194,7 @@ return array(
 		'View'              => 'Illuminate\Support\Facades\View',
 		'OAuth' 			=> 'Artdarek\OAuth\Facade\OAuth',
 		'Sentry' 			=> 'Cartalyst\Sentry\Facades\Laravel\Sentry',
+		'Purifier' => 'Mews\Purifier\Facades\Purifier',
 	),
 
 );

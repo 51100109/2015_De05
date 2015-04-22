@@ -20,3 +20,5 @@
 		<script type="text/javascript" src="{{asset('assets/jquery-validation/jquery.validate.js')}}"></script>
 
 		<script type="text/javascript" src="{{asset('js/js.js')}}"></script>
+		
+		@yield('moreLibrary')

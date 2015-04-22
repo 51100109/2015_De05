@@ -3,17 +3,21 @@
 	{
 		$idUser = Auth::user()->id;
 	}
-	$idTarget = $software->id;
+	
 	$url = URL::to('comment');
 	
-	if ($isSoftware)
+	if ($isSoftware==1)
 	{
+		$idTarget = $software->id;
 		$matchThese = ['target' => 'Phần mềm', 'id_target' => $idTarget];
+		
 		
 	}
 	else 
 	{
+		$idTarget = $post->id;
 		$matchThese = ['target' => 'Bài đăng', 'id_target' => $idTarget];
+		
 	}
 	$comments = Comment::where($matchThese)->get()->reverse();
 ?>

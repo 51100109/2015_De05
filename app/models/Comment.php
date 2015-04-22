@@ -14,7 +14,16 @@ class Comment extends Eloquent {
 	
 	public static function saveData($data)
 	{
-		DB::table('comments')->insert($data);
+		$comment = new Comment;
+		
+		$comment->id_user = $data['id_user'];
+		$comment->content = $data['content'];
+		$comment->target = $data['target'];
+		$comment->id_target = $data['id_target'];
+		$comment->created_at = $data['created_at'];
+		
+		$comment->save();
+		
+		return $comment->id;
 	}
-	
 }

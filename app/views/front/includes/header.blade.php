@@ -71,7 +71,7 @@
 		            </li>          
 		             
 			        <li>
-			        	<a href="{{ URL::to('home/huong-dan') }}"> Hướng dẫn </a>
+			        	<a href="{{ URL::to('post') }}"> Bài đăng </a>
 			        </li>	  
 			         
 			     </ul>			      
