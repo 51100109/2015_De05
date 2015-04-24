@@ -18,57 +18,57 @@
 			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			      <ul class="nav navbar-nav">			      
 
-			      	<li class="dropdown">
-                		<a href="{{ URL::to('home/window') }}" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false">Window <span class="caret"></span></a>
-	                	<ul class="dropdown-menu" role="menu">
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Bảo mật</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Diệt virut - Spyware</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Internet & Email</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Ứng dụng văn phòng</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Dữ liệu - File</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm doanh nghiệp</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm giáo dục </a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Audio & Video</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Công cụ lập trình</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Drivers</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Hỗ trợ Mobile</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm khác</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Hệ thống</a></li>
-		                  <li class="divider"></li>
-		                </ul>
-	              	</li>
+<!-- 			      	<li class="dropdown"> -->
+<!--                 		<a href="{{ URL::to('home/window') }}" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false">Window <span class="caret"></span></a> -->
+<!-- 	                	<ul class="dropdown-menu" role="menu"> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Bảo mật</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Diệt virut - Spyware</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Internet & Email</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Ứng dụng văn phòng</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Dữ liệu - File</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm doanh nghiệp</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm giáo dục </a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Audio & Video</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Công cụ lập trình</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Drivers</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Hỗ trợ Mobile</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm khác</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Hệ thống</a></li> -->
+<!-- 		                  <li class="divider"></li> -->
+<!-- 		                </ul> -->
+<!-- 	              	</li> -->
 
 
-	              	 <li class="dropdown">
-		                <a href="{{ URL::to('home/mac') }}" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false">Mac <span class="caret"></span></a>
-		                <ul class="dropdown-menu" role="menu">
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Bảo mật</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Diệt virut - Spyware</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Internet & Email</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Ứng dụng văn phòng</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Dữ liệu - File</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm doanh nghiệp</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm giáo dục </a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Audio & Video</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Công cụ lập trình</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Drivers</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Hỗ trợ Mobile</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm khác</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Hệ thống</a></li>
-		                  <li class="divider"></li>
-		                </ul>
-		            </li>
+<!-- 	              	 <li class="dropdown"> -->
+<!-- 		                <a href="{{ URL::to('home/mac') }}" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false">Mac <span class="caret"></span></a> -->
+<!-- 		                <ul class="dropdown-menu" role="menu"> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Bảo mật</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Diệt virut - Spyware</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Internet & Email</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Ứng dụng văn phòng</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Dữ liệu - File</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm doanh nghiệp</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm giáo dục </a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Audio & Video</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Công cụ lập trình</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Drivers</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Hỗ trợ Mobile</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm khác</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Hệ thống</a></li> -->
+<!-- 		                  <li class="divider"></li> -->
+<!-- 		                </ul> -->
+<!-- 		            </li> -->
 
-		            <li class="dropdown">
-		                <a href="{{ URL::to('home/huong-dan') }}" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false">Mobile <span class="caret"></span></a>
-		                <ul class="dropdown-menu" role="menu">
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Window Phone</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Android</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> iOS</a></li>
-		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Symbian</a></li>
-		                  <li class="divider"></li>
-		                </ul>
-		            </li>          
+<!-- 		            <li class="dropdown"> -->
+<!-- 		                <a href="{{ URL::to('home/huong-dan') }}" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false">Mobile <span class="caret"></span></a> -->
+<!-- 		                <ul class="dropdown-menu" role="menu"> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Window Phone</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Android</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> iOS</a></li> -->
+<!-- 		                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Symbian</a></li> -->
+<!-- 		                  <li class="divider"></li> -->
+<!-- 		                </ul> -->
+<!-- 		            </li>           -->
 		             
 			        <li>
 			        	<a href="{{ URL::to('post') }}"> Bài đăng </a>

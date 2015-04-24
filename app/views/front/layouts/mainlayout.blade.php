@@ -3,6 +3,7 @@
 <head>
 	@include('front.includes.head')
 </head>
+
 <body>
 	<div class="container" >
 		@include('front.includes.header')

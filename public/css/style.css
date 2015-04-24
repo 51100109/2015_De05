@@ -1,3 +1,5 @@
+
+/*Comment block*/
 .detailBox {
     border:1px solid #bbb;
     margin-bottom:10px;
@@ -57,3 +59,16 @@
 	margin:0px;
 	font-weight: bold;
 }
+/*Comment block*/
+
+/*Software info table*/
+#softinfoTable{
+	width: 100%;
+	
+}
+
+#softinfoTable td{
+	line-height:2;
+}
+
+

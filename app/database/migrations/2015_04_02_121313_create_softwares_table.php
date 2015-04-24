@@ -23,7 +23,7 @@ class CreateSoftwaresTable extends Migration {
 	        $table->enum('license',['Miễn phí','Dùng thử'])->default('Miễn phí');
 	        $table->string('download')->dafault('');
 	        $table->integer('id_category')->default(0);
-	        $table->string('id_system')->default(0);
+	        $table->integer('id_system')->default(0);
 	        $table->integer('id_publisher')->default(0);
 			$table->timestamps();
 		});

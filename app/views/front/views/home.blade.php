@@ -9,7 +9,9 @@ Home - Softsharing
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
           </p>
         @if (Session::has('flash_notice'))
-        <div class="bg-danger">{{ Session::get('flash_notice') }}</div>
+	        <script>
+	        	$.notify("{{ Session::get('flash_notice') }}","success");
+	        </script>
    		 @endif
         @if (count($softwares) === 0)
     		<h1>No Item</h1>
