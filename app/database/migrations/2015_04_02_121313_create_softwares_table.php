@@ -19,7 +19,7 @@ class CreateSoftwaresTable extends Migration {
 			$table->string('image')->default('');
 	        $table->mediumText('description')->default('');
 	        $table->integer('filesize')->default(0);
-	        $table->enum('language',['Tiếng anh','Tiếng Việt', 'Đa ngôn ngữ'])->default('Đa ngôn ngữ');
+	        $table->enum('language',['Tiếng Anh','Tiếng Việt', 'Đa ngôn ngữ'])->default('Đa ngôn ngữ');
 	        $table->enum('license',['Miễn phí','Dùng thử'])->default('Miễn phí');
 	        $table->string('download')->dafault('');
 	        $table->integer('id_category')->default(0);

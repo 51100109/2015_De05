@@ -63,8 +63,8 @@ class AuthController extends BaseController {
 	{
 	$data =  Input::except(array('_token')) ;
             $rule  =  array(
-                    'username'       => 'required|unique:user-accounts',
-                    'email'      => 'required|email|unique:user-accounts',
+                    'username'       => 'required|unique:user_accounts',
+                    'email'      => 'required|email|unique:user_accounts',
                     'password'   => 'required|min:6|same:cpassword',
                     'cpassword'  => 'required|min:6'
                 ) ;

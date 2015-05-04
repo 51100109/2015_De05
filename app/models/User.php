@@ -14,7 +14,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 *
 	 * @var string
 	 */
-	protected $table = 'user-accounts';
+	protected $table = 'user_accounts';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -25,7 +25,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	
 	public static function saveFormData($data)
 	{
-		DB::table('user-accounts')->insert($data);
+		DB::table('user_accounts')->insert($data);
 	}
 
 }

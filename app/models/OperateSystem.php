@@ -14,5 +14,5 @@ class OperateSystem extends Eloquent {
 	// Don't forget to fill this array
 	protected $fillable = ['id','name'];
 
-	public $table = 'operate-systems';
+	public $table = 'operate_systems';
 }

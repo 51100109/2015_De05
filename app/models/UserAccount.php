@@ -19,7 +19,7 @@ class UserAccount extends Eloquent {
 	protected $fillable = ['id','username','admin','fullname','creenname','gender','email','birthday','address','phone'];
 	
 
-	public $table="user-accounts";
+	public $table="user_accounts";
 	public function post(){
 		return $this->hasMany('Post','id_user');
 	}
