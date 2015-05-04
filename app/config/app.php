@@ -126,6 +126,7 @@ return array(
 		'Artdarek\OAuth\OAuthServiceProvider',
 		'Cartalyst\Sentry\SentryServiceProvider',
 		'Mews\Purifier\PurifierServiceProvider',
+		'Bllim\Datatables\DatatablesServiceProvider',
 	),
 
 	/*
@@ -194,7 +195,8 @@ return array(
 		'View'              => 'Illuminate\Support\Facades\View',
 		'OAuth' 			=> 'Artdarek\OAuth\Facade\OAuth',
 		'Sentry' 			=> 'Cartalyst\Sentry\Facades\Laravel\Sentry',
-		'Purifier' => 'Mews\Purifier\Facades\Purifier',
+		'Purifier' 			=> 'Mews\Purifier\Facades\Purifier',
+		'Datatables'      	=> 'Bllim\Datatables\Facade\Datatables',
 	),
 
 );

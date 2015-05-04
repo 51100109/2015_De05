@@ -1,0 +1,41 @@
+* {
+	border: 0;
+	padding: 0;
+	outline: 0;
+	border: 0
+}
+body {
+	text-align: center;
+}
+.demo {
+	width: 960px;
+	margin: 20px auto;
+}
+.thumb {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow: 0 0 5px #CCC;
+	-webkit-box-shadow: 0 0 5px #CCC;
+	box-shadow: 0 0 5px #CCC;
+	margin: 5px;
+	border: 1px solid #CCC;
+	background: WhiteSmoke;
+	padding: 0;
+	display: inline-block;
+	width: 270px;
+	height: 102px;
+}
+.thumb img {
+	margin: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	width: 260px
+}
+#example_1 {
+	float: left
+}
+#example_2 {
+	float: right
+}

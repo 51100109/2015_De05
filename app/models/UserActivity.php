@@ -12,14 +12,6 @@ class UserActivity extends Eloquent {
 
 	public $table = 'user_activities';
 
-    public function user(){
-        return $this->belongsTo('User','id_user');
-    }
-
-    public function activity(){
-        return $this->belongsTo('Activity','id_activity');
-    }
-
 	public static  function addActivity($id_user, $activity,$target,$id_target,$infor){
         date_default_timezone_set("Asia/Ho_Chi_Minh");
         $date=new DateTime();

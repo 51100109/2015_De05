@@ -2,10 +2,10 @@
 
 class UserAccount extends Eloquent {
 
-	public static $rules = [
-	 	'username' => 'required|unique:user-accounts|min:3',
+	public static $rules_create = [
+	 	'username' => 'required|unique:user_accounts|min:3',
 	 	'password' => 'required|min:6',
-	 	'email' => 'required|unique:user-accounts',
+	 	'email' => 'required|unique:user_accounts',
 	 	'admin'=> 'required',
 	 	'fullname'=> 'required',
 	 	'creenname'=> 'required',
@@ -15,22 +15,14 @@ class UserAccount extends Eloquent {
 	 	'phone'=> 'required'
 	];
 
+	public static $rules_edit = [
+	 	'admin'=> 'required',
+	];
+
 	// Don't forget to fill this array
-	protected $fillable = ['id','username','admin','fullname','creenname','gender','email','birthday','address','phone'];
+	protected $fillable = ['id','username','password','admin','fullname','creenname','gender','email','birthday','address','phone'];
 	
-
 	public $table="user_accounts";
-	public function post(){
-		return $this->hasMany('Post','id_user');
-	}
-
-	public function comment(){
-		return $this->hasMany('Comment','id_user');
-	}
-
-	public function useractivity(){
-		return $this->hasMany('UserActivity','id_user');
-	}
 
 	public static function check_login($user_input,$password){
 		$array1=array('user_input'=>$user_input);

@@ -9,11 +9,14 @@
 		"laracasts/validation": "~1.0",
 		"artdarek/oauth-4-laravel": "dev-master",
 		"cartalyst/sentry": "2.1.*",
-		"mews/purifier": "dev-master-l4"
+		"mews/purifier": "dev-master-l4",
+		"bllim/datatables": "~1.3"
 	},
 	"minimum-stability": "dev",
 	"require-dev": {
-    	"way/generators": "~2.0"
+    	"way/generators": "~2.0",
+    	"phpunit/phpunit": "~4.0",
+        "mockery/mockery": "~0.9"
 	},
 	"autoload": {
 		"classmap": [

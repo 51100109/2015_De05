@@ -69,18 +69,24 @@ Route::get('post/delete/{post}','ActionController@deletePost')->before('auth');
 //---------------Backend Group--------------------------------------------------
 Route::controller('user', 'UserController');
 
-Route::controller('admin', 'UserActivitiesController');
+Route::group(array("prefix"=>"admin"),function(){
 
-Route::controller('operate-systems', 'OperateSystemsController');
+	Route::get('home', array('as' => 'admin_home', 'uses' => 'UserActivitiesController@getHome'));
 
-Route::controller('publishers', 'PublishersController');
+	Route::controller('activities', 'UserActivitiesController');
 
-Route::controller('categories', 'CategoriesController');
+	Route::controller('operate-systems', 'OperateSystemsController');
 
-Route::controller('user-accounts', 'UserAccountsController');
+	Route::controller('publishers', 'PublishersController');
 
-Route::controller('posts', 'PostsController');
+	Route::controller('categories', 'CategoriesController');
 
-Route::controller('comments', 'CommentsController');
+	Route::controller('user-accounts', 'UserAccountsController');
 
-Route::controller('softwares', 'SoftwaresController');
+	Route::controller('posts', 'PostsController');
+
+	Route::controller('comments', 'CommentsController');
+
+	Route::controller('softwares', 'SoftwaresController');
+	
+});

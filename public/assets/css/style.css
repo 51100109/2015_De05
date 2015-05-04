@@ -1,0 +1,362 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/*   
+Theme Name: Origin
+Theme URI: http://www.orgin.com
+Description: I built this theme from ground up
+Author: Demon Warlock
+Author URI: http://www.izwebz.com
+Version: 1.3
+*/
+
+@media screen {
+* { margin: 0; padding: 0; }    
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+ caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family:arial,"Times New Roman", Times, serif;
+	vertical-align: baseline;
+}
+
+ul, ol {list-style: none;}
+strong {font-weight: bold;}
+
+article, aside, figure, footer, header, hgroup, menu, nav, section { display: block; }
+
+.group:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
+.group { display: inline-block; clear: both; }
+/* start commented backslash hack \*/ * html .group { height: 1%; } .group { display: block; } /* close commented backslash hack */
+
+body { font: 12px/2 "Helvetica Neue",Helvetica,Arial,sans-serif;}
+
+/*
+	TYPOGRAPHY
+*/
+h1, h2, h3, h4, h5 {}
+a img { border: 0; }
+a {color: #08C; text-decoration: none;}
+.zoomer:active { top: 0; } 
+
+ body{
+ background-color:#2980b9;
+
+ }
+#searchBox{
+	float:right;
+        height: 100%;
+	padding:0px 10px;
+        font-size: 14px;
+     
+}
+#searchBox a{
+             line-height: 100%;
+             font-weight: bold;
+               color:white;
+        }   
+#searchBox label{
+             line-height: 100%;
+             font-weight: bold;
+               color:white;
+        }           
+#home{
+	float:left;
+	margin-top:2px;
+
+	
+	}
+
+
+#main-content {
+	width:1000px;
+	background-color:white;
+
+	
+        float:left;
+}
+#main-content p{
+	font-size:1.7em;
+}
+
+
+
+
+#page-wrap {
+	width: 1000px;
+        min-height: 600px;
+	margin: 0 auto;
+        background-color: white;
+
+	
+}
+#banner {
+	width: 1000px;
+	height: 166px;
+	position: relative;
+	
+	
+}
+#top-bar{
+
+
+margin-top: -1px;
+background-color: #3498db;
+width:1000px;
+}
+
+
+/* drop down menu*/
+#menu-page-menu li{
+float: left;
+position:relative;
+z-index: 100;
+}
+#menu-page-menu li a{
+display:block;
+float:left;
+padding:0px 10px;
+border-right:1px solid white;
+
+color:white;
+font-size:16px;
+font-weight: bold;
+
+
+}
+
+#menu-page-menu li a:hover{
+color:white;
+background:#2980b9;
+}
+#menu-page-menu li ul{
+position:absolute;
+top:100%;
+width:13em;
+display:none;
+}
+#menu-page-menu li:hover ul{
+display:block;
+
+}
+#menu-page-menu li ul li a{
+float:none;
+font-size:14px;
+border-left:1px solid white;
+border-right:1px solid white;
+border-bottom:1px solid white;
+}
+#menu-page-menu li ul li{
+background:#3498db;
+width:100%;
+}
+#menu-page-menu li ul li a:hover{
+background:#2980b9;
+color:#31576e;
+
+}
+/***************/
+
+#footer {
+	width:1000px;
+	margin:0px auto;
+	overflow: hidden;
+	
+}
+
+#footer div#footerNav {
+	padding: 10px 15px;
+	overflow: hidden;
+	background: #3498db repeat-x;
+	background-position: bottom center;
+}
+
+#footer div#footerNav p.copyright {
+	float: left;
+	color: #f1f1f1;
+	font-size: 1em;
+}
+
+#footer div#footerNav ul {
+	list-style: none;
+	float: right;
+}
+
+#footer div#footerNav ul li {
+	float: left;
+	padding-right: 15px;
+}
+
+#footer div#footerNav li a {
+	color: #f1f1f1;
+	text-decoration: none;
+	font-size: 1em;
+	font-weight: bold;
+}
+
+#footer div#footerNav li a:hover {
+	color: #336;
+	border-bottom: 2px solid #f1f1f1;
+}
+/**Main Nav */
+div#mainNav{
+    width: 200px;
+    float: left;
+    margin-left: 5px;
+    margin-top: 5px;
+
+}
+
+div#mainNav h1{
+    font-size: 16px;
+    background-color: #3498db;
+    font-weight: bold;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    color: white;
+    text-align: center;
+    border-radius: 5px 5px 0px 0px;
+    -moz-border-radius: 5px 5px 0px 0px;
+    -webkit-border-radius:  5px 5px 0px 0px;
+}
+div#mainNav ul{
+    border: 1px solid #3498db;
+}
+
+div#mainNav ul li{
+    position: relative;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+div#mainNav ul li a{
+    padding:5px;
+    text-decoration: none;
+}
+
+div#mainNav ul li ul{
+    position: absolute;
+    top:0px;
+    left:199px;
+    background-color: #ecf0f1;
+    display:none;
+}
+div#mainNav ul li:hover ul{
+    display:block;
+    width:100%;
+}
+div#mainNav ul li:hover{
+    background-color: #bdc3c7;
+}
+
+/** CONTENT **/
+div#content {
+    width:780px;
+    float:right;
+    overflow: hidden;
+    margin-right: 5px;
+    margin-top: 5px;
+    border: 1px solid #bdc3c7;
+     border-radius: 5px ;
+    -moz-border-radius: 5px ;
+    -webkit-border-radius:  5px;
+}
+div#content h2{
+    font-size: 16px;
+    background-color: #3498db;
+    color:white;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+        border-radius: 5px 5px 0px 0px;
+    -moz-border-radius: 5px 5px 0px 0px;
+    -webkit-border-radius:  5px 5px 0px 0px;
+}
+.dieukhoan{
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+div#content ol li label{
+  font-size: 14px;
+  font-weight: bold;
+  color:#e74c3c;
+}
+
+#content form{
+    width:500px;
+    margin: 5px auto;
+}
+
+#content form label{
+    font-size: 13px;
+    font-weight: bold;
+   
+
+    clear: both;
+    
+}
+
+.select{
+    width:150px;
+}
+
+div#content2{
+    width: 990px;
+    float:left;
+    overflow: hidden;
+    margin: 5px 5px;
+       border: 1px solid #bdc3c7;
+     border-radius: 5px ;
+    -moz-border-radius: 5px ;
+    -webkit-border-radius:  5px;
+}
+
+div#content2 h2{
+    font-size: 16px;
+    background-color: #3498db;
+    color:white;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+        border-radius: 5px 5px 0px 0px;
+    -moz-border-radius: 5px 5px 0px 0px;
+    -webkit-border-radius:  5px 5px 0px 0px;
+}
+div#content2 p{
+    font-size: 14px;
+}
+#content2 form label{
+    font-size: 13px;
+    font-weight: bold;
+   
+
+    clear: both;
+    
+}
+#form-make{
+    width:500px;
+    margin: 5px auto;
+}
+label.thanhcong{
+    color: #2ecc71;
+}
+label.error{
+    color:#e74c3c;
+}
+
+table th{
+    font-weight: bold;
+}
+

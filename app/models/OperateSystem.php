@@ -2,17 +2,20 @@
 
 class OperateSystem extends Eloquent {
 
-	// Add your validation rules here
 	public static $rules = [
-	 	'name' => 'required|unique:operate-systems',
+	 	'name' => 'required|unique:operate_systems',
+	 	'image' => 'required',
+	 	'id_category' => 'required',
 	];
 
-	public static $messages = [
-    	'name.required' => 'Hãy nhập tên hệ điều hành',
-    	'name.unique'=>'Tên hệ điều hành đã tồn tại'
+	public static $rules_edit = [
+	 	'image' => 'required',
+	 	'id_category' => 'required',
 	];
+
 	// Don't forget to fill this array
-	protected $fillable = ['id','name'];
+	protected $fillable = ['id','name','image','id_category'];
+
 
 	public $table = 'operate_systems';
 }
