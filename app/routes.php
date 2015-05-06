@@ -67,8 +67,6 @@ Route::post('post/edit/{post}','ActionController@saveEditPost')->before('auth');
 Route::get('post/delete/{post}','ActionController@deletePost')->before('auth');
 
 //---------------Backend Group--------------------------------------------------
-Route::controller('user', 'UserController');
-
 Route::group(array("prefix"=>"admin"),function(){
 
 	Route::controller('activities', 'UserActivitiesController');

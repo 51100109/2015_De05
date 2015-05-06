@@ -50,6 +50,7 @@ class UserAccountsController extends BaseController {
 			return Redirect::back();
 		}
 		else{
+			$data['password'] = Hash::make($data['password']);
 			$user = UserAccount::create($data);
 			UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Thành viên', $user->id,"Tài khoản: " .$user->username. " --- \n Tên: " .$user->fullname. " --- \n Tên hiển thị: " .$user->creenname);
 			Session::put('success',"Đã thêm thành viên ".$user->username." có ID: ".$user->id);
@@ -96,6 +97,7 @@ class UserAccountsController extends BaseController {
         }
         else{
             $user = UserAccount::find($id);
+            $data['password'] = Hash::make($data['password']);
             $user->update($data);
             UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Thành viên', $user->id,$user->username. " cập nhật thông tin cá nhân");
             Session::put('success',"Cập nhật thông tin thành công");
