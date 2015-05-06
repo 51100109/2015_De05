@@ -9,6 +9,10 @@ class Category extends Eloquent {
 	 	'image' => 'required',
 	];
 
+	public static $rules_edit = [
+	 	'image' => 'required',
+	];
+
 	// Don't forget to fill this array
 	protected $fillable = ['id','name','image'];
 	

@@ -1,18 +1,15 @@
 @extends('backend.modals.layout_colorbox')
 
-@include('backend.publishers.hidden')
-
 @section('title')
     Thêm Nhà Phát Hành
 @stop
 
 @section('title_modals')
-    Thêm nhà phát hành
+    <div class="title slogan">Thêm nhà phát hành</div>
 @stop
 
 @section('modals')
-    @include('backend.modals.delete_confirm')
-    <form method="POST" action="{{asset('admin/publishers/create')}}" class="container register-publisher"> 
+    <form method="POST" action="{{{ URL::to('admin/publishers/create') }}}" class="container register-publisher"> 
 		 <div class="row">
                 <div class="col-xs-3">
                     <img src="{{asset('assets/image/publishers/publisher_create.png')}}" class="image_size300" alt="add">          
@@ -41,7 +38,7 @@
 		            name:{
 		              	required:true,
 		              	remote:{
-			                url: "{{asset('admin/publishers/check-name')}}",
+			                url: "{{{ URL::to('admin/publishers/check-name') }}}",
 			                type: "POST",
 			            },
 		            },

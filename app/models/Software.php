@@ -21,4 +21,8 @@ class Software extends Eloquent {
 
 	public $table = 'softwares';
 
+	public static function count($id_system,$id_category){
+		return Software::where('id_system','=',$id_system)->where('id_category','=',$id_category)->count();
+	}
+
 }

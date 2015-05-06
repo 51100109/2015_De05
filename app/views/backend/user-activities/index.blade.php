@@ -4,6 +4,14 @@
 	Hoạt động
 @stop
 
+@section('breadcrumbs')
+    <ol class="breadcrumb null margin_left10">
+      <li><a href="{{{ URL::to('admin/home') }}}" class="block">Trang chủ</a></li>
+      <li class="active">Quản lý thành viên</li>
+      <li class="active">Hoạt động</li>
+    </ol>
+@stop
+
 @section('content')  
     <div class="row">
         <div class="col-xs-12">
@@ -53,14 +61,20 @@
 @stop
 
 @section('scripts')
-	<script type="text/javascript">
-        var oTable_activities_admin;
-        var oTable_activities_member;
-        var length = window.innerHeight * 0.7;     
-        
+	<script type="text/javascript">    
         function updatetable(){
             parent.oTable_activities_admin.fnReloadAjax();
             parent.oTable_activities_member.fnReloadAjax();
+            $.ajax({
+                  url:  "{{{ URL::to('admin/reload-toolpanel') }}}",
+                  type:"POST",
+                  success: toolpanel,
+            });
+            $.ajax({
+                  url:  "{{{ URL::to('admin/reload-toolbar') }}}",
+                  type:"POST",
+                  success: toolbar,
+            });
         }
 
 		$(document).ready(function() {

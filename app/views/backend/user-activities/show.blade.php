@@ -6,7 +6,9 @@
 @stop
 
 @section('title_modals')
-    Thông tin hoạt động {{ $show->id }}
+    <li class="previous"><a onclick="goBack()">Back</a></li>
+    <li class="title slogan">Thông tin hoạt động {{ $show->id }}</li>
+    <li class="next"><a onclick="goForward()">Forward</a></li>
 @stop
 
 @section('modals')

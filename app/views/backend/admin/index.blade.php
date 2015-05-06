@@ -86,181 +86,96 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{asset('admin/activities/home')}}"><span class="glyphicon glyphicon-fire"></span> Administrator</a>
+            <a class="navbar-brand" href="{{{ URL::to('admin/home') }}}"><span class="glyphicon glyphicon-fire"></span> Administrator</a>
           </div>
           
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav nav-tabs">
-              <li><a href="{{asset('admin/activities/home')}}"><span class="glyphicon glyphicon-home"></span> Trang chủ</a></li>
+            <ul class="nav navbar-nav nav-tabs" id="reload_toolbar">
+              <li><a href="{{{ URL::to('admin/home') }}}"><span class="glyphicon glyphicon-home"></span> Trang chủ</a></li>
+              @foreach($system as $item)
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false">Window <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false"><img src="{{ $item->image }}" class="size20" alt="icon"> {{ $item->name }} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Bảo mật</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Diệt virut - Spyware</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Internet & Email</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Ứng dụng văn phòng</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Dữ liệu - File</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm doanh nghiệp</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm giáo dục </a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Audio & Video</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Công cụ lập trình</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Drivers</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Hỗ trợ Mobile</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm khác</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Hệ thống</a></li>
+                  @foreach(explode("\n",$item->id_category) as $category)
+                      @if(!empty(Category::find($category)))
+                          <li><a href="{{{ URL::to('admin/softwares/category/'.$item->id.'/'.$category) }}}"><img src="{{ Category::find($category)->image }}" class="size20" alt="icon">  {{ Category::find($category)->name }}</a></li>
+                      @endif
+                  @endforeach
                   <li class="divider"></li>
                 </ul>
               </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false">Mac <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Bảo mật</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Diệt virut - Spyware</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Internet & Email</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Ứng dụng văn phòng</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Dữ liệu - File</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm doanh nghiệp</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm giáo dục </a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Audio & Video</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Công cụ lập trình</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Drivers</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Hỗ trợ Mobile</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Phần mềm khác</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Hệ thống</a></li>
-                  <li class="divider"></li>
-                </ul>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false">Mobile <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Window Phone</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Android</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> iOS</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-minus"></span> Symbian</a></li>
-                  <li class="divider"></li>
-                </ul>
-              </li>
+              @endforeach
             </ul>
            <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false"> Phần mềm<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="{{asset('admin/softwares/index')}}"><span class="glyphicon glyphicon-cog"></span> Phần mềm</a></li>
-                  <li><a href="{{asset('admin/categories/index')}}"><span class="glyphicon glyphicon-cog"></span> Danh mục</a></li>
-                  <li><a href="{{asset('admin/operate-systems/index')}}"><span class="glyphicon glyphicon-cog"></span> Hệ điều hành</a></li>
-                  <li><a href="{{asset('admin/publishers/index')}}"><span class="glyphicon glyphicon-cog"></span> Nhà phát hành</a></li>
+                  <li><a href="{{{ URL::to('admin/softwares/index') }}}"><span class="glyphicon glyphicon-cog"></span> Phần mềm</a></li>
+                  <li><a href="{{{ URL::to('admin/categories/index') }}}"><span class="glyphicon glyphicon-cog"></span> Danh mục</a></li>
+                  <li><a href="{{{ URL::to('admin/operate-systems/index') }}}"><span class="glyphicon glyphicon-cog"></span> Hệ điều hành</a></li>
+                  <li><a href="{{{ URL::to('admin/publishers/index') }}}"><span class="glyphicon glyphicon-cog"></span> Nhà phát hành</a></li>
                   <li class="divider"></li>
                 </ul>
               </li>
                <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false"> Thành viên<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="{{asset('admin/activities/index')}}"><span class="glyphicon glyphicon-cog"></span> Hoạt động</a></li>
-                  <li><a href="{{asset('admin/user-accounts/index')}}"><span class="glyphicon glyphicon-cog"></span> Thành viên</a></li>
-                  <li><a href="{{asset('admin/posts/index')}}"><span class="glyphicon glyphicon-cog"></span> Bài đăng</a></li>
-                  <li><a href="{{asset('admin/comments/index')}}"><span class="glyphicon glyphicon-cog"></span> Bình luận</a></li>
+                  <li><a href="{{{ URL::to('admin/activities/index') }}}"><span class="glyphicon glyphicon-cog"></span> Hoạt động</a></li>
+                  <li><a href="{{{ URL::to('admin/user-accounts/index') }}}"><span class="glyphicon glyphicon-cog"></span> Thành viên</a></li>
+                  <li><a href="{{{ URL::to('admin/posts/index') }}}"><span class="glyphicon glyphicon-cog"></span> Bài đăng</a></li>
+                  <li><a href="{{{ URL::to('admin/comments/index') }}}"><span class="glyphicon glyphicon-cog"></span> Bình luận</a></li>
                   <li class="divider"></li>
                 </ul>
               </li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Admin<b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{ Auth::user()->username }}<b class="caret"></b></a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-envelope"></span> Inbox</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Đổi mật khẩu</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Thoát</a></li>
+                  <li><a href="{{{ URL::to('/') }}}"><span class="glyphicon glyphicon-map-marker"></span> Public Page</a></li>
+                  <li><a href="{{{ URL::to('admin/user-accounts/edit-admin/'.Auth::user()->id) }}}" class="add_info"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                  <li><a href="{{{ URL::to('logout') }}}"><span class="glyphicon glyphicon-log-out"></span> Thoát</a></li>
                 </ul>
               </li>
             </ul>
           </div>
         </div>
       </nav>
-    
+ 
     <div class="row">
-        <div class="col-xs-3">
+        <div class="col-xs-3" id="reload_toolpanel">
           <ul class="nav nav-pills nav-stacked">
+            @foreach($system as $item)
             <li>
               <div class="panel panel-info">
-              <div class="panel-heading"><a data-toggle="collapse" data-parent="#stacked-menu" href="#pp1"><span class="glyphicon glyphicon-check"></span> Window <span class="caret arrow" id="right"></span></a></div>
-              <ul class="nav nav-pills nav-stacked collapse" id="pp1">
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Bảo mật</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Diệt virut - Spyware</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Internet & Email</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Ứng dụng văn phòng</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Dữ liệu - File</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Phần mềm doanh nghiệp</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Phần mềm giáo dục </a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Audio & Video</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Công cụ lập trình</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Drivers</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Hỗ trợ Mobile</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Phần mềm khác</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Hệ thống</a></li> 
+              <div class="panel-heading"><a data-toggle="collapse" data-parent="#stacked-menu" href="#{{ $item->id }}" class="block"><img src="{{ $item->image }}" class="size20" alt="icon"> {{ $item->name }} <span class="caret arrow right_top8"></span></a></div>
+              <ul class="nav nav-pills nav-stacked collapse" id="{{ $item->id }}">
+                @foreach(explode("\n",$item->id_category) as $category)
+                    @if(!empty(Category::find($category)))
+                        <li><a href="{{{ URL::to('admin/softwares/category/'.$item->id.'/'.$category) }}}"><img src="{{ Category::find($category)->image }}" class="size20" alt="icon"> {{ Category::find($category)->name }} <span class="badge right">{{ Software::count($item->id,$category) }}</span></a></li>
+                    @endif
+                @endforeach 
               </ul>
               </div>
             </li>
+            @endforeach
             <li>
               <div class="panel panel-info">
-              <div class="panel-heading"><a data-toggle="collapse" data-parent="#stacked-menu" href="#pp2"><span class="glyphicon glyphicon-check"></span> Mac <span class="caret arrow" id="right"></span></a></div>
-              <ul class="nav nav-pills nav-stacked collapse" id="pp2">
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Bảo mật</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Diệt virut - Spyware</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Internet & Email</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Ứng dụng văn phòng</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Dữ liệu - File</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Phần mềm doanh nghiệp</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Phần mềm giáo dục </a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Audio & Video</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Công cụ lập trình</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Drivers</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Hỗ trợ Mobile</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Phần mềm khác</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Hệ thống</a></li> 
-              </ul>
-              </div>
-            </li>
-            <li>
-              <div class="panel panel-info">
-              <div class="panel-heading"><a data-toggle="collapse" data-parent="#stacked-menu" href="#pp3"><span class="glyphicon glyphicon-check"></span> Mobile <span class="caret arrow" id="right"></span></a></div>
-              <ul class="nav nav-pills nav-stacked collapse" id="pp3">
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Window Phone</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Android</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> iOS</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> Symbian</a></li>
-              </ul>
-              </div>
-            </li>
-            <li>
-              <div class="panel panel-info">
-              <div class="panel-heading"><a data-toggle="collapse" data-parent="#stacked-menu" href="#pp4"><span class="glyphicon glyphicon-check"></span> Quản lý phần mềm <span class="caret arrow" id="right"></span></a></div>
+              <div class="panel-heading"><a data-toggle="collapse" data-parent="#stacked-menu" href="#pp4" class="block"><img src="{{asset('assets/image/softwares/software1.png')}}" class="size20" alt="icon"> Quản lý phần mềm <span class="caret arrow right_top8"></span></a></div>
               <ul class="nav nav-pills nav-stacked collapse" id="pp4">
-                <li><a href="{{asset('admin/softwares/index')}}"><span class="glyphicon glyphicon-chevron-right"></span> Phần mềm</a></li>
-                <li><a href="{{asset('admin/categories/index')}}"><span class="glyphicon glyphicon-chevron-right"></span> Danh mục</a></li>
-                <li><a href="{{asset('admin/operate-systems/index')}}"><span class="glyphicon glyphicon-chevron-right"></span> Hệ điều hành</a></li>
-                <li><a href="{{asset('admin/publishers/index')}}"><span class="glyphicon glyphicon-chevron-right"></span> Nhà phát hành</a></li>
+                <li><a href="{{{ URL::to('admin/softwares/index') }}}"><img src="{{asset('assets/image/softwares/software_hidden.png')}}" class="size20" alt="icon"> Phần mềm <span class="badge right">{{ Software::all()->count() }}</span></a></li>
+                <li><a href="{{{ URL::to('admin/categories/index') }}}"><img src="{{asset('assets/image/categories/category_hidden.png')}}" class="size20" alt="icon"> Danh mục <span class="badge right">{{ Category::all()->count() }}</span></a></li>
+                <li><a href="{{{ URL::to('admin/operate-systems/index') }}}"><img src="{{asset('assets/image/systems/system_hidden.png')}}" class="size20" alt="icon"> Hệ điều hành <span class="badge right">{{ OperateSystem::all()->count() }}</span></a></li>
+                <li><a href="{{{ URL::to('admin/publishers/index') }}}"><img src="{{asset('assets/image/publishers/publisher_hidden.png')}}" class="size20" alt="icon"> Nhà phát hành <span class="badge right">{{ Publisher::all()->count() }}</span></a></li>
               </ul>
               </div>
             </li>
             <li>
               <div class="panel panel-info">
-              <div class="panel-heading"><a data-toggle="collapse" data-parent="#stacked-menu" href="#pp5"><span class="glyphicon glyphicon-check"></span> Quản lý thành viên <span class="caret arrow" id="right"></span></a></div>    
+              <div class="panel-heading"><a data-toggle="collapse" data-parent="#stacked-menu" href="#pp5" class="block"><img src="{{asset('assets/image/softwares/software2.png')}}" class="size20" alt="icon"> Quản lý thành viên <span class="caret arrow right_top8"></span></a></div>    
               <ul class="nav nav-pills nav-stacked collapse" id="pp5">
-                <li><a href="{{asset('admin/activities/index')}}"><span class="glyphicon glyphicon-chevron-right"></span> Hoạt động</a></li>
-                <li><a href="{{asset('admin/user-accounts/index')}}"><span class="glyphicon glyphicon-chevron-right"></span> Thành viên</a></li>
-                <li><a href="{{asset('admin/posts/index')}}"><span class="glyphicon glyphicon-chevron-right"></span> Bài đăng</a></li>
-                <li><a href="{{asset('admin/comments/index')}}"><span class="glyphicon glyphicon-chevron-right"></span> Bình luận</a></li>
-              </ul>
-              </div>
-            </li>
-            <li>
-              <div class="panel panel-info">
-              <div class="panel-heading"><a data-toggle="collapse" data-parent="#stacked-menu" href="#pp6"><span class="glyphicon glyphicon-check"></span> Quản lý Menu <span class="caret arrow" id="right"></span></a></div>
-              <ul class="nav nav-pills nav-stacked collapse" id="pp6">
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> l1</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> l2</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> l3</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span> l4</a></li>
+                <li><a href="{{{ URL::to('admin/activities/index') }}}"><img src="{{asset('assets/image/activities/icon.png')}}" class="size20" alt="icon"> Hoạt động <span class="badge right">{{ UserActivity::all()->count() }}</span></a></li>
+                <li><a href="{{{ URL::to('admin/user-accounts/index') }}}"><img src="{{asset('assets/image/users/users.png')}}" class="size20" alt="icon"> Thành viên <span class="badge right">{{ UserAccount::all()->count() }}</span></a></li>
+                <li><a href="{{{ URL::to('admin/posts/index') }}}"><img src="{{asset('assets/image/posts/posts.png')}}" class="size20" alt="icon"> Bài đăng <span class="badge right">{{ Post::all()->count() }}</span></a></li>
+                <li><a href="{{{ URL::to('admin/comments/index') }}}"><img src="{{asset('assets/image/comments/comments.png')}}" class="size20" alt="icon"> Bình luận <span class="badge right">{{ Comment::all()->count() }}</span></a></li>
               </ul>
               </div>
             </li>
@@ -269,6 +184,9 @@
         <div class="col-xs-9">    
           <div class="row">
             <div class="col-xs-12">
+                <div class="row background_F5 alert alert-danger">
+                    @yield('breadcrumbs')
+                </div>
                 <div class="row background_F5 alert alert-success">
                     <ul class="pager null">
                         <li class="previous"><a class="margin10" onclick="goBack()">Back</a></li>
@@ -294,19 +212,13 @@
           <div class="alignright">
               Powered by Laravel | Designed by MyGroup
           </div>
-          <div class="social-icons">
-              <a class="ttip-none" href="#" title="Rss"><i class="fa fa-rss"></i></a>
-          </div>
           <div class="alignleft"> © Sharing Free Softwares </div>
           <div class="clear"></div>
       </div>
   </div>
  <!-- <div id="topcontrol" class="fa fa-angle-up" title="Scroll To Top" style="bottom: 10px;"></div>
   <div id="fb-root"></div>-->
-  <div class="hidden_box" style="right: -300px;">
-        @yield('hidden')
-    </div>
-    <div class="message" style="right:50px;">
+    <div class="message" style="right:0px;">
         @if(Session::has('success'))
         <div class="alert alert-success alert-dismissable alert-message">
             <label class="success"><span class="glyphicon glyphicon-ok"></span> {{Session::get('success')}}</label>
@@ -335,8 +247,19 @@
     <script type='text/javascript' src="{{asset('assets/jquery-validation/jquery.validate.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/data-table/js/datatables.fnReloadAjax.js')}}"></script>
     <script type="text/javascript" charset="utf-8">
+        var oTable;
+        var oTable2;
+        var oTable_activities;
+        var oTable_activities_admin;
+        var oTable_activities_member;
+        var length = window.innerHeight * 0.7;
+
         function goBack() {
             window.history.back();
+        }
+
+        function goForward() {
+            window.history.forward();
         }
 
         function check_highlight(element, errorClass, validClass) {
@@ -363,13 +286,34 @@
            window.setTimeout(function() { alert.alert('close') }, delay);
         }
 
-        function updatetable(){}
+        function toolpanel(result){
+            $("#reload_toolpanel").html(result);
+        }
+
+        function toolbar(result){
+            $("#reload_toolbar").html(result);
+        }
+
+        function updatetable(){
+            parent.oTable.fnReloadAjax();
+            parent.oTable_activities.fnReloadAjax();
+            $.ajax({
+                  url:  "{{{ URL::to('admin/reload-toolpanel') }}}",
+                  type:"POST",
+                  success: toolpanel,
+            });
+            $.ajax({
+                  url:  "{{{ URL::to('admin/reload-toolbar') }}}",
+                  type:"POST",
+                  success: toolbar,
+            });
+        }
 
         function colorbox_activity( oSettings ) {
                 $(".show_info_activity").colorbox({
                       iframe:true, 
                       width:"70%", 
-                      height:"90%",
+                      height:"100%",
                       rel:'show_info_activity', 
                       current: "Activity {current} of {total}",
                       previous: "Previous",
@@ -380,7 +324,7 @@
                 $(".show_info").colorbox({
                       iframe:true, 
                       width:"70%", 
-                      height:"90%",
+                      height:"100%",
                       close: "Close",
                       onClosed: updatetable,
                       fixed:true,
@@ -391,7 +335,7 @@
               $(".show_info_entry").colorbox({
                       iframe:true, 
                       width:"70%", 
-                      height:"90%",
+                      height:"100%",
                       rel:'show_info_entry', 
                       current: "Entry {current} of {total}",
                       previous: "Previous",
@@ -443,7 +387,7 @@
               $(".edit_info_entry").colorbox({
                       iframe:true, 
                       width:"70%", 
-                      height:"90%",
+                      height:"100%",
                       rel:'edit_info_entry', 
                       current: "Entry {current} of {total}",
                       previous: "Previous",
@@ -454,50 +398,13 @@
               });
             }    
 
-        function colorbox_show_hidden( oSettings ) {
-              $(".show_info_hidden").colorbox({
-                        iframe:true, 
-                        width:"70%", 
-                        height:"90%",
-                        rel:'show_info_hidden', 
-                        current: "Entry {current} of {total}",
-                        previous: "Previous",
-                        next: "Next",
-                        close: "Close",
-                        onClosed: updatetable,
-                        fixed:true,
-              });
-
-              $(".edit_info_hidden").colorbox({
-                  iframe:true, 
-                      width:"70%", 
-                      height:"90%",
-                      rel:'edit_info_hidden', 
-                      current: "Entry {current} of {total}",
-                      previous: "Previous",
-                      next: "Next",
-                      close: "Close",
-                      onClosed: updatetable,
-                      fixed:true,
-              });
-        }
-
         $(document).ready(function() {
               createAutoClosingAlert(".alert-message", 3000);
-
-              $(".hidden_box").ready(function(){
-                  $(".hidden_box").hover(function(){
-                  $(".hidden_box").animate({right:"0"},500);
-                  },function(){
-                      $(".hidden_box").animate({right:"-300"},400);
-                      });
-                  return false;
-              });
       
               $(".add_info").colorbox({
                   iframe:true, 
                   width:"70%", 
-                  height:"90%",
+                  height:"100%",
                   close: "Close",
                   onClosed: updatetable,
                   fixed:true,

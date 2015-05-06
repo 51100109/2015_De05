@@ -21,7 +21,8 @@ class OperateSystemsController extends BaseController {
 	}
 
 	public function getIndex(){
-		return View::make('backend.operate-systems.index');
+		$system = OperateSystem::all();
+		return View::make('backend.operate-systems.index', compact('system'));
 	}
 
 	public function getCreate(){
@@ -43,7 +44,7 @@ class OperateSystemsController extends BaseController {
 			$system->image = Input::get('image');
 			$system->id_category = $id_nums;
 			$system->save();
-			UserActivity::addActivity(Session::get('user'), 'Thêm', 'Hệ điều hành', $system->id,"Hệ điều hành ".$system->name." có ID: ".$system->id);
+			UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Hệ điều hành', $system->id,"Hệ điều hành ".$system->name." có ID: ".$system->id);
 			Session::put('success',"Đã thêm hệ điều hành ".$system->name." có ID: ".$system->id);
 			return Redirect::back();
 		}
@@ -69,8 +70,7 @@ class OperateSystemsController extends BaseController {
 			$system->image = Input::get('image');
 			$system->id_category = $id_nums;
 			$system->save();
-	//		$system->update($data);
-			UserActivity::addActivity(Session::get('user'), 'Chỉnh sửa', 'Hệ điều hành', $system->id,"Cập nhật hệ điều hành ".$system->name." có ID: ".$system->id);
+			UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Hệ điều hành', $system->id,"Cập nhật hệ điều hành ".$system->name." có ID: ".$system->id);
 			Session::put('success',"Đã cập nhật hệ điều hành ".$system->name." có ID: ".$system->id);
 			return Redirect::back();
 		}
@@ -78,7 +78,7 @@ class OperateSystemsController extends BaseController {
 
 	public function postDetroyId($id,$back){
 		$system = OperateSystem::findOrFail($id);
-		UserActivity::addActivity(Session::get('user'), 'Xóa', 'Hệ điều hành', $system->id,"Hệ điều hành ".$system->name." có ID: ".$system->id);
+		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Hệ điều hành', $system->id,"Hệ điều hành ".$system->name." có ID: ".$system->id);
 		Session::put('success',"Đã xóa hệ điều hành ".$system->name." có ID: ".$system->id);
 		OperateSystem::destroy($id);
 		$find = OperateSystem::get()->first();
@@ -86,7 +86,10 @@ class OperateSystemsController extends BaseController {
 			return Redirect::back();
 		}
 		else if($back=='next'){
-			return Redirect::to("admin/operate-systems/information/{$find->id}");
+			if(!empty($find))
+				return Redirect::to("admin/operate-systems/information/{$find->id}");
+			else
+				return Redirect::to("admin/operate-systems/create");
 		}
 	}
 
@@ -99,7 +102,7 @@ class OperateSystemsController extends BaseController {
 		else{
 			foreach ($id as $key) {
 				$system = OperateSystem::findOrFail($key);
-				UserActivity::addActivity(Session::get('user'), 'Xóa', 'Hệ điều hành', $system->id,"Hệ điều hành ".$system->name." có ID: ".$system->id);
+				UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Hệ điều hành', $system->id,"Hệ điều hành ".$system->name." có ID: ".$system->id);
 				OperateSystem::destroy($key);
 			}
 			Session::put('success',"Đã xóa các hệ điều hành vừa chọn");
@@ -125,21 +128,6 @@ class OperateSystemsController extends BaseController {
                           ->add_column('number', '{{ Software::where("id_system","=",$id)->count() }}',4)	      
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/operate-systems/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',5)	                      
                           ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',6)	                      
-		                  ->make();
-    }
-
-    public function getDataHidden(){
-    	$systems = OperateSystem::select(array('operate_systems.id as id','operate_systems.name as name'));
-		return  Datatables::of($systems)					  
-                          ->edit_column('id', '<a href="{{{ URL::to(\'admin/operate-systems/information/\' . $id) }}}" class="show_info_hidden close block em1_1" style="float:left">{{ $id }}</a>')	                      
-                          ->edit_column('name', '{{{ Str::limit($name, 10, \'...\') }}}')
-                          ->add_column('edit', '<a class="close block edit_info_hidden em1_1" href="{{{ URL::to(\'admin/operate-systems/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',3)	                      
-                          ->add_column(
-                          		'delete', 
-                          		'	<form method="POST" action="{{{ URL::to(\'admin/operate-systems/detroy-id/\' . $id . \'/back\') }}}" style="display:inline">
-										<a class="close delete em1_1" data-toggle="modal" href="#confirmDelete" data-title="Xóa hệ điều hành" data-message="Bạn chắc chắn muốn xóa hệ điều hành có ID: {{ $id }} ?"><span class="glyphicon glyphicon-remove"></span></a>
-									</form>
-                          		',4)	                      
 		                  ->make();
     }
 }

@@ -40,10 +40,6 @@ class AuthController extends BaseController {
 		}
 		
 		if ($result) {
-			$member = UserAccount::where('username','=',Input::get('username'))->get()->first();
-			Session::put('logined', 'true');
-			Session::put('admin', $member->admin);
-			Session::put('user', $member->id);
 			return Redirect::route('home')
 			->with('flash_notice', 'You are successfully logged in.');
 		}

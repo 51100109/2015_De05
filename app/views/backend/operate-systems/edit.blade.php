@@ -1,18 +1,15 @@
 @extends('backend.modals.layout_colorbox')
 
-@include('backend.operate-systems.hidden')
-
 @section('title')
     Cập Nhật Hệ Điều Hành
 @stop
 
 @section('title_modals')
-    <img src="{{ $system->image }}" class="size40" alt="icon"> {{ $system->name }}
+    <div class="title slogan"><img src="{{ $system->image }}" class="size40" alt="icon"> {{ $system->name }}</div>
 @stop
 
 @section('modals')
-    @include('backend.modals.delete_confirm')
-	<form method="POST" action="<?php echo asset("admin/operate-systems/edit/{$system->id}"); ?>" class="container edit-system"> 
+	<form method="POST" action="{{{ URL::to('admin/operate-systems/edit/'.$system->id) }}}" class="container edit-system"> 
         <div class="row">
                 <div class="col-xs-3">
                     <img src="{{asset('assets/image/systems/system_edit.png')}}" class="image_size300" alt="{{$system->id}}">          
@@ -28,7 +25,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="image">Hình ảnh</label> 
-                        <input type="text" name="image" id="image" class="form-control" value="http://freedroid.ru/uploads/posts/2014-02/1392829440_gg.png" />
+                        <input type="text" name="image" id="image" class="form-control" value="{{ $system->image }}" />
                     </div>
                     <div class="form-group">
                         <label class="col-xs-12 control-label null" for="id_category">Danh mục</label><br>
@@ -63,7 +60,7 @@
                     name:{
                         required:true,
                         remote:{
-                            url: "{{ URL::to('admin/operate-systems/check-editname/'.$system->id) }}",
+                            url: "{{{ URL::to('admin/operate-systems/check-editname/'.$system->id) }}}",
                             type: "POST",
                         },
                     },

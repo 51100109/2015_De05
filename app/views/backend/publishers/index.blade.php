@@ -4,39 +4,22 @@
 	Nhà Phát Hành
 @stop
 
-@section('hidden')
-	<div class="show_hidden">
-        <div class="col-xs-1 icon_publisher"></div>
-    </div>
-    <div class="hiddenlist">
-			<div class="panel panel-primary null">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Nhà Phát Hành</h3>
-                </div>
-                <div class="panel-body background_EB">
-                    <table class="display" id="publishers_hidden_table">
-                            <thead>
-                                <tr>    
-                                    <th class="col-xs-1">ID</th>
-                                    <th class="col-xs-9">Nhà Phát Hành</th>
-                                    <th class="col-xs-1"></th>
-                                    <th class="col-xs-1"></th>
-                                </tr>
-                            </thead>
-                    </table>
-                </div>
-			</div>
-	</div>
+@section('breadcrumbs')
+	<ol class="breadcrumb null margin_left10">
+	  <li><a href="{{{ URL::to('admin/home') }}}" class="block">Trang chủ</a></li>
+	  <li class="active">Quản lý phần mềm</li>
+	  <li class="active">Nhà phát hành</li>
+	</ol>
 @stop
 
 @section('content')
 	@include('backend.modals.delete_confirm')
 	<div class="width50_bottom10">
- 		<a class="close add_info" href="{{asset('admin/publishers/create')}}"><img src="{{asset('assets/image/background/add_icon.png')}}" class="image_size300" alt="add"></a>
+ 		<a class="close add_info" href="{{{ URL::to('admin/publishers/create') }}}"><img src="{{asset('assets/image/background/add_icon.png')}}" class="image_size300" alt="add"></a>
  	</div> 
     <div class="row">
         <div class="col-md-12">
-			<form method="POST" action="{{ asset('admin/publishers/detroy') }}" style="display:inline">
+			<form method="POST" action="{{{ URL::to('admin/publishers/detroy') }}}" style="display:inline">
 				<div class="panel panel-primary">
 			        <div class="panel-heading">
 						<a class="close deleteWhite em1_4" data-toggle="modal" href="#confirmDelete" data-title="Xóa nhà phát hành" data-message="Bạn chắc chắn muốn xóa các nhà phát hành đã chọn ?"><span class="glyphicon glyphicon-trash"></span></a>
@@ -85,17 +68,6 @@
 
 @section('scripts')
 	<script type="text/javascript">
-        var oTable;
-        var oTable_hidden;
-        var oTable_activities;
-        var length = window.innerHeight * 0.7;
-
-        function updatetable(){
-        	parent.oTable.fnReloadAjax();
-            parent.oTable_hidden.fnReloadAjax();
-            parent.oTable_activities.fnReloadAjax();
-        }
-
 		$(document).ready(function() {
            oTable =   $('#publishers_table').dataTable({
                 "scrollY":        length,
@@ -103,30 +75,14 @@
                 "order": [[ 1, "asc" ]],
                 "bProcessing": true,
 		        "bServerSide": true,
-		        "sAjaxSource": "{{ URL::to('admin/publishers/data') }}",
+		        "sAjaxSource": "{{{ URL::to('admin/publishers/data') }}}",
 		        "language": {
 		            "url":"{{asset('assets/data-table/language/publishers.json')}}",
 		            "sLoadingRecords": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
 		            "sProcessing": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
 		        },
 		       	"fnDrawCallback": colorbox_show,
-        	}); 
-
-         oTable_hidden =   $('#publishers_hidden_table').dataTable({
-                "sDom": "<'row'<'col-xs-12'f>r>t<'row'<'col-xs-12'p>>",
-                "bLengthChange": false,
-                "bInfo" : false,
-                "order": [[ 0, "asc" ]],
-                "bProcessing": true,
-                "bServerSide": true,
-                "sAjaxSource": "{{ URL::to('admin/publishers/data-hidden') }}",
-                "language": {
-		            "url":"{{asset('assets/data-table/language/publishers.json')}}",
-		            "sLoadingRecords": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
-		            "sProcessing": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
-		        },
-                "fnDrawCallback": colorbox_show_hidden,
-            });              
+        	});          
 
         oTable_activities =   $('#activities_table').dataTable({
         	 	"scrollY":        length,
@@ -134,7 +90,7 @@
                 "order": [[ 5, "desc" ]],
                 "bProcessing": true,
 		        "bServerSide": true,
-		        "sAjaxSource": "{{ URL::to('admin/activities/data-publisher/0') }}",
+		        "sAjaxSource": "{{{ URL::to('admin/activities/data-publisher/0') }}}",
 		        "language": {
 		            "url":"{{asset('assets/data-table/language/activities.json')}}",
 		            "sLoadingRecords": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',

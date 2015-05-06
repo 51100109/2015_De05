@@ -1,18 +1,15 @@
 @extends('backend.modals.layout_colorbox')
 
-@include('backend.softwares.hidden')
-
 @section('title')
     Cập Nhật Phần Mềm
 @stop
 
 @section('title_modals')
-    <img src="{{ $software->image }}" class="size40" alt="icon"> {{ $software->name }}
+    <div class="title slogan"><img src="{{ $software->image }}" class="size40" alt="icon"> {{ $software->name }}</div>
 @stop
 
 @section('modals')
-    @include('backend.modals.delete_confirm')
-	               <form method="POST" action="<?php echo asset("admin/softwares/edit/{$software->id}"); ?>" class="container edit-software"> 
+	               <form method="POST" action="{{{ URL::to('admin/softwares/edit/'.$software->id) }}}" class="container edit-software"> 
                                 <div class="form-group col-xs-12">
                                     <label class="control-label" for="name">ID</label> 
                                     <input type="text" name="id" id="id" value="{{ $software->id }}" class="form-control" disabled />
@@ -78,11 +75,12 @@
                                         <label class="control-label" for="id_category">Danh mục phần mềm</label> 
                                         <select name="id_category" id="id_category" class="form-control">
                                                 <option value="">Danh mục</option>
-                                
                                                 @foreach($system as $item)
                                                         <option value="" class="id_selected"  disabled>{{ $item->name }}</option>
-                                                        @foreach(explode("\n",$item->id_category) as $cate)
-                                                            <option value="{{ $cate }}" <?php if($software->id_category ==  $cate) echo "selected='selected'"; ?>>{{ Category::find($cate)->name }}</option>
+                                                        @foreach(explode("\n",$item->id_category) as $category)
+                                                            @if(!empty(Category::find($category)))
+                                                                <option value="{{ $category }}" <?php if($software->id_category ==  $category) echo "selected='selected'"; ?>>{{ Category::find($category)->name }}</option>
+                                                            @endif
                                                         @endforeach
                                                 @endforeach
                                         </select>
@@ -90,7 +88,7 @@
                                 </div>  
                                 <div class="form-group col-xs-12">
                                     <label class="control-label" for="description">Mô tả</label> 
-                                    <textarea type="text" name="description" id="description description_text" class="form-control ckeditor" value="{{ $software->description }}"></textarea>
+                                    <textarea type="text" name="description" id="description description_text" class="form-control ckeditor">{{ $software->description }}</textarea>
                                 </div>
                                 <div class="form-group col-xs-12">
                                     <div class="text-right">

@@ -36,7 +36,7 @@
                 "order": [[ 0, "desc" ]],
                 "bProcessing": true,
                 "bServerSide": true,
-                "sAjaxSource": "{{ URL::to('admin/user-accounts/data-hidden') }}",
+                "sAjaxSource": "{{{ URL::to('admin/user-accounts/data-hidden') }}}",
                 "language": {
                     "url":"{{asset('assets/data-table/language/users.json')}}",
                     "sLoadingRecords": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',

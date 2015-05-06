@@ -23,10 +23,7 @@
   </head>
 
   <body>
-        <div class="hidden_box" style="right: -300px;">
-            @yield('hidden')
-        </div>
-        <div class="message" style="right:50px;">
+        <div class="message" style="right:0px;">
             @if(Session::has('success'))
                 <div class="alert alert-success alert-dismissable alert-message">
                     <label class="success"><span class="glyphicon glyphicon-ok"></span> {{Session::get('success')}}</label>
@@ -42,9 +39,7 @@
         </div>
         <div class="page-header alert alert-info null_top">
                 <ul class="pager">
-                    <li class="previous"><a onclick="goBack()">Back</a></li>
-                    <li class="title slogan">@yield('title_modals')</li>
-                    <li class="next"><a onclick="goForward()">Forward</a></li>
+                    @yield('title_modals')
                 </ul>
         </div>
         <div class="container">
@@ -99,15 +94,6 @@
 
             $(document).ready(function(){
                 createAutoClosingAlert(".alert-message", 3000);
-                
-                $(".hidden_box").ready(function(){
-                  $(".hidden_box").hover(function(){
-                  $(".hidden_box").animate({right:"0"},500);
-                  },function(){
-                      $(".hidden_box").animate({right:"-300"},400);
-                      });
-                  return false;
-              });
 
                 $('#confirmDelete').on('show.bs.modal', function (e) {
                   $message = $(e.relatedTarget).attr('data-message');

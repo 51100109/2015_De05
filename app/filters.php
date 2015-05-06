@@ -94,12 +94,9 @@ Route::filter('csrf', function()
 	}
 });
 
-Route::filter('check-login', function(){
-	if(!Session::has('logined')) 
-		return Redirect::to('user/login');
-});
-
 Route::filter('check-admin', function(){
-	if(Session::get('admin')!=1) 
-		return Redirect::to('/');
+	if (Auth::check()){
+		if (Auth::user()->admin != 1)
+			return Redirect::to('/');
+	}
 });

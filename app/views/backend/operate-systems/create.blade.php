@@ -1,18 +1,15 @@
 @extends('backend.modals.layout_colorbox')
 
-@include('backend.operate-systems.hidden')
-
 @section('title')
     Thêm Hệ Điều Hành
 @stop
 
 @section('title_modals')
-    Thêm hệ điều hành
+    <div class="title slogan">Thêm hệ điều hành</div>
 @stop
 
 @section('modals')
-    @include('backend.modals.delete_confirm')
-    <form method="POST" action="{{asset('admin/operate-systems/create')}}" class="container register-system"> 
+    <form method="POST" action="{{{ URL::to('admin/operate-systems/create') }}}" class="container register-system"> 
 		 <div class="row">
                 <div class="col-xs-3">
                     <img src="{{asset('assets/image/systems/system_create.png')}}" class="image_size300" alt="add">          
@@ -24,7 +21,7 @@
 			        </div> 
 			        <div class="form-group">
 			            <label class="control-label" for="image">Hình ảnh</label> 
-			            <input type="text" name="image" id="image" class="form-control" value="http://freedroid.ru/uploads/posts/2014-02/1392829440_gg.png" />
+			            <input type="text" name="image" id="image" class="form-control" value="http://ai-i2.infcdn.net/icons_siandroid/png/300/5456/5456887.png" />
 			        </div>
                     <div class="form-group">
                         <label class="col-xs-12 control-label null" for="id_category">Danh mục</label><br>
@@ -54,7 +51,7 @@
                     name:{
                         required:true,
                         remote:{
-                            url: "{{asset('admin/operate-systems/check-name')}}",
+                            url: "{{{ URL::to('admin/operate-systems/check-name') }}}",
                             type: "POST",
                         },
                     },

@@ -1,18 +1,15 @@
 @extends('backend.modals.layout_colorbox')
 
-@include('backend.publishers.hidden')
-
 @section('title')
     Cập Nhật Nhà Phát Hành
 @stop
 
 @section('title_modals')
-    Cập nhật nhà phát hành
+    <div class="title slogan"><img src="{{asset('assets/image/publishers/publisher_icon.png')}}" class="size40" alt="icon"> {{ $publisher->name }}</div>
 @stop
 
 @section('modals')
-    @include('backend.modals.delete_confirm')
-	<form method="POST" action="<?php echo asset("admin/publishers/edit/{$publisher->id}"); ?>" class="container edit-publisher"> 
+	<form method="POST" action="{{{ URL::to('admin/publishers/edit/'.$publisher->id) }}}" class="container edit-publisher"> 
         <div class="row">
             <div class="col-xs-3">
                 <img src="{{asset('assets/image/publishers/publisher_edit.png')}}" class="image_size300" alt="{{ $publisher->id }}">          
@@ -44,7 +41,7 @@
                     name:{
                         required:true,
                         remote:{
-                            url: "{{asset('admin/publishers/check-name')}}",
+                            url: "{{{ URL::to('admin/publishers/check-editname/'.$publisher->id) }}}",
                             type: "POST",
                         },
                     },

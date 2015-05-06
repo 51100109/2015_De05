@@ -7,19 +7,23 @@ class CommentsController extends BaseController {
 	}
 
 	public function getIndex(){
-		return View::make('backend.comments.index');
+		$system = OperateSystem::all();
+		return View::make('backend.comments.index', compact('system'));
 	}
 
 	public function postDetroyId($id,$back){
 		$comment = Comment::findOrFail($id);
-		UserActivity::addActivity(Session::get('user'), 'Xóa', 'Bình luận', $comment->id,"Nội dung: ".$comment->content);
+		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Bình luận', $comment->id,"Nội dung: ".$comment->content);
 		Session::put('success',"Đã xóa bình luận có ID: ".$comment->id);
 		Comment::destroy($id);
 		$find = Comment::get()->first();
 		if($back == 'back')
 			return Redirect::back();
 		else if($back=='next'){
-			return Redirect::to("admin/comments/information/{$find->id}");
+			if(!empty($find))
+				return Redirect::to("admin/comments/information/{$find->id}");
+			else
+				return View::make('backend.modals.null', ['item'=>"bình luận"]);
 		}
 	}
 
@@ -32,7 +36,7 @@ class CommentsController extends BaseController {
 		else{
 			foreach ($id as $key) {
 				$comment = Comment::findOrFail($key);
-				UserActivity::addActivity(Session::get('user'), 'Xóa', 'Bình luận', $comment->id,"Nội dung: ".$comment->content);
+				UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Bình luận', $comment->id,"Nội dung: ".$comment->content);
 				Comment::destroy($key);
 			}
 			Session::put('success',"Đã xóa các bình luận vừa chọn");
@@ -76,20 +80,6 @@ class CommentsController extends BaseController {
        					  ->remove_column('id_user')
        					  ->remove_column('admin')
        					  ->remove_column('gender')
-		                  ->make();
-    }
-
-    public function getDataHidden(){
-    	$comments = Comment::select(array('comments.id as id','comments.content as content'));
-		return  Datatables::of($comments)					  
-                          ->edit_column('id', '<a href="{{{ URL::to(\'admin/comments/information/\' . $id) }}}" class="show_info_hidden close block em1_1" style="float:left">{{ $id }}</a>')	                      
-                          ->edit_column('content', '{{{ Str::limit($content, 20, \'...\') }}}')
-                          ->add_column(
-                          		'delete', 
-                          		'	<form method="POST" action="{{{ URL::to(\'admin/comments/detroy-id/\' . $id . \'/back\') }}}" style="display:inline">
-										<a class="close delete em1_1" data-toggle="modal" href="#confirmDelete" data-title="Xóa bình luận" data-message="Bạn chắc chắn muốn xóa bình luận có ID: {{ $id }} ?"><span class="glyphicon glyphicon-remove"></span></a>
-									</form>
-                          		',3)	                      
 		                  ->make();
     }
 

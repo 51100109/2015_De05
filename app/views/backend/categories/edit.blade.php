@@ -1,18 +1,15 @@
 @extends('backend.modals.layout_colorbox')
 
-@include('backend.categories.hidden')
-
 @section('title')
     Cập Nhật Danh Mục
 @stop
 
 @section('title_modals')
-    Cập nhật danh mục
+    <div class="title slogan"><img src="{{ $category->image }}" class="size40" alt="icon"> {{ $category->name }}</div>
 @stop
 
 @section('modals')
-    @include('backend.modals.delete_confirm')
-	<form method="POST" action="<?php echo asset("admin/categories/edit/{$category->id}"); ?>" class="container edit-category"> 
+	<form method="POST" action="{{{ URL::to('admin/categories/edit/'.$category->id) }}}" class="container edit-category"> 
         <div class="row">
                 <div class="col-xs-3">
                     <img src="{{asset('assets/image/categories/categories_edit.png')}}" class="image_size300" alt="{{$category->id}}">          
@@ -43,12 +40,12 @@
 @section('scripts_validator')
     <script type="text/javascript">
         $(document).ready(function() {
-            $(".register-category").validate({
+            $(".edit-category").validate({
                 rules:{
                     name:{
                         required:true,
                         remote:{
-                            url: "{{asset('admin/categories/check-name')}}",
+                            url: "{{{ URL::to('admin/categories/check-editname/'.$category->id) }}}",
                             type: "POST",
                         },
                     },

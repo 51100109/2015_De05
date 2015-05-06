@@ -1,18 +1,15 @@
 @extends('backend.modals.layout_colorbox')
 
-@include('backend.user-accounts.hidden')
-
 @section('title')
     Thay Đổi Quyền Sử Dụng
 @stop
 
 @section('title_modals')
-    Thay đổi quyền sử dụng {{ $user->username }}
+    <div class="title slogan">Thay đổi quyền sử dụng {{ $user->username }}</div>
 @stop
 
 @section('modals')
-    @include('backend.modals.delete_confirm')
-	<form method="POST" action="<?php echo asset("admin/user-accounts/edit/{$user->id}"); ?>" class="container edit-user"> 
+	<form method="POST" action="{{{ URL::to('admin/user-accounts/edit/'.$user->id) }}}" class="container edit-user"> 
             <div class="row">
                 <div class="col-xs-4">
                         @if($user->admin == 1)

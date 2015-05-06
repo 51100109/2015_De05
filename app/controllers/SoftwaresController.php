@@ -6,7 +6,15 @@ class SoftwaresController extends BaseController {
 	}
 
 	public function getIndex(){
-		return View::make('backend.softwares.index');
+		$system = OperateSystem::all();
+		return View::make('backend.softwares.index', compact('system'));
+	}
+
+	public function getCategory($id_system,$id_category){
+		$system = OperateSystem::all();
+		$op_system = OperateSystem::find($id_system);
+		$category= Category::find($id_category);
+		return View::make('backend.softwares.filter', compact('system','op_system','category'));
 	}
 
 	public function getCreate(){
@@ -23,7 +31,7 @@ class SoftwaresController extends BaseController {
 		}
 		else{
 			$software = Software::create($data);
-			UserActivity::addActivity(Session::get('user'), 'Thêm', 'Phần mềm', $software->id,$software->name);
+			UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Phần mềm', $software->id,"Phần mềm ".$software->name." có ID: ".$software->id);
 			Session::put('success',"Đã thêm phần mềm ".$software->name." có ID: ".$software->id);
 			return Redirect::back();
 		}
@@ -44,9 +52,8 @@ class SoftwaresController extends BaseController {
 		}
 		else{
 			$software = Software::findOrFail($id);
-			$infor =$software->name;
 			$software->update($data);
-			UserActivity::addActivity(Session::get('user'), 'Chỉnh sửa', 'Phần mềm', $software->id,$infor);
+			UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Phần mềm', $software->id,"Cập nhật phần mềm ".$software->name." có ID: ".$software->id);
 			Session::put('success',"Đã cập nhật phần mềm có ID: ".$software->id);
 			return Redirect::back();
 		}
@@ -54,7 +61,7 @@ class SoftwaresController extends BaseController {
 
 	public function postDetroyId($id,$back){
 		$software = Software::findOrFail($id);
-		UserActivity::addActivity(Session::get('user'), 'Xóa', 'Phần mềm', $software->id,"Phần mềm ".$software->name." có ID: ".$software->id);
+		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Phần mềm', $software->id,"Phần mềm ".$software->name." có ID: ".$software->id);
 		Session::put('success',"Đã xóa phần mềm ".$software->name." có ID: ".$software->id);
 		Software::destroy($id);
 		$find = Software::get()->first();
@@ -62,7 +69,10 @@ class SoftwaresController extends BaseController {
 			return Redirect::back();
 		}
 		else if($back=='next'){
-			return Redirect::to("admin/softwares/information/{$find->id}");
+			if(!empty($find))
+				return Redirect::to("admin/softwares/information/{$find->id}");
+			else
+				return Redirect::to("admin/softwares/create");
 		}
 	}
 
@@ -75,7 +85,7 @@ class SoftwaresController extends BaseController {
 		else{
 			foreach ($id as $key) {
 				$software = Software::findOrFail($key);
-				UserActivity::addActivity(Session::get('user'), 'Xóa', 'Phần mềm', $software->id,"Phần mềm ".$software->name." có ID: ".$software->id);
+				UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Phần mềm', $software->id,"Phần mềm ".$software->name." có ID: ".$software->id);
 				Software::destroy($key);
 			}
 			Session::put('success',"Đã xóa các phần mềm vừa chọn");
@@ -103,26 +113,32 @@ class SoftwaresController extends BaseController {
 									<img src="{{ $image }}" class="size40" alt="{{ $id }}">
                           		</a>')	                      
                           ->edit_column('name', '{{{ Str::limit($name, 10, \'...\') }}}')
-                          ->edit_column('name_publisher', '{{{ Str::limit($name_publisher, 10, \'...\') }}}')
-                          ->edit_column('name_system', '{{{ Str::limit($name_system, 10, \'...\') }}}')
-                          ->edit_column('name_category', '{{{ Str::limit($name_category, 10, \'...\') }}}')
+                          ->edit_column(
+                          		'name_publisher', 
+                          		' 	@if(!empty($name_publisher))
+                          				{{{ Str::limit($name_publisher, 10, \'...\') }}}
+									@else
+										[ ... ]
+									@endif
+                          		')
+                          ->edit_column(
+                          		'name_system', 
+                          		'	@if(!empty($name_system))
+                          				{{{ Str::limit($name_system, 10, \'...\') }}}
+                          			@else
+										[ ... ]
+									@endif
+                          		')
+                          ->edit_column(
+                          		'name_category', 
+                          		'	@if(!empty($name_category))
+                          				{{{ Str::limit($name_category, 10, \'...\') }}}
+                          			@else
+										[ ... ]
+									@endif
+                          		')
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',7)	                      
                           ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',8)	                      
-		                  ->make();
-    }
-
-    public function getDataHidden(){
-    	$softwares = Software::select(array('softwares.id as id','softwares.name as name'));
-		return  Datatables::of($softwares)					  
-                          ->edit_column('id', '<a href="{{{ URL::to(\'admin/softwares/information/\' . $id) }}}" class="show_info_hidden close block em1_1" style="float:left">{{ $id }}</a>')	                      
-                          ->edit_column('name', '{{{ Str::limit($name, 10, \'...\') }}}')
-                          ->add_column('edit', '<a class="close block edit_info_hidden em1_1" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',3)	                      
-                          ->add_column(
-                          		'delete', 
-                          		'	<form method="POST" action="{{{ URL::to(\'admin/softwares/detroy-id/\' . $id . \'/back\') }}}" style="display:inline">
-										<a class="close delete em1_1" data-toggle="modal" href="#confirmDelete" data-title="Xóa phần mềm" data-message="Bạn chắc chắn muốn xóa phần mềm có ID: {{ $id }} ?"><span class="glyphicon glyphicon-remove"></span></a>
-									</form>
-                          		',4)	                      
 		                  ->make();
     }
 
@@ -139,8 +155,22 @@ class SoftwaresController extends BaseController {
 									<img src="{{ $image }}" class="size40" alt="{{ $id }}">
                           		</a>')	                      
                           ->edit_column('name', '{{{ Str::limit($name, 10, \'...\') }}}')
-                          ->edit_column('name_publisher', '{{{ Str::limit($name_publisher, 10, \'...\') }}}')
-                          ->edit_column('name_system', '{{{ Str::limit($name_system, 10, \'...\') }}}')
+                          ->edit_column(
+                          		'name_publisher', 
+                          		' 	@if(!empty($name_publisher))
+                          				{{{ Str::limit($name_publisher, 10, \'...\') }}}
+									@else
+										[ ... ]
+									@endif
+                          		')
+                          ->edit_column(
+                          		'name_system', 
+                          		'	@if(!empty($name_system))
+                          				{{{ Str::limit($name_system, 10, \'...\') }}}
+                          			@else
+										[ ... ]
+									@endif
+                          		')
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',7)	                      
                           ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',8)	                      
 		                  ->make();
@@ -159,8 +189,22 @@ class SoftwaresController extends BaseController {
 									<img src="{{ $image }}" class="size40" alt="{{ $id }}">
                           		</a>')	                      
                           ->edit_column('name', '{{{ Str::limit($name, 10, \'...\') }}}')
-                          ->edit_column('name_system', '{{{ Str::limit($name_system, 10, \'...\') }}}')
-                          ->edit_column('name_category', '{{{ Str::limit($name_category, 10, \'...\') }}}')
+                          ->edit_column(
+                          		'name_system', 
+                          		'	@if(!empty($name_system))
+                          				{{{ Str::limit($name_system, 10, \'...\') }}}
+                          			@else
+										[ ... ]
+									@endif
+                          		')
+                          ->edit_column(
+                          		'name_category', 
+                          		'	@if(!empty($name_category))
+                          				{{{ Str::limit($name_category, 10, \'...\') }}}
+                          			@else
+										[ ... ]
+									@endif
+                          		')
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',7)	                      
                           ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',8)	                      
 		                  ->make();
@@ -179,10 +223,50 @@ class SoftwaresController extends BaseController {
 									<img src="{{ $image }}" class="size40" alt="{{ $id }}">
                           		</a>')	                      
                           ->edit_column('name', '{{{ Str::limit($name, 10, \'...\') }}}')
-                          ->edit_column('name_publisher', '{{{ Str::limit($name_publisher, 10, \'...\') }}}')
-                          ->edit_column('name_category', '{{{ Str::limit($name_category, 10, \'...\') }}}')
+                          ->edit_column(
+                          		'name_publisher', 
+                          		' 	@if(!empty($name_publisher))
+                          				{{{ Str::limit($name_publisher, 10, \'...\') }}}
+									@else
+										[ ... ]
+									@endif
+                          		')
+                          ->edit_column(
+                          		'name_category', 
+                          		'	@if(!empty($name_category))
+                          				{{{ Str::limit($name_category, 10, \'...\') }}}
+                          			@else
+										[ ... ]
+									@endif
+                          		')
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',7)	                      
                           ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',8)	                      
+		                  ->make();
+    }
+
+    public function getDataItem($id_system,$id_category){
+    	 $softwares = Software::where('softwares.id_system','=',$id_system)
+    	 					->where('softwares.id_category','=',$id_category)
+    	 					->leftjoin('publishers', 'publishers.id', '=','softwares.id_publisher')
+    	 				    ->select(array('softwares.image as image', 'softwares.id as id', 'softwares.name as name','publishers.name as name_publisher'));
+
+		return  Datatables::of($softwares)					  
+                          ->edit_column(
+                          		'image', 
+                          		'<a href="{{{ URL::to(\'admin/softwares/information/\' . $id) }}}" class="show_info_entry close" style="float:left">
+									<img src="{{ $image }}" class="size40" alt="{{ $id }}">
+                          		</a>')	                      
+                          ->edit_column('name', '{{{ Str::limit($name, 10, \'...\') }}}')
+                          ->edit_column(
+                          		'name_publisher', 
+                          		' 	@if(!empty($name_publisher))
+                          				{{{ Str::limit($name_publisher, 10, \'...\') }}}
+									@else
+										[ ... ]
+									@endif
+                          		')
+                          ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',6)	                      
+                          ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',7)	                      
 		                  ->make();
     }
 }

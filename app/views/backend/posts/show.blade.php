@@ -5,38 +5,16 @@
 @stop
 
 @section('title_modals')
-  Thông tin bài đăng {{ $show->id }}
-@stop
-
-@section('hidden')
-    <div class="show_hidden">
-        <div class="col-xs-1 icon_post"></div>
-    </div>
-    <div class="hiddenlist">
-            <div class="panel panel-primary null">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Danh Sách Bài Đăng</h3>
-                </div>
-                <div class="panel-body background_EB">
-                    <table class="display" id="posts_table_hidden">
-                            <thead>
-                                <tr>    
-                                    <th class="col-xs-1">ID</th>
-                                    <th class="col-xs-10">Tiêu Đề</th>
-                                    <th class="col-xs-1"></th>
-                                </tr>
-                            </thead>
-                    </table>
-                </div>
-            </div>
-    </div>
+    <li class="previous"><a onclick="goBack()">Back</a></li>
+    <li class="title slogan">Thông tin bài đăng {{ $show->id }}</li>
+    <li class="next"><a onclick="goForward()">Forward</a></li>
 @stop
 
 @section('modals')
     @include('backend.modals.delete_confirm')
      <div class="panel panel-primary">
         <div class="panel-heading">
-            <form method="POST" action="<?php echo asset("admin/posts/detroy-id/{$show->id}/next"); ?>" style="display:inline">
+            <form method="POST" action="{{{ URL::to('admin/posts/detroy-id/'.$show->id.'/next') }}}" style="display:inline">
                 <a class="close deleteWhite em1_4" data-toggle="modal" href="#confirmDelete" data-title="Xóa bài đăng" data-message="Bạn chắc chắn muốn xóa bài đăng có ID: {{ $show->id }} ?"><span class="glyphicon glyphicon-trash"></span></a>
             </form>
             <h3 class="panel-title">Thông tin</h3>
@@ -91,7 +69,7 @@
         </div>  
     </div>
 
-    <form method="POST" action="{{asset('admin/comments/detroy')}}" style="display:inline">
+    <form method="POST" action="{{{ URL::to('admin/comments/detroy') }}}" style="display:inline">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <a class="close deleteWhite em1_4" data-toggle="modal" href="#confirmDelete" data-title="Xóa bình luận" data-message="Bạn chắc chắn muốn xóa các bình luận đã chọn ?"><span class="glyphicon glyphicon-trash"></span></a>
@@ -139,7 +117,6 @@
 @section('scripts')
     <script type="text/javascript">
         var oTable;
-        var oTable_hidden;
         var oTable_activities;
         var length = window.innerHeight * 0.7;
 
@@ -153,21 +130,6 @@
                 "sAjaxSource": "{{ URL::to('admin/comments/comment-item/posts/'.$show->id) }}",
                 "language": {
                     "url":"{{asset('assets/data-table/language/comments.json')}}",
-                    "sLoadingRecords": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
-                    "sProcessing": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
-                },
-            }); 
-
-           oTable_hidden =   $('#posts_table_hidden').dataTable({
-                "sDom": "<'row'<'col-md-12'f>r>t<'row'<'col-md-12'p>>",
-                "bLengthChange": false,
-                "bInfo" : false,
-                "order": [[ 0, "desc" ]],
-                "bProcessing": true,
-                "bServerSide": true,
-                "sAjaxSource": "{{ URL::to('admin/posts/data-hidden') }}",
-                "language": {
-                    "url":"{{asset('assets/data-table/language/posts.json')}}",
                     "sLoadingRecords": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
                     "sProcessing": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
                 },

@@ -1,18 +1,15 @@
 @extends('backend.modals.layout_colorbox')
 
-@include('backend.user-accounts.hidden')
-
 @section('title')
     Thêm Thành Viên
 @stop
 
 @section('title_modals')
-    Thêm thành viên
+    <div class="title slogan">Thêm thành viên</div>
 @stop
 
 @section('modals')
-              @include('backend.modals.delete_confirm')
-                    <form method="POST" action="{{asset('admin/user-accounts/create')}}" class="form-horizontal register-user"> 
+                    <form method="POST" action="{{{ URL::to('admin/user-accounts/create') }}}" class="form-horizontal register-user"> 
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label" for="username">Tên tài khoản</label> 
                                     <div class="col-xs-8">
@@ -106,7 +103,7 @@
               required:true,
               minlength:3,
               remote:{
-                url: "{{asset('admin/user-accounts/check-username')}}",
+                url: "{{{ URL::to('admin/user-accounts/check-username') }}}",
                 type: "POST"
               }
             },
@@ -122,7 +119,7 @@
               required:true,
               email:true,
               remote:{
-                url:"{{asset('admin/user-accounts/check-email')}}",
+                url:"{{{ URL::to('admin/user-accounts/check-email') }}}",
                 type: "POST"
               }
             },

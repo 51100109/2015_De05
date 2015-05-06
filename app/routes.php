@@ -71,8 +71,6 @@ Route::controller('user', 'UserController');
 
 Route::group(array("prefix"=>"admin"),function(){
 
-	Route::get('home', array('as' => 'admin_home', 'uses' => 'UserActivitiesController@getHome'));
-
 	Route::controller('activities', 'UserActivitiesController');
 
 	Route::controller('operate-systems', 'OperateSystemsController');
@@ -90,3 +88,5 @@ Route::group(array("prefix"=>"admin"),function(){
 	Route::controller('softwares', 'SoftwaresController');
 	
 });
+
+Route::controller('admin', 'AdminsController');

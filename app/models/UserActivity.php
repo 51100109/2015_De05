@@ -26,13 +26,4 @@ class UserActivity extends Eloquent {
         $ac->save();
     }
 
-    public static function selected($admin,$number){
-        $user = UserAccount::where('admin','=',$admin)->get();
-        $array=array();
-        foreach ($user as $key) {
-           array_push($array, $key->id);
-        }
-        return UserActivity::whereIn('id_user',$array)->orderBy("created_at","desc")->paginate($number);
-    }
-
 }

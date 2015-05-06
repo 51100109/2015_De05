@@ -1,12 +1,18 @@
 @extends('backend.admin.index')
 
 @section('title')
-Trang Chủ Admin
+    Trang Chủ
+@stop
+
+@section('breadcrumbs')
+  <ol class="breadcrumb null margin_left10">
+    <li><a href="{{{ URL::to('admin/home') }}}" class="block">Trang chủ</a></li>
+  </ol>
 @stop
 
 @section('content')
       <div class="alert alert-info alert-dismissable">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <button type="button" class="close em1_4" data-dismiss="alert" aria-hidden="true"><span class="glyphicon glyphicon-remove"></span></button>
               <label>Điều khoản sử dụng</label>
           <ol>
               <li>Admin có thể cập nhật các thông tin về phần mềm.</li>
@@ -16,13 +22,13 @@ Trang Chủ Admin
            
       </div>
       <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-primary">
+          <div class="col-xs-12">
+              <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Administrator - Hoạt Động Gần Đây</h3>
+                        <h3 class="panel-title">Hoạt Động Gần Đây</h3>
                     </div>
 
-                    @if ($admin_activities->count())
+                    @if ($activities->count())
                     <div class="panel-body">
                         <table class="table table-hover tablesorter">
                             <thead>
@@ -36,11 +42,11 @@ Trang Chủ Admin
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($admin_activities as $log)
+                                @foreach($activities as $log)
                                 <tr>
                                     <td>
                                         @if(!empty( UserAccount::find($log->id_user)))
-                                            <a href="<?php echo asset("admin/user-accounts/information/{$log->id_user}"); ?>" class="block"> {{ UserAccount::find($log->id_user)->username }}</a>
+                                            <a href="<?php echo asset("admin/user-accounts/information/{$log->id_user}"); ?>" class="block add_info">{{{ Str::limit(UserAccount::find($log->id_user)->username, 10, '...') }}}</a>
                                         @else
                                             [ Không tồn tại ]
                                         @endif
@@ -48,25 +54,25 @@ Trang Chủ Admin
                                     <td>{{ $log->activity }}</td>
                                     <td>
                                         @if(($log->target == 'Nhà phát hành')&&(!empty(Publisher::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/publishers/information/{$log->id_target}"); ?>" class="block"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
+                                            <a href="<?php echo asset("admin/publishers/information/{$log->id_target}"); ?>" class="block add_info"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
                                         @elseif(($log->target == 'Danh mục')&&(!empty(Category::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/categories/information/{$log->id_target}"); ?>" class="block"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
+                                            <a href="<?php echo asset("admin/categories/information/{$log->id_target}"); ?>" class="block add_info"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
                                         @elseif(($log->target == 'Hệ điều hành')&&(!empty(OperateSystem::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/operate-systems/information/{$log->id_target}"); ?>" class="block"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
+                                            <a href="<?php echo asset("admin/operate-systems/information/{$log->id_target}"); ?>" class="block add_info"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
                                         @elseif(($log->target == 'Phần mềm')&&(!empty(Software::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/softwares/information/{$log->id_target}"); ?>" class="block"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
+                                            <a href="<?php echo asset("admin/softwares/information/{$log->id_target}"); ?>" class="block add_info"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
                                         @elseif(($log->target == 'Thành viên')&&(!empty(UserAccount::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/user-accounts/information/{$log->id_target}"); ?>" class="block"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
+                                            <a href="<?php echo asset("admin/user-accounts/information/{$log->id_target}"); ?>" class="block add_info"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
                                         @elseif(($log->target == 'Bài đăng')&&(!empty(Post::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/posts/information/{$log->id_target}"); ?>" class="block"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
+                                            <a href="<?php echo asset("admin/posts/information/{$log->id_target}"); ?>" class="block add_info"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
                                         @elseif(($log->target == 'Bình luận')&&(!empty(Comment::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/comments/information/{$log->id_target}"); ?>" class="block"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
+                                            <a href="<?php echo asset("admin/comments/information/{$log->id_target}"); ?>" class="block add_info"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
                                         @else
                                             {{ $log->id_target }} <span class="glyphicon glyphicon-remove-circle"></span>
                                         @endif
                                     </td>
                                     <td>{{ $log->target }}</td>
-                                    <td>{{ $log->infor }}</td>
+                                    <td>{{{ Str::limit($log->infor, 15, '...') }}}</td>
                                     <td>{{ $log->created_at }}</td>
                                 </tr>
                                 @endforeach
@@ -82,65 +88,7 @@ Trang Chủ Admin
                         </div>
                     @endif
                 </div>
-
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Thành viên - Hoạt Động Gần Đây</h3>
-                    </div>
-
-                    @if ($user_activities->count())
-                    <div class="panel-body">
-                        <table class="table table-hover tablesorter">
-                            <thead>
-                                <tr>
-                                    <th>Thành viên</th>
-                                    <th>Hoạt Động</th>
-                                    <th>ID Đối Tượng</th>
-                                    <th>Đối Tượng</th>
-                                    <th>Thông Tin</th>
-                                    <th>Thời Gian <i class="fa fa-sort"></i></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($user_activities as $log)
-                                <tr>
-                                    <td>
-                                        @if(!empty( UserAccount::find($log->id_user)))
-                                            <a href="<?php echo asset("admin/user-accounts/information/{$log->id_user}"); ?>" class="block"> {{ UserAccount::find($log->id_user)->username }}</a>
-                                        @else
-                                            [ Không tồn tại ]
-                                        @endif
-                                    </td>
-                                    <td>{{ $log->activity }}</td>
-                                    <td>
-                                        @if(($log->target == 'Phần mềm')&&(!empty(Software::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/softwares/information/{$log->id_target}"); ?>" class="block"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
-                                        @elseif(($log->target == 'Bài đăng')&&(!empty(Post::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/posts/information/{$log->id_target}"); ?>" class="block"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
-                                        @elseif(($log->target == 'Bình luận')&&(!empty(Comment::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/comments/information/{$log->id_target}"); ?>" class="block"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
-                                        @else
-                                            {{ $log->id_target }} <span class="glyphicon glyphicon-remove-circle"></span>
-                                        @endif
-                                    </td>
-                                    <td>{{ $log->target }}</td>
-                                    <td>{{ $log->infor }}</td>
-                                    <td>{{ $log->created_at }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <div class="text-right">
-                        <a href="{{asset('admin/activities/index')}}" class="block"> Xem thêm <span class="glyphicon glyphicon-arrow-right"></span></a>
-                        </div>
-                    </div>
-                    @else
-                        <div class="panel-body">
-                             Chưa có thông tin.
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
+          </div>
+    </div>
    
 @stop

@@ -7,12 +7,13 @@ class PostsController extends BaseController {
 	}
 
 	public function getIndex(){
-		return View::make('backend.posts.index');
+		$system = OperateSystem::all();
+		return View::make('backend.posts.index', compact('system'));
 	}
 
 	public function postDetroyId($id,$back){
 		$post = Post::findOrFail($id);
-		UserActivity::addActivity(Session::get('user'), 'Xóa', 'Bài đăng', $post->id,"Tiêu đề: ".$post->title);
+		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Bài đăng', $post->id,"Tiêu đề: ".$post->title);
 		Session::put('success',"Đã xóa bài đăng có ID: ".$post->id);
 		Post::destroy($id);
 		$find = Post::get()->first();
@@ -20,7 +21,10 @@ class PostsController extends BaseController {
 			return Redirect::back();
 		}
 		else if($back=='next'){
-			return Redirect::to("admin/posts/information/{$find->id}");
+			if(!empty($find))
+				return Redirect::to("admin/posts/information/{$find->id}");
+			else
+				return View::make('backend.modals.null', ['item'=>"bài đăng"]);
 		}
 	}
 
@@ -33,7 +37,7 @@ class PostsController extends BaseController {
 		else{
 			foreach ($id as $key) {
 				$post = Post::findOrFail($key);
-				UserActivity::addActivity(Session::get('user'), 'Xóa', 'Bài đăng', $post->id,"Tiêu đề: ".$post->title);
+				UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Bài đăng', $post->id,"Tiêu đề: ".$post->title);
 				Post::destroy($key);
 			}
 			Session::put('success',"Đã xóa các bài đăng vừa chọn");
@@ -79,20 +83,6 @@ class PostsController extends BaseController {
        					  ->remove_column('id_user')
        					  ->remove_column('admin')
        					  ->remove_column('gender')
-		                  ->make();
-    }
-
-    public function getDataHidden(){
-    	$posts = Post::select(array('posts.id as id','posts.title as title'));
-		return  Datatables::of($posts)					  
-                          ->edit_column('id', '<a href="{{{ URL::to(\'admin/posts/information/\' . $id) }}}" class="show_info_hidden close block em1_1" style="float:left">{{ $id }}</a>')	                      
-                          ->edit_column('title', '{{{ Str::limit($title, 20, \'...\') }}}')
-                          ->add_column(
-                          		'delete', 
-                          		'	<form method="POST" action="{{{ URL::to(\'admin/posts/detroy-id/\' . $id . \'/back\') }}}" style="display:inline">
-										<a class="close delete em1_1" data-toggle="modal" href="#confirmDelete" data-title="Xóa bài đăng" data-message="Bạn chắc chắn muốn xóa bài đăng có ID: {{ $id }} ?"><span class="glyphicon glyphicon-remove"></span></a>
-									</form>
-                          		',3)	                      
 		                  ->make();
     }
 

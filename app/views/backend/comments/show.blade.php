@@ -5,38 +5,16 @@
 @stop
 
 @section('title_modals')
-  Thông tin bình luận {{ $show->id }}
-@stop
-
-@section('hidden')
-    <div class="show_hidden">
-        <div class="col-xs-1 icon_comment"></div>
-    </div>
-    <div class="hiddenlist">
-            <div class="panel panel-primary null">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Danh Sách Bình Luận</h3>
-                </div>
-                <div class="panel-body background_EB">
-                    <table class="display" id="comments_table_hidden">
-                        <thead>
-                            <tr>    
-                                <th class="col-xs-1">ID</th>
-                                <th class="col-xs-10">Nội Dung</th>
-                                <th class="col-xs-1"></th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-    </div>
+    <li class="previous"><a onclick="goBack()">Back</a></li>
+    <li class="title slogan">Thông tin bình luận {{ $show->id }}</li>
+    <li class="next"><a onclick="goForward()">Forward</a></li>
 @stop
 
 @section('modals')
     @include('backend.modals.delete_confirm')
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <form method="POST" action="<?php echo asset("admin/comments/detroy-id/{$show->id}/next"); ?>" style="display:inline">
+            <form method="POST" action="{{{ URL::to('admin/comments/detroy-id/'.$show->id.'/next') }}}" style="display:inline">
                 <a class="close deleteWhite em1_4" data-toggle="modal" href="#confirmDelete" data-title="Xóa bình luận" data-message="Bạn chắc chắn muốn xóa bình luận có ID: {{ $show->id }} ?"><span class="glyphicon glyphicon-trash"></span></a>
             </form>
             <h3 class="panel-title">Thông tin</h3>
@@ -44,7 +22,7 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-xs-3 text-center">
-                    <img src="{{asset('assets/image/comments/comment_icon.png')}}" class="image_size300" alt="{{$show->id}}">
+                    <img src="{{asset('assets/image/comments/comment_icon.png')}}" class="image_size300" alt="{{ $show->id }}">
                 </div>
                 <div class="col-xs-9">
                     <div class="row rowbody">
@@ -118,33 +96,17 @@
 
 @section('scripts')
     <script type="text/javascript">
-        var oTable_hidden;
         var oTable_activities;
         var length = window.innerHeight * 0.7;
 
         $(document).ready(function() {
-           oTable_hidden =   $('#comments_table_hidden').dataTable({
-                "sDom": "<'row'<'col-xs-12'f>r>t<'row'<'col-xs-12'p>>",
-                "bLengthChange": false,
-                "bInfo" : false,
-                "order": [[ 0, "desc" ]],
-                "bProcessing": true,
-                "bServerSide": true,
-                "sAjaxSource": "{{ URL::to('admin/comments/data-hidden') }}",
-                "language": {
-                    "url":"{{asset('assets/data-table/language/comments.json')}}",
-                    "sLoadingRecords": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
-                    "sProcessing": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
-                },
-            }); 
-
             oTable_activities =   $('#activities_table').dataTable({
                 "scrollY":        length,
                 "scrollCollapse": true,
                 "order": [[ 5, "desc" ]],
                 "bProcessing": true,
                 "bServerSide": true,
-                "sAjaxSource": "{{ URL::to('admin/activities/data-comment/'.$show->id) }}",
+                "sAjaxSource": "{{{ URL::to('admin/activities/data-comment/'.$show->id) }}}",
                 "language": {
                     "url":"{{asset('assets/data-table/language/activities.json')}}",
                     "sLoadingRecords": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',

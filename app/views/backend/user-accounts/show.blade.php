@@ -1,20 +1,20 @@
 @extends('backend.modals.layout_colorbox')
 
-@include('backend.user-accounts.hidden')
-
 @section('title')
     Thông Tin Thành Viên
 @stop
 
 @section('title_modals')
-    Thông tin thành viên {{ $show->username }}
+    <li class="previous"><a onclick="goBack()">Back</a></li>
+    <li class="title slogan">Thông tin thành viên {{ $show->username }}</li>
+    <li class="next"><a onclick="goForward()">Forward</a></li>
 @stop
 
 @section('modals')
     @include('backend.modals.delete_confirm')
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <form method="POST" action="<?php echo asset("admin/user-accounts/detroy-id/{$show->id}/next"); ?>" style="display:inline">
+            <form method="POST" action="{{{ URL::to('admin/user-accounts/detroy-id/'.$show->id.'/next') }}}" style="display:inline">
                 <a class="close deleteWhite em1_4" data-toggle="modal" href="#confirmDelete" data-title="Xóa thành viên" data-message="Bạn chắc chắn muốn xóa thành viên {{ $show->username}} có ID: {{ $show->id }} ?"><span class="glyphicon glyphicon-trash"></span></a>
             </form>
             <h3 class="panel-title">Thông tin</h3>
@@ -125,7 +125,7 @@
                 "order": [[ 5, "desc" ]],
                 "bProcessing": true,
                 "bServerSide": true,
-                "sAjaxSource": "{{ URL::to('admin/activities/data-user/'.$show->id) }}",
+                "sAjaxSource": "{{{ URL::to('admin/activities/data-user/'.$show->id) }}}",
                 "language": {
                     "url":"{{asset('assets/data-table/language/activities.json')}}",
                     "sLoadingRecords": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',

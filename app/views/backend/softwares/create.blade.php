@@ -1,25 +1,22 @@
 @extends('backend.modals.layout_colorbox')
 
-@include('backend.softwares.hidden')
-
 @section('title')
     Thêm Phần Mềm
 @stop
 
 @section('title_modals')
-    Thêm phần mềm
+    <div class="title slogan">Thêm phần mềm</div>
 @stop
 
 @section('modals')
-    @include('backend.modals.delete_confirm')
-                    <form method="POST" action="{{asset('admin/softwares/create')}}" class="container register-software"> 
+                    <form method="POST" action="{{{ URL::to('admin/softwares/create') }}}" class="container register-software"> 
                                 <div class="form-group col-xs-12">
                                     <label class="control-label" for="name">Tên phần mềm</label> 
                                     <input type="text" name="name" id="name" class="form-control"/>
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-6">
                                     <label class="control-label" for="image">Hình ảnh</label> 
-                                    <input type="text" name="image" id="image" class="form-control" value="http://freedroid.ru/uploads/posts/2014-02/1392829440_gg.png"/>
+                                    <input type="text" name="image" id="image" class="form-control" value="http://ai-i2.infcdn.net/icons_siandroid/png/300/5456/5456887.png"/>
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-6">
                                     <label class="control-label" for="download">Tải về</label> 
@@ -67,8 +64,10 @@
                                                 <option value="">Danh mục</option>
                                                 @foreach($system as $item)
                                                         <option value="" class="id_selected"  disabled>{{ $item->name }}</option>
-                                                        @foreach(explode("\n",$item->id_category) as $cate)
-                                                            <option value="{{ $cate }}">{{ Category::find($cate)->name }}</option>
+                                                        @foreach(explode("\n",$item->id_category) as $category)
+                                                            @if(!empty(Category::find($category)))
+                                                                <option value="{{ $category }}">{{ Category::find($category)->name }}</option>
+                                                            @endif
                                                         @endforeach
                                                 @endforeach
                                         </select>

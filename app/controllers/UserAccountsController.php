@@ -20,8 +20,23 @@ class UserAccountsController extends BaseController {
 			return "true";
     }
 
+    public function postCheckEditusername($id){
+		if(UserAccount::where('username','=', Input::get('username'))->whereNotIn('id', array($id))->count() > 0)
+			return "false";
+		else
+			return "true";
+	}
+	
+	public function postCheckEditemail($id){
+        if(UserAccount::where('email','=', Input::get('email'))->whereNotIn('id', array($id))->count() > 0)
+			return "false";
+		else
+			return "true";
+    }
+
 	public function getIndex(){
-		return View::make('backend.user-accounts.index');
+		$system = OperateSystem::all();
+		return View::make('backend.user-accounts.index', compact('system'));
 	}
 
 	public function getCreate(){
@@ -36,7 +51,7 @@ class UserAccountsController extends BaseController {
 		}
 		else{
 			$user = UserAccount::create($data);
-			UserActivity::addActivity(Session::get('user'), 'Thêm', 'Thành viên', $user->id,"Tài khoản: " .$user->username. " --- \n Tên: " .$user->fullname. " --- \n Tên hiển thị: " .$user->creenname);
+			UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Thành viên', $user->id,"Tài khoản: " .$user->username. " --- \n Tên: " .$user->fullname. " --- \n Tên hiển thị: " .$user->creenname);
 			Session::put('success',"Đã thêm thành viên ".$user->username." có ID: ".$user->id);
 			return Redirect::back();
 		}
@@ -57,19 +72,40 @@ class UserAccountsController extends BaseController {
 		else{
 			$user = UserAccount::find($id);
 			$user->update($data);
-			if($edit->admin == 1 )
+			if($user->admin == 1 )
 				$infor = "Administrator";
 			else
 				$infor = "Thành viên";
-			UserActivity::addActivity(Session::get('user'), 'Chỉnh sửa', 'Thành viên', $user->id,"Thay đổi quyền sử dụng thành viên " .$user->username. " thành: " .$infor);
+			UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Thành viên', $user->id,"Thay đổi quyền sử dụng thành viên " .$user->username. " thành: " .$infor);
 			Session::put('success',"Đã thay đổi quyền sử dụng của thành viên ".$user->username." có ID: ".$user->id);
 			return Redirect::back();
 		}
 	}
 
+	public function getEditAdmin($id){
+        $user = UserAccount::find($id);
+        return View::make('backend.admin.profile',compact('user'));
+    
+    }
+
+    public function postEditAdmin($id){
+        $validator = Validator::make($data = Input::all(), UserAccount::$rules_edit_admin);
+        if ($validator->fails()){
+            Session::put('fail',"Cập nhật không thành công");
+            return Redirect::back();
+        }
+        else{
+            $user = UserAccount::find($id);
+            $user->update($data);
+            UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Thành viên', $user->id,$user->username. " cập nhật thông tin cá nhân");
+            Session::put('success',"Cập nhật thông tin thành công");
+            return Redirect::back();
+        }
+    }
+
 	public function postDetroyId($id,$back){
 		$user = UserAccount::findOrFail($id);
-		UserActivity::addActivity(Session::get('user'), 'Xóa', 'Thành viên', $user->id,"Tài khoản: " .$user->username. " --- \n Tên: " .$user->fullname. " --- \n Tên hiển thị: " .$user->creenname);
+		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Thành viên', $user->id,"Tài khoản: " .$user->username. " --- \n Tên: " .$user->fullname. " --- \n Tên hiển thị: " .$user->creenname);
 		Session::put('success',"Đã xóa thành viên ".$user->username." có ID: ".$user->id);
 		UserAccount::destroy($id);
 		$find = UserAccount::get()->first();
@@ -77,7 +113,10 @@ class UserAccountsController extends BaseController {
 			return Redirect::back();
 		}
 		else if($back=='next'){
-			return Redirect::to("admin/user-accounts/information/{$find->id}");
+			if(!empty($find))
+				return Redirect::to("admin/user-accounts/information/{$find->id}");
+			else
+				return Redirect::to("admin/user-accounts/create");
 		}
 	}
 
@@ -90,7 +129,7 @@ class UserAccountsController extends BaseController {
 		else{
 			foreach ($id as $key) {
 				$user = UserAccount::findOrFail($key);
-				UserActivity::addActivity(Session::get('user'), 'Xóa', 'Thành viên', $user->id,"Tài khoản: " .$user->username. " --- \n Tên: " .$user->fullname. " --- \n Tên hiển thị: " .$user->creenname);
+				UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Thành viên', $user->id,"Tài khoản: " .$user->username. " --- \n Tên: " .$user->fullname. " --- \n Tên hiển thị: " .$user->creenname);
 				UserAccount::destroy($key);
 			}
 			Session::put('success',"Đã xóa các thành viên vừa chọn");
@@ -127,22 +166,6 @@ class UserAccountsController extends BaseController {
 		                  ->remove_column('admin')
                           ->remove_column('gender')
 		                  ->make();
-    }
-
-    public function getDataHidden(){
-    	$users = UserAccount::select(array('user_accounts.id as id', 'user_accounts.username as username'));
-		return  Datatables::of($users)					  
-                          ->edit_column(
-                          		'id','<a href="{{{ URL::to(\'admin/user-accounts/information/\' . $id) }}}" class="show_info_hidden close block em1_1" style="float:left">{{ $id }}</a>')	                      
-                          ->edit_column('username', '{{{ Str::limit($username, 10, \'...\') }}}')
-                          ->add_column('edit', '<a class="close block edit_info_hidden em1_1" href="{{{ URL::to(\'admin/user-accounts/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',6)	                      
-                          ->add_column(
-                          		'delete', 
-                          		'	<form method="POST" action="{{{ URL::to(\'admin/user-accounts/detroy-id/\' . $id . \'/back\') }}}" style="display:inline">
-										<a class="close delete em1_1" data-toggle="modal" href="#confirmDelete" data-title="Xóa thành viên" data-message="Bạn chắc chắn muốn xóa thành viên {{ $username }} có ID: {{ $id }} ?"><span class="glyphicon glyphicon-remove"></span></a>
-									</form>
-                          		',3)	
-                          ->make();
     }
 }
 

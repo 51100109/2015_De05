@@ -13,8 +13,16 @@ class CategoriesController extends BaseController {
 			return "true";
 	}
 
+	public function postCheckEditname($id){
+		if(Category::where('name','=', Input::get('name'))->whereNotIn('id', array($id))->count() > 0)
+			return "false";
+		else
+			return "true";
+	}
+
 	public function getIndex(){
-		return View::make('backend.categories.index');
+		$system = OperateSystem::all();
+		return View::make('backend.categories.index',compact('system'));
 	}
 
 	public function getCreate(){
@@ -29,7 +37,7 @@ class CategoriesController extends BaseController {
 		}
 		else{
 			$category = Category::create($data);
-			UserActivity::addActivity(Session::get('user'), 'Thêm', 'Danh mục', $category->id,"Danh mục ".$category->name." có ID: ".$category->id);
+			UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Danh mục', $category->id,"Danh mục ".$category->name." có ID: ".$category->id);
 			Session::put('success',"Đã thêm danh mục ".$category->name." có ID: ".$category->id);
 			return Redirect::back();
 		}
@@ -41,24 +49,23 @@ class CategoriesController extends BaseController {
 	}
 
 	public function postEdit($id){
-		$validator = Validator::make($data = Input::all(), Category::$rules);
+		$validator = Validator::make($data = Input::all(), Category::$rules_edit);
 		if ($validator->fails()){
 			Session::put('fail',"Cập nhật không thành công");
 			return Redirect::back();
 		}
 		else{
 			$category = Category::find($id);
-			$infor =$edit->name;
 			$category->update($data);
-			UserActivity::addActivity(Session::get('user'), 'Chỉnh sửa', 'Danh mục', $category->id,"Cập nhật tên danh mục ".$infor." thành ".$category->name);
-			Session::put('success',"Đã cập nhật tên danh mục ".$infor." thành ".$category->name." có ID: ".$category->id);
+			UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Danh mục', $category->id,"Cập nhật danh mục ".$category->name." có ID: ".$category->id);
+			Session::put('success',"Đã cập nhật danh mục ".$category->name." có ID: ".$category->id);
 			return Redirect::back();
 		}
 	}
 
 	public function postDetroyId($id,$back){
 		$category = Category::findOrFail($id);
-		UserActivity::addActivity(Session::get('user'), 'Xóa', 'Danh mục', $category->id,"Danh mục ".$category->name." có ID: ".$category->id);
+		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Danh mục', $category->id,"Danh mục ".$category->name." có ID: ".$category->id);
 		Session::put('success',"Đã xóa danh mục ".$category->name." có ID: ".$category->id);
 		Category::destroy($id);
 		$find = Category::get()->first();
@@ -66,7 +73,10 @@ class CategoriesController extends BaseController {
 			return Redirect::back();
 		}
 		else if($back=='next'){
-			return Redirect::to("admin/categories/information/{$find->id}");
+			if(!empty($find))
+				return Redirect::to("admin/categories/information/{$find->id}");
+			else
+				return Redirect::to("admin/categories/create");
 		}
 	}
 
@@ -79,7 +89,7 @@ class CategoriesController extends BaseController {
 		else{
 			foreach ($id as $key) {
 				$category = Category::findOrFail($key);
-				UserActivity::addActivity(Session::get('user'), 'Xóa', 'Danh mục', $category->id,"Danh mục ".$category->name." có ID: ".$category->id);
+				UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Danh mục', $category->id,"Danh mục ".$category->name." có ID: ".$category->id);
 				Category::destroy($key);
 			}
 			Session::put('success',"Đã xóa các danh mục vừa chọn");
@@ -105,21 +115,6 @@ class CategoriesController extends BaseController {
                           ->add_column('number', '{{ Software::where("id_category","=",$id)->count() }}',4)	                      
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/categories/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',5)	                      
                           ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',6)	                      
-		                  ->make();
-    }
-
-    public function getDataHidden(){
-    	$categories = Category::select(array('categories.id as id','categories.name as name'));
-		return  Datatables::of($categories)					  
-                          ->edit_column('id', '<a href="{{{ URL::to(\'admin/categories/information/\' . $id) }}}" class="show_info_hidden close block em1_1" style="float:left">{{ $id }}</a>')	                      
-                          ->edit_column('name', '{{{ Str::limit($name, 10, \'...\') }}}')
-                          ->add_column('edit', '<a class="close block edit_info_hidden em1_1" href="{{{ URL::to(\'admin/categories/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',3)	                      
-                          ->add_column(
-                          		'delete', 
-                          		'	<form method="POST" action="{{{ URL::to(\'admin/categories/detroy-id/\' . $id . \'/back\') }}}" style="display:inline">
-										<a class="close delete em1_1" data-toggle="modal" href="#confirmDelete" data-title="Xóa danh mục phần mềm" data-message="Bạn chắc chắn muốn xóa danh mục có ID: {{ $id }} ?"><span class="glyphicon glyphicon-remove"></span></a>
-									</form>
-                          		',4)	                      
 		                  ->make();
     }
 }
