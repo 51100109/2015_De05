@@ -8,8 +8,7 @@ class AdminsController extends BaseController {
 
     public function getHome(){
         $system = OperateSystem::all();
-        $activities = UserActivity::orderBy("created_at","desc")->paginate(20);
-        return View::make('backend.admin.home', compact('system','activities'));
+        return View::make('backend.admin.home', compact('system'));
     }
 
     public function postReloadToolpanel(){

@@ -90,7 +90,7 @@
 		            "sLoadingRecords": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
 		            "sProcessing": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
 		        },
-		       	"fnDrawCallback": colorbox,
+		       	"fnDrawCallback": colorbox_activity,
         	});    
 
         oTable_activities_member =   $('#activities_member_table').dataTable({
@@ -105,30 +105,8 @@
 		            "sLoadingRecords": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
 		            "sProcessing": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
 		        },
-		       	"fnDrawCallback": colorbox,
-        });      
-
-        function colorbox( oSettings ) {
-	           	$(".show_info_activity").colorbox({
-	           			iframe:true, 
-	                    width:"70%", 
-	                    height:"90%",
-	                    rel:'show_info_activity', 
-	                    current: "Activity {current} of {total}",
-	                    previous: "Previous",
-	                    next: "Next",
-	                    close: "Close",
-	                    fixed:true,
-	           	});
-	           	$(".show_info").colorbox({
-	           			iframe:true, 
-	                    width:"70%", 
-	                    height:"90%",
-	                    close: "Close",
-	                    onClosed: updatetable,
-	                    fixed:true,
-	           	});
-	     }                                                      
+		       	"fnDrawCallback": colorbox_activity,
+        });                                     
 	});
     </script>
 @stop

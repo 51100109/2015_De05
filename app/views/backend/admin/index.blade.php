@@ -319,6 +319,7 @@
                       previous: "Previous",
                       next: "Next",
                       close: "Close",
+                      onClosed: updatetable,
                       fixed:true,
                 });
                 $(".show_info").colorbox({

@@ -9,80 +9,63 @@
 @stop
 
 @section('modals')
-                    <form method="POST" action="{{{ URL::to('admin/user-accounts/create') }}}" class="form-horizontal register-user"> 
+            <form method="POST" action="{{{ URL::to('admin/user-accounts/create') }}}" class="container register-user"> 
+                  <div class="row">
+                      <div class="col-xs-4">
+                           <img src="{{asset('assets/image/users/male.png')}}" class="image_size300" alt="add">           
+                      </div>
+                      <div class="col-xs-7">       
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label" for="username">Tên tài khoản</label> 
-                                    <div class="col-xs-8">
-                                        <input type="text" name="username" id="username" class="form-control"/>
-                                    </div>
+                                    <label class="control-label" for="username">Tên tài khoản</label> 
+                                    <input type="text" name="username" id="username" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label" for="admin">Quyền sử dụng</label> 
-                                    <div class="col-xs-8">
-                                        <select name="admin" id="admin" class="form-control">
+                                    <label class="control-label" for="admin">Quyền sử dụng</label> 
+                                    <select name="admin" id="admin" class="form-control">
                                             <option value="">Quyền sử dụng</option>
                                             <option value="0">Thành viên</option>
                                             <option value="1">Administrator</option>
-                                        </select>
-                                    </div>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label" for="password">Mật khẩu</label>
-                                    <div class="col-xs-8">
-                                        <input type="password" name="password" id="password" class="form-control"/>
-                                    </div>
+                                    <label class="control-label" for="password">Mật khẩu</label>
+                                    <input type="password" name="password" id="password" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label" for="password_confirmation">Nhập lại mật khẩu</label>
-                                    <div class="col-xs-8">
-                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control"/>
-                                    </div>
+                                    <label class="control-label" for="password_confirmation">Nhập lại mật khẩu</label>
+                                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label" for="email">Email</label>
-                                    <div class="col-xs-8">
-                                        <input type="email" name="email" id="email" class="form-control"/>
-                                    </div>
+                                    <label class="control-label" for="email">Email</label>
+                                    <input type="email" name="email" id="email" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label" for="fullname">Họ và tên</label>
-                                    <div class="col-xs-8">
-                                        <input type="text" name="fullname" id="fullname" class="form-control"/>
-                                    </div>
+                                    <label class="control-label" for="fullname">Họ và tên</label>
+                                    <input type="text" name="fullname" id="fullname" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label" for="creenname">Tên hiển thị</label>
-                                    <div class="col-xs-8">
-                                        <input type="text" name="creenname" id="creenname"  class="form-control"/>
-                                    </div>
+                                    <label class="control-label" for="creenname">Tên hiển thị</label>
+                                    <input type="text" name="creenname" id="creenname"  class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label" for="gender">Giới tính</label>
-                                    <div class="col-xs-8">
-                                        <select name="gender" id="gender" class="form-control">
+                                    <label class="control-label" for="gender">Giới tính</label>
+                                    <select name="gender" id="gender" class="form-control">
                                             <option value="">Giới tính </option>
                                             <option value="1">Nam</option>
                                             <option value="2">Nữ</option>
-                                        </select>
-                                    </div>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label" for="birthday">Ngày sinh</label>
-                                    <div class="col-xs-8"> 
-                                       <input type="date" name="birthday" id="birthday" class="form-control"/>
-                                    </div>
+                                    <label class="control-label" for="birthday">Ngày sinh</label>
+                                    <input type="date" name="birthday" id="birthday" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label" for="address">Địa chỉ</label>
-                                    <div class="col-xs-8"> 
-                                        <input type="text" name="address" id="address" class="form-control"/>
-                                    </div>
+                                    <label class="control-label" for="address">Địa chỉ</label>
+                                    <input type="text" name="address" id="address" class="form-control"/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label" for="phone">Điện thoại</label>
-                                    <div class="col-xs-8">
-                                       <input type="text" name="phone" id="phone" class="form-control"/>
-                                    </div>
+                                    <label class="control-label" for="phone">Điện thoại</label>
+                                    <input type="text" name="phone" id="phone" class="form-control"/>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-xs-11 text-right">
@@ -90,7 +73,9 @@
                                         <button type="reset" class="btn btn-warning">Tạo lại</button>
                                     </div>
                                 </div>
-                    </form>
+                            </div>
+                      </div>
+                </form>
     
 @stop
 

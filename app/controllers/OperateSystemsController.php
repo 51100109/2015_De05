@@ -33,7 +33,7 @@ class OperateSystemsController extends BaseController {
 	public function postCreate(){
 		$validator = Validator::make($data = Input::all(), OperateSystem::$rules);
 		if ($validator->fails()){
-			Session::put('fail',"Khởi tạo không thành công");
+			Session::put('fail',"Vui lòng chọn danh mục");
 			return Redirect::back();
 		}
 		else{
@@ -59,7 +59,7 @@ class OperateSystemsController extends BaseController {
 	public function postEdit($id){
 		$validator = Validator::make($data = Input::all(), OperateSystem::$rules_edit);
 		if ($validator->fails()){
-			Session::put('fail',"Cập nhật không thành công");
+			Session::put('fail',"Vui lòng chọn danh mục");
 			return Redirect::back();
 		}
 		else{

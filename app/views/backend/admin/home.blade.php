@@ -23,72 +23,52 @@
       </div>
       <div class="row">
           <div class="col-xs-12">
-              <div class="panel panel-primary">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Hoạt Động Gần Đây</h3>
                     </div>
-
-                    @if ($activities->count())
-                    <div class="panel-body">
-                        <table class="table table-hover tablesorter">
-                            <thead>
-                                <tr>   
-                                    <th>Admin</th>
-                                    <th>Hoạt Động</th>
-                                    <th>ID Đối Tượng</th>
-                                    <th>Đối Tượng</th>
-                                    <th>Thông Tin</th>
-                                    <th>Thời Gian</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($activities as $log)
-                                <tr>
-                                    <td>
-                                        @if(!empty( UserAccount::find($log->id_user)))
-                                            <a href="<?php echo asset("admin/user-accounts/information/{$log->id_user}"); ?>" class="block add_info">{{{ Str::limit(UserAccount::find($log->id_user)->username, 10, '...') }}}</a>
-                                        @else
-                                            [ Không tồn tại ]
-                                        @endif
-                                    </td>
-                                    <td>{{ $log->activity }}</td>
-                                    <td>
-                                        @if(($log->target == 'Nhà phát hành')&&(!empty(Publisher::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/publishers/information/{$log->id_target}"); ?>" class="block add_info"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
-                                        @elseif(($log->target == 'Danh mục')&&(!empty(Category::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/categories/information/{$log->id_target}"); ?>" class="block add_info"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
-                                        @elseif(($log->target == 'Hệ điều hành')&&(!empty(OperateSystem::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/operate-systems/information/{$log->id_target}"); ?>" class="block add_info"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
-                                        @elseif(($log->target == 'Phần mềm')&&(!empty(Software::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/softwares/information/{$log->id_target}"); ?>" class="block add_info"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
-                                        @elseif(($log->target == 'Thành viên')&&(!empty(UserAccount::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/user-accounts/information/{$log->id_target}"); ?>" class="block add_info"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
-                                        @elseif(($log->target == 'Bài đăng')&&(!empty(Post::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/posts/information/{$log->id_target}"); ?>" class="block add_info"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
-                                        @elseif(($log->target == 'Bình luận')&&(!empty(Comment::find($log->id_target))))
-                                            <a href="<?php echo asset("admin/comments/information/{$log->id_target}"); ?>" class="block add_info"> {{ $log->id_target }} <span class="glyphicon glyphicon-link"></span></a>
-                                        @else
-                                            {{ $log->id_target }} <span class="glyphicon glyphicon-remove-circle"></span>
-                                        @endif
-                                    </td>
-                                    <td>{{ $log->target }}</td>
-                                    <td>{{{ Str::limit($log->infor, 15, '...') }}}</td>
-                                    <td>{{ $log->created_at }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <div class="text-right">
+                <div class="panel-body background_EB">
+                    <table class="display" id="activities_table">
+                        <thead>
+                            <tr>   
+                                <th class="col-xs-1"><div class="icon0"></div></th>
+                                <th class="col-xs-2">Admin</th>
+                                <th class="col-xs-2">Hoạt Động</th>
+                                <th class="col-xs-2">Đối Tượng</th>
+                                <th class="col-xs-1">ID</th>
+                                <th class="col-xs-2">Thông Tin</th>
+                                <th class="col-xs-2">Thời Gian</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="text-right">
                         <a href="{{asset('admin/activities/index')}}" class="block"> Xem thêm <span class="glyphicon glyphicon-arrow-right"></span></a>
-                        </div>
                     </div>
-                    @else
-                        <div class="panel-body">
-                             Chưa có thông tin.
-                        </div>
-                    @endif
                 </div>
-          </div>
+            </div>
+        </div>
     </div>
    
+@stop
+
+@section('scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+             oTable_activities =   $('#activities_table').dataTable({
+                "scrollY":        length,
+                "scrollCollapse": true,
+                "bPaginate": false,
+                "order": [[ 6, "desc" ]],
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "{{{ URL::to('admin/activities/data/1') }}}",
+                "language": {
+                    "url":"{{asset('assets/data-table/language/activities.json')}}",
+                    "sLoadingRecords": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
+                    "sProcessing": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
+                },
+                "fnDrawCallback": colorbox_activity,
+            });                                            
+    });
+    </script>
 @stop
