@@ -33,7 +33,7 @@
 							</tr>
 							<tr>
 								<td>Kích thước file:</td>
-								<td>{{{$software->filesize}}} KB</td>
+								<td>{{{$software->filesize}}} MB</td>
 							</tr>
 							<tr>
 								<td>Phân loại:</td>
@@ -66,7 +66,7 @@
 		</div>
 		<div class="row">
 			<h2>Giới thiệu</h2>
-			<p>  {{{$software->description}}} </p>
+			{{Purifier::clean($software->description)}}
 		</div>
 		@include('front.includes.comment',['isSoftware'=>1 ,'software'=>$software])
 @endsection
