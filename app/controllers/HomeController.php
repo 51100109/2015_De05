@@ -2,6 +2,7 @@
 
 class HomeController extends BaseController {
 
+	public static $itemPerPage = 15;
 	/*
 	|--------------------------------------------------------------------------
 	| Default Home Controller
@@ -22,7 +23,7 @@ class HomeController extends BaseController {
 
 	public function showHome()
 	{
-		$softwares = Software::all();
+		$softwares = Software::orderBy('created_at', 'DESC')->paginate(HomeController::$itemPerPage);
 		return View::make('front.views.home',['softwares'=>$softwares]);
 	}
 	
@@ -43,7 +44,7 @@ class HomeController extends BaseController {
 	
 	public function showCategory($category)
 	{
-		$softwares = Software::where('id_category', '=', $category->id)->get();
+		$softwares = Software::where('id_category', '=', $category->id)->orderBy('created_at', 'DESC')->paginate(HomeController::$itemPerPage);
 		return View::make('front.views.category',['softwares'=>$softwares,'categoryname'=>$category->name]);
 	}
 	
@@ -59,7 +60,7 @@ class HomeController extends BaseController {
 	
 	public function showpostList()
 	{
-		$posts = Post::all()->reverse();
+		$posts = Post::orderBy('created_at', 'DESC')->paginate(HomeController::$itemPerPage);
 		return View::make('front.views.post.listpost',['posts'=>$posts]);
 	}
 

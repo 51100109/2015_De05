@@ -19,5 +19,7 @@ Home - Softsharing
     		@foreach ($softwares as $software)
     			@include('front.includes.softwareItem',['softwareItem'=>$software])
 			@endforeach
+			<div class="pull-right">{{ $softwares->links() }}</div>
+			
 		@endif 
 @endsection

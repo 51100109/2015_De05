@@ -22,5 +22,6 @@ Các bài đăng - Softsharing
     		@foreach ($posts as $post)
     			@include('front.includes.postItem',['postItem'=>$post])
 			@endforeach
+			<div class="pull-right">{{ $posts->links()}}</div>
 		@endif 
 @endsection
