@@ -11,5 +11,6 @@
 		@yield("content")		
 		</div>
 	</div>
+	@include('front.includes.footer')
 </body>
 </html>

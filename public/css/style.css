@@ -157,7 +157,7 @@ h3 {
 }
 
 .content-subhead {
-    margin-left: 11.7em;
+/*     margin-left: 11.7em; */
     margin-right: 2em;
     margin-top: -0.1em;
     text-transform: uppercase;
@@ -251,7 +251,8 @@ h3 {
 @media (min-width: 48em) {
     .content {
         padding: 2em 3em 0;
-        margin-left: 25%;
+/*         margin-left: 25%; */
+		margin-bottom: 15px;
     }
 
     .header {

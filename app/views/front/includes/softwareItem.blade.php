@@ -3,7 +3,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/font-awesome/css/font-awesome.min.css')}}"  media="all" rel="stylesheet">
 </div>
 
-<?php $numCharacter = 150; ?>
+<?php $numCharacter = 300; ?>
 <!--/row-->
 <div class="body">
     <div class="content pure-u-1 pure-u-md-3-4">
