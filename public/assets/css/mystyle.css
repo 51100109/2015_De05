@@ -260,6 +260,12 @@ img.items:hover{
 	float:right;
 	margin:0 10px 0 5px;
 }
+.width100{
+	width:100px;
+}
+.heigh800{
+	height:800px;
+}
 .box_0{
 	padding:0px;
 }
@@ -271,6 +277,26 @@ img.items:hover{
 }
 .fontsize4em{
 	font-size:4em;
+}
+.fontsize1_5em{
+	font-size:1.5em;
+}
+.fontsize1_2em{
+	font-size:1.2em;
+}
+.commentbox{
+	width: auto; 
+	height: 700px; 
+	overflow: auto; 
+	padding: 5px;
+	background:white;
+}
+.bg_white{
+	background:white;
+}
+.bg_border{
+	border:1px dotted black;
+	padding:5px;
 }
 .right{
 	float:right;

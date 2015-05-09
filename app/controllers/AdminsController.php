@@ -13,11 +13,20 @@ class AdminsController extends BaseController {
 
     public function postReloadToolpanel(){
         $system = OperateSystem::all();
-        return View::make('backend.admin.reload_toolpanel', compact('system'));
+        return View::make('backend.ajax.reload_toolpanel', compact('system'));
     }
 
     public function postReloadToolbar(){
         $system = OperateSystem::all();
-        return View::make('backend.admin.reload_toolbar', compact('system'));
+        return View::make('backend.ajax.reload_toolbar', compact('system'));
+    }
+
+    public function postMessage(){
+        return View::make('backend.ajax.message');
+    }
+
+    public function postCategory($item){
+        $system = OperateSystem::find($item);
+        return View::make('backend.ajax.category',compact('system'));
     }
 }

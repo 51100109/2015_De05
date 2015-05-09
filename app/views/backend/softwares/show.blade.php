@@ -11,12 +11,9 @@
 @stop
 
 @section('modals')
-    @include('backend.modals.delete_confirm')
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <form method="POST" action="{{{ URL::to('admin/softwares/detroy-id/'.$show->id.'/next') }}}" style="display:inline">
-                <a class="close deleteWhite em1_4" data-toggle="modal" href="#confirmDelete" data-title="Xóa phần mềm" data-message="Bạn chắc chắn muốn xóa phần mềm {{ $show->username}} có ID: {{ $show->id }} ?"><span class="glyphicon glyphicon-trash"></span></a>
-            </form>
+            <a class="close deleteWhite delete_info_entry_close em1_4" href="{{{ URL::to('admin/softwares/delete/' . $show->id) }}}"><span class="glyphicon glyphicon-trash"></span></a>
             <h3 class="panel-title">Thông tin</h3>
         </div>
         <div class="panel-body">
@@ -87,10 +84,9 @@
         </div>
     </div>
     
-    <form method="POST" action="{{{ URL::to('admin/comments/detroy') }}}" style="display:inline">
-        <div class="panel panel-primary">
+    <div class="panel panel-primary">
             <div class="panel-heading">
-                <a class="close deleteWhite em1_4" data-toggle="modal" href="#confirmDelete" data-title="Xóa bình luận" data-message="Bạn chắc chắn muốn xóa các bình luận đã chọn ?"><span class="glyphicon glyphicon-trash"></span></a>
+                <a class="close deleteWhite add_info em1_4" href="{{{ URL::to('admin/comments/create/softwares/'.$show->id) }}}"><span class="glyphicon glyphicon-plus"></span></a>
                 <h3 class="panel-title">Bình luận trong phần mềm</h3>
             </div>
             <div class="panel-body background_EB">
@@ -99,16 +95,16 @@
                         <tr>
                             <th class="col-xs-1"><div class="icon0"></div></th>
                             <th class="col-xs-1">ID</th>
-                            <th class="col-xs-4">Bình Luận</th>
+                            <th class="col-xs-3">Bình Luận</th>
                             <th class="col-xs-2">Người Đăng</th>
                             <th class="col-xs-3">Thời Gian</th>
+                            <th class="col-xs-1"></th>
                             <th class="col-xs-1"></th>
                         </tr>
                     </thead>
                 </table>
             </div>
-        </div>
-    </form>
+    </div>
 
     <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -133,23 +129,20 @@
 
 @section('scripts_activities')
     <script type="text/javascript">
-        var oTable;
-        var oTable_activities;
-        var length = window.innerHeight * 0.7;
-
         $(document).ready(function() {
             oTable =   $('#comments_table').dataTable({
                 "scrollY":        length,
                 "scrollCollapse": true,
-                "order": [[ 1, "desc" ]],
+                "order": [[ 4, "asc" ]],
                 "bProcessing": true,
                 "bServerSide": true,
-                "sAjaxSource": "{{{ URL::to('admin/comments/comment-item/posts/'.$show->id) }}}",
+                "sAjaxSource": "{{{ URL::to('admin/comments/comment-item/softwares/'.$show->id) }}}",
                 "language": {
                     "url":"{{asset('assets/data-table/language/comments.json')}}",
                     "sLoadingRecords": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
                     "sProcessing": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
                 },
+                "fnDrawCallback": colorbox_show,
             }); 
 
             oTable_activities =   $('#activities_table').dataTable({

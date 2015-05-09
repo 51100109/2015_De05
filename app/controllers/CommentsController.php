@@ -11,37 +11,64 @@ class CommentsController extends BaseController {
 		return View::make('backend.comments.index', compact('system'));
 	}
 
-	public function postDetroyId($id,$back){
-		$comment = Comment::findOrFail($id);
-		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Bình luận', $comment->id,"Nội dung: ".$comment->content);
-		Session::put('success',"Đã xóa bình luận có ID: ".$comment->id);
-		Comment::destroy($id);
-		$find = Comment::get()->first();
-		if($back == 'back')
-			return Redirect::back();
-		else if($back=='next'){
-			if(!empty($find))
-				return Redirect::to("admin/comments/information/{$find->id}");
-			else
-				return View::make('backend.modals.null', ['item'=>"bình luận"]);
-		}
+	public function getCreate($target,$id_target){
+		return View::make('backend.comments.create',compact('target','id_target'));
 	}
 
-	public function postDetroy(){
-		$id = Input::get('id');
-		if($id == 0){
-			Session::put('fail',"Chọn bình luận cần xóa");
+	public function postCreate($target,$id_target){
+		$validator = Validator::make($data = Input::all(), Comment::$rules);
+		if ($validator->fails()){
+			Session::put('fail',"Vui lòng nhập nội dung bình luận");
 			return Redirect::back();
 		}
 		else{
-			foreach ($id as $key) {
-				$comment = Comment::findOrFail($key);
-				UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Bình luận', $comment->id,"Nội dung: ".$comment->content);
-				Comment::destroy($key);
-			}
-			Session::put('success',"Đã xóa các bình luận vừa chọn");
+			$comment = new Comment;
+			$comment->id_user = Auth::user()->id;
+			$comment->content = Input::get('content');
+			if($target == "posts")
+				$comment->target = "Bài đăng";
+			else if($target == "softwares")
+				$comment->target = "Phần mềm";
+			$comment->id_target = $id_target;
+			$comment->save();
+			UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Bình luận', $comment->id,"Bình luận: ".$comment->content."- ID: ".$comment->id);
+			Session::put('success',"Đã thêm bình luận có ID: ".$comment->id);
 			return Redirect::back();
 		}
+	}
+
+	public function getEdit($id){
+		$comment=Comment::findOrFail($id);
+		return View::make('backend.comments.edit',compact('comment'));
+	}
+
+	public function postEdit($id){
+		$validator = Validator::make($data = Input::all(), Comment::$rules);
+		if ($validator->fails()){
+			Session::put('fail',"Vui lòng nhập nội dung bình luận");
+			return Redirect::back();
+		}
+		else{
+			$comment = Comment::find($id);
+			$comment->update($data);
+			UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Bình luận', $comment->id,"Cập nhật bình luận ".$comment->title." có ID: ".$comment->id);
+			Session::put('success',"Đã cập nhật bình luận có ID: ".$comment->id);
+			return Redirect::back();
+		}
+	}
+
+	public function getDelete($id){
+		$comment = Comment::find($id);
+		$string = Str::limit($comment->content, 150, '...');
+		return View::make('backend.modals.delete_form', ['id'=>$comment->id,'title'=>"bình luận",'item'=>"comments",'content'=>$string]);
+	}
+
+	public function postDelete($id){
+		$comment = Comment::find($id);
+		Session::put('success',"Đã xóa bình luận có ID: ".$id);
+		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Bình luận', $comment->id,"Nội dung: ".$comment->content);
+		Comment::destroy($id);
+		return Redirect::to("admin/comments/index");
 	}
 
 	public function getInformation($id){
@@ -67,16 +94,17 @@ class CommentsController extends BaseController {
 											<img src="{{asset(\'assets/image/comments/user_comment.png\')}}" class="size40" alt="{{ $id }}">
 						                @endif
                           		</a>',0)	                      
-                          ->edit_column('content', '{{{ Str::limit($content, 40, \'...\') }}}')
+                          ->edit_column('content', '{{{ Str::limit($content, 20, \'...\') }}}')
                           ->edit_column(
                           		'username', 
                           		' 	@if(!empty($id_user))
-					                    <a href="{{{ URL::to(\'admin/user-accounts/information/\' . $id_user) }}}" class="block show_info"> {{{ Str::limit($username, 20, \'...\') }}}</a>
+					                    <a href="{{{ URL::to(\'admin/user-accounts/information/\' . $id_user) }}}" class="block show_info"> {{{ Str::limit($username, 15, \'...\') }}}</a>
 					             	@else
 					                    [ ... ]
 					             	@endif 
                           		')
-                          ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',8)	                      
+                          ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/comments/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',8)	                      
+                          ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/comments/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',9)	                      
        					  ->remove_column('id_user')
        					  ->remove_column('admin')
        					  ->remove_column('gender')
@@ -110,16 +138,17 @@ class CommentsController extends BaseController {
 											<img src="{{asset(\'assets/image/comments/user_comment.png\')}}" class="size40" alt="{{ $id }}">
 						                @endif
                           		</a>',0)	                      
-                          ->edit_column('content', '{{{ Str::limit($content, 40, \'...\') }}}')
+                          ->edit_column('content', '{{{ Str::limit($content, 20, \'...\') }}}')
                           ->edit_column(
                           		'username', 
                           		' 	@if(!empty($id_user))
-					                    <a href="{{{ URL::to(\'admin/user-accounts/information/\' . $id_user) }}}" class="block show_info"> {{{ Str::limit($username, 20, \'...\') }}}</a>
+					                    <a href="{{{ URL::to(\'admin/user-accounts/information/\' . $id_user) }}}" class="block show_info"> {{{ Str::limit($username, 15, \'...\') }}}</a>
 					             	@else
 					                    [ ... ]
 					             	@endif 
                           		')
-                          ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',8)	                      
+                          ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/comments/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',8)	                      
+                          ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/comments/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',9)	                      
        					  ->remove_column('id_user')
        					  ->remove_column('admin')
        					  ->remove_column('gender')

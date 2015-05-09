@@ -9,7 +9,7 @@
 @stop
 
 @section('modals')
-                    <form method="POST" action="{{{ URL::to('admin/softwares/create') }}}" class="container register-software"> 
+                    <form method="POST" action="{{{ URL::to('admin/softwares/create') }}}" class="container add-software"> 
                                 <div class="form-group col-xs-12">
                                     <label class="control-label" for="name">Tên phần mềm</label> 
                                     <input type="text" name="name" id="name" class="form-control"/>
@@ -51,26 +51,20 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <div class="form-group">
                                         <label class="control-label" for="id_system">Hệ điều hành</label> 
-                                        <select name="id_system" id="id_system" class="form-control">
+                                        <select name="id_system" id="id_system" class="form-control" onchange="selecled_system();">
                                                 <option value="">Hệ điều hành</option>
                                                 @foreach($system as $item)
                                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                 @endforeach
                                         </select>
                                     </div>
+                                    <div id="select_category">
                                     <div class="form-group">
                                         <label class="control-label" for="id_category">Danh mục phần mềm</label> 
                                         <select name="id_category" id="id_category" class="form-control">
                                                 <option value="">Danh mục</option>
-                                                @foreach($system as $item)
-                                                        <option value="" class="id_selected"  disabled>{{ $item->name }}</option>
-                                                        @foreach(explode("\n",$item->id_category) as $category)
-                                                            @if(!empty(Category::find($category)))
-                                                                <option value="{{ $category }}">{{ Category::find($category)->name }}</option>
-                                                            @endif
-                                                        @endforeach
-                                                @endforeach
                                         </select>
+                                    </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label" for="id_publisher">Nhà phát hành</label> 
@@ -88,8 +82,9 @@
                                 </div>
                                 <div class="form-group col-xs-12">
                                     <div class="text-right">
-                                        <button type="submit" class="btn btn-primary">Xác nhận</button>
-                                        <button type="reset" class="btn btn-warning">Tạo lại</button>
+                                        <button type="submit" class="btn btn-primary width100">Xác nhận</button>
+                                        <button type="reset" class="btn btn-warning width100">Tạo lại</button>
+                                        <button type="button" class="btn btn-default close_colorbox width100">Đóng</button>
                                     </div>
                                 </div>
                     </form>
@@ -99,7 +94,8 @@
 @section('scripts_validator')
     <script type="text/javascript">
         $(document).ready(function() {
-            $(".register-software").validate({
+
+            $(".add-software").validate({
           rules:{
             name:{
               required:true,

@@ -25,8 +25,9 @@
 			        </div>  
 			        <div class="form-group">
 			        	<div class="text-right">
-			            	<button type="submit" class="btn btn-primary">Xác nhận</button>
-			            	<button type="reset" class="btn btn-warning">Tạo lại</button>
+			            	<button type="submit" class="btn btn-primary width100">Xác nhận</button>
+			            	<button type="reset" class="btn btn-warning width100">Tạo lại</button>
+			            	<button type="button" class="btn btn-default close_colorbox width100">Đóng</button>
 			            </div>
 			        </div>
 			    </div>

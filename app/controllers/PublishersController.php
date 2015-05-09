@@ -51,44 +51,25 @@ class PublishersController extends BaseController {
 	public function postEdit($id){
 			$publisher = Publisher::find($id);
 			$infor =$publisher->name;
-			$publisher->update($data);
+			$publisher->update(Input::all());
 			UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Nhà phát hành', $publisher->id,"Cập nhật tên nhà phát hành ".$infor." thành ".$publisher->name);
 			Session::put('success',"Đã cập nhật nhà phát hành ".$publisher->name." có ID: ".$publisher->id);
 			return Redirect::back();
 	}
 
-	public function postDetroyId($id,$back){
-		$publisher = Publisher::findOrFail($id);
-		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Nhà phát hành', $publisher->id,"Nhà phát hành ".$publisher->name." có ID: ".$publisher->id);
-		Session::put('success',"Đã xóa nhà phát hành ".$publisher->name." có ID: ".$publisher->id);
-		Publisher::destroy($id);
-		$find = Publisher::get()->first();
-		if($back=='back'){
-			return Redirect::back();
-		}
-		else if($back=='next'){
-			if(!empty($find))
-				return Redirect::to("admin/publishers/information/{$find->id}");
-			else
-				return Redirect::to("admin/publishers/create");
-		}
+	public function getDelete($id){
+		$publisher = Publisher::find($id);
+		$string = Str::limit($publisher->name, 150, '...');
+		return View::make('backend.modals.delete_form', ['id'=>$publisher->id,'title'=>"nhà phát hành",'item'=>"publishers",'content'=>$string]);
 	}
 
-	public function postDetroy(){
-		$id = Input::get('id');
-		if($id == 0){
-			Session::put('fail',"Chọn nhà phát hành cần xóa");
-			return Redirect::back();
-		}
-		else{
-			foreach ($id as $key) {
-				$publisher = Publisher::findOrFail($key);
-				UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Nhà phát hành', $publisher->id,"Nhà phát hành ".$publisher->name." có ID: ".$publisher->id);
-				Publisher::destroy($key);
-			}
-			Session::put('success',"Đã xóa các nhà phát hành vừa chọn");
-			return Redirect::back();
-		}
+	public function postDelete($id){
+		$publisher = Publisher::find($id);
+		Session::put('success',"Đã xóa nhà phát hành có ID: ".$id);
+		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Nhà phát hành', $publisher->id,"Nhà phát hành: ".$publisher->name);
+		Publisher::destroy($id);
+		
+		return Redirect::to("admin/publishers/index");
 	}
 
 	public function getInformation($id){
@@ -105,10 +86,10 @@ class PublishersController extends BaseController {
                           		'<a href="{{{ URL::to(\'admin/publishers/information/\' . $id) }}}" class="show_info_entry close" style="float:left">
 									<img src="{{asset(\'assets/image/publishers/publisher_icon.png\')}}" class="size40" alt="{{ $id }}">    
                           		</a>',0)	                      
-                          ->edit_column('name', '{{{ Str::limit($name, 40, \'...\') }}}')
+                          ->edit_column('name', '{{{ Str::limit($name, 20, \'...\') }}}')
                           ->add_column('number', '{{ Software::where("id_publisher","=",$id)->count() }}',4)	      
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/publishers/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',5)	                      
-                          ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',6)	                      
+                          ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/publishers/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',6)	                      
 		                  ->make();
     }
 }

@@ -59,38 +59,18 @@ class SoftwaresController extends BaseController {
 		}
 	}
 
-	public function postDetroyId($id,$back){
-		$software = Software::findOrFail($id);
-		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Phần mềm', $software->id,"Phần mềm ".$software->name." có ID: ".$software->id);
-		Session::put('success',"Đã xóa phần mềm ".$software->name." có ID: ".$software->id);
-		Software::destroy($id);
-		$find = Software::get()->first();
-		if($back=='back'){
-			return Redirect::back();
-		}
-		else if($back=='next'){
-			if(!empty($find))
-				return Redirect::to("admin/softwares/information/{$find->id}");
-			else
-				return Redirect::to("admin/softwares/create");
-		}
+	public function getDelete($id){
+		$software = Software::find($id);
+		$string = Str::limit($software->name, 150, '...');
+		return View::make('backend.modals.delete_form', ['id'=>$software->id,'title'=>"phần mềm",'item'=>"softwares",'content'=>$string]);
 	}
 
-	public function postDetroy(){
-		$id = Input::get('id');
-		if($id == 0){
-			Session::put('fail',"Chọn phần mềm cần xóa");
-			return Redirect::back();
-		}
-		else{
-			foreach ($id as $key) {
-				$software = Software::findOrFail($key);
-				UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Phần mềm', $software->id,"Phần mềm ".$software->name." có ID: ".$software->id);
-				Software::destroy($key);
-			}
-			Session::put('success',"Đã xóa các phần mềm vừa chọn");
-			return Redirect::back();
-		}
+	public function postDelete($id){
+		$software = Software::find($id);
+		Session::put('success',"Đã xóa phần mềm có ID: ".$id);
+		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Phần mềm', $software->id,"Phần mềm: ".$software->name);
+		Software::destroy($id);
+		return Redirect::to("admin/softwares/index");
 	}
 
 	public function getInformation($id){
@@ -138,7 +118,7 @@ class SoftwaresController extends BaseController {
 									@endif
                           		')
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',7)	                      
-                          ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',8)	                      
+                          ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',8)	                      
 		                  ->make();
     }
 
@@ -172,7 +152,7 @@ class SoftwaresController extends BaseController {
 									@endif
                           		')
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',7)	                      
-                          ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',8)	                      
+                          ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',8)	                      
 		                  ->make();
     }
 
@@ -206,7 +186,7 @@ class SoftwaresController extends BaseController {
 									@endif
                           		')
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',7)	                      
-                          ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',8)	                      
+                          ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',8)	                      
 		                  ->make();
     }
 
@@ -240,7 +220,7 @@ class SoftwaresController extends BaseController {
 									@endif
                           		')
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',7)	                      
-                          ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',8)	                      
+                          ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',8)	                      
 		                  ->make();
     }
 
@@ -266,7 +246,7 @@ class SoftwaresController extends BaseController {
 									@endif
                           		')
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',6)	                      
-                          ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',7)	                      
+                          ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',7)	                      
 		                  ->make();
     }
 }
