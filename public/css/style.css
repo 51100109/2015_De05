@@ -272,6 +272,8 @@ body {
     background-color: #fff;
     padding-left: 0px;
     padding-right: 0px;
+    margin-top:10px;
+    margin-bottom: 10px;
 }
 .container-fluid{
     background-color: #FFEC94;
