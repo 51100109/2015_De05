@@ -62,7 +62,7 @@ class SoftwaresController extends BaseController {
 	public function getDelete($id){
 		$software = Software::find($id);
 		$string = Str::limit($software->name, 150, '...');
-		return View::make('backend.modals.delete_form', ['id'=>$software->id,'title'=>"phần mềm",'item'=>"softwares",'content'=>$string]);
+		return View::make('backend.modals.delete_form', ['id'=>$software->id,'title'=>"phần mềm",'item'=>"softwares",'content'=>$string,'counter'=>0]);
 	}
 
 	public function postDelete($id){
@@ -70,6 +70,11 @@ class SoftwaresController extends BaseController {
 		Session::put('success',"Đã xóa phần mềm có ID: ".$id);
 		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Phần mềm', $software->id,"Phần mềm: ".$software->name);
 		Software::destroy($id);
+    $comments = Comment::where('target','=','Phần mềm')->where('id_target','=',$id)->get();
+    foreach ($comments as $comment) {
+        UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Bình luận', $comment->id,"Nội dung: ".$comment->content);
+        Comment::destroy($comment->id);
+    }
 		return Redirect::to("admin/softwares/index");
 	}
 

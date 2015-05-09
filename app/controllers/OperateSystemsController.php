@@ -79,7 +79,8 @@ class OperateSystemsController extends BaseController {
 	public function getDelete($id){
 		$system = OperateSystem::find($id);
 		$string = Str::limit($system->name, 150, '...');
-		return View::make('backend.modals.delete_form', ['id'=>$system->id,'title'=>"hệ điều hành",'item'=>"operate-systems",'content'=>$string]);
+		$counter = Software::where('id_system','=',$id)->count();
+		return View::make('backend.modals.delete_form', ['id'=>$system->id,'title'=>"hệ điều hành",'item'=>"operate-systems",'content'=>$string,'counter'=>$counter]);
 	}
 
 	public function postDelete($id){

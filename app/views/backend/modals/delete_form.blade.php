@@ -9,14 +9,22 @@
 @stop
 
 @section('modals')
-    <form method="POST" action="{{{ URL::to('admin/'.$item.'/delete/'.$id) }}}" class="container deleteForm"> 
-        <div class="form-group">
-            <b>Bạn chắc chắn muốn xóa {{ $title }} <span class="fontsize1_2em">{{ $id }}</span> : <span class="fontsize1_2em">{{ $content }}</span></b>
-            <br><br>
-            <div class="text-right">
-                <button type="submit" class="btn btn-danger width100">Xác nhận</button>
-                <button type="button" class="btn btn-default close_colorbox width100">Bỏ qua</button>
+    @if($counter == 0)
+        <form method="POST" action="{{{ URL::to('admin/'.$item.'/delete/'.$id) }}}" class="container deleteForm"> 
+            <div class="form-group">
+                <b>Bạn chắc chắn muốn xóa {{ $title }} <span class="fontsize1_2em">{{ $content }} (ID:{{ $id }})</span></b>
+                <br><br>
+                <div class="text-right">
+                    <button type="submit" class="btn btn-danger width100">Xác nhận</button>
+                    <button type="button" class="btn btn-default close_colorbox width100">Bỏ qua</button>
+                </div>
             </div>
+        </form>
+    @else
+        <b>Không thể xóa {{ $title }} <span class="fontsize1_2em">{{ $content }} (ID: {{ $id }})</span> vì tồn tại <span class="fontsize1_2em">{{ $counter }} phần mềm</span> liên quan.</b> 
+        <br><br>
+        <div class="text-right">
+            <button type="button" class="btn btn-default close_colorbox width100">Đóng</button>
         </div>
-    </form>
+    @endif
 @stop

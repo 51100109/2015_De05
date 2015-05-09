@@ -60,7 +60,7 @@ class CommentsController extends BaseController {
 	public function getDelete($id){
 		$comment = Comment::find($id);
 		$string = Str::limit($comment->content, 150, '...');
-		return View::make('backend.modals.delete_form', ['id'=>$comment->id,'title'=>"bình luận",'item'=>"comments",'content'=>$string]);
+		return View::make('backend.modals.delete_form', ['id'=>$comment->id,'title'=>"bình luận",'item'=>"comments",'content'=>$string,'counter'=>0]);
 	}
 
 	public function postDelete($id){

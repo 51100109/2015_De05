@@ -60,7 +60,8 @@ class PublishersController extends BaseController {
 	public function getDelete($id){
 		$publisher = Publisher::find($id);
 		$string = Str::limit($publisher->name, 150, '...');
-		return View::make('backend.modals.delete_form', ['id'=>$publisher->id,'title'=>"nhà phát hành",'item'=>"publishers",'content'=>$string]);
+		$counter = Software::where('id_publisher','=',$id)->count();
+		return View::make('backend.modals.delete_form', ['id'=>$publisher->id,'title'=>"nhà phát hành",'item'=>"publishers",'content'=>$string,'counter'=>$counter]);
 	}
 
 	public function postDelete($id){

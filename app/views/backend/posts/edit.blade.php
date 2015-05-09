@@ -15,6 +15,17 @@
                  	<div class="form-group">
 			            <label class="control-label" for="id">ID</label> 
 			            <input type="text" name="id" id="id" value="{{ $post->id }}" class="form-control" disabled />
+			        </div>
+			        <div class="form-group">
+			            <label class="control-label" for="id">Người đăng</label> 
+			            <input type="text" name="id" id="id" class="form-control" disabled 
+			            		value="<?php
+			            					if(!empty(UserAccount::find($post->id_user)))
+			            						echo UserAccount::find($post->id_user)->username;
+			            					else
+			            						echo "[ ... ]"
+			            				?>
+			            		"/>
 			        </div> 
 			        <div class="form-group">
 			            <label class="control-label" for="title">Tiêu đề</label> 

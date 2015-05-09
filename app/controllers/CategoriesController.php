@@ -66,7 +66,8 @@ class CategoriesController extends BaseController {
 	public function getDelete($id){
 		$category = Category::find($id);
 		$string = Str::limit($category->name, 150, '...');
-		return View::make('backend.modals.delete_form', ['id'=>$category->id,'title'=>"danh mục",'item'=>"categories",'content'=>$string]);
+		$counter = Software::where('id_category','=',$id)->count();
+		return View::make('backend.modals.delete_form', ['id'=>$category->id,'title'=>"danh mục",'item'=>"categories",'content'=>$string,'counter'=>$counter]);
 	}
 
 	public function postDelete($id){

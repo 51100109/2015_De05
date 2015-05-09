@@ -56,7 +56,7 @@ class PostsController extends BaseController {
 	public function getDelete($id){
 		$post = Post::find($id);
 		$string = Str::limit($post->title, 150, '...');
-		return View::make('backend.modals.delete_form', ['id'=>$post->id,'title'=>"bài đăng",'item'=>"posts",'content'=>$string]);
+		return View::make('backend.modals.delete_form', ['id'=>$post->id,'title'=>"bài đăng",'item'=>"posts",'content'=>$string,'counter'=>0]);
 	}
 
 	public function postDelete($id){
@@ -64,7 +64,11 @@ class PostsController extends BaseController {
 		Session::put('success',"Đã xóa bài đăng có ID: ".$id);
 		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Bài đăng', $post->id,"Tiêu đề: ".$post->title);
 		Post::destroy($id);
-		
+		$comments = Comment::where('target','=','Bài đăng')->where('id_target','=',$id)->get();
+	    foreach ($comments as $comment) {
+	        UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Bình luận', $comment->id,"Nội dung: ".$comment->content);
+	        Comment::destroy($comment->id);
+	    }
 		return Redirect::to("admin/posts/index");
 	}
 

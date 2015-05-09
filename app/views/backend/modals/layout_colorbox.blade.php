@@ -23,19 +23,21 @@
   </head>
 
   <body>
-        <div class="message" style="right:0px;top:3px">
-           @if(Session::has('success'))
-            <div class="alert alert-success alert-dismissable alert-message">
-                <label class="success"><span class="glyphicon glyphicon-ok"></span> {{Session::get('success')}}</label>
-                {{ Session::forget("success") }}
-            </div>
-            @endif
-            @if(Session::has('fail'))
-                <div class="alert alert-danger alert-dismissable alert-message">
-                    <label class="success"><span class="glyphicon glyphicon-exclamation-sign"></span> {{Session::get('fail')}}</label>
-                    {{ Session::forget("fail") }}
-                </div>
-            @endif
+        <div id="notify_mes">
+          <div class="message" style="right:0px;">
+             @if(Session::has('success'))
+              <div class="alert alert-success alert-dismissable alert-message">
+                  <label class="success"><span class="glyphicon glyphicon-ok"></span> {{Session::get('success')}}</label>
+                  {{ Session::forget("success") }}
+              </div>
+              @endif
+              @if(Session::has('fail'))
+                  <div class="alert alert-danger alert-dismissable alert-message">
+                      <label class="success"><span class="glyphicon glyphicon-exclamation-sign"></span> {{Session::get('fail')}}</label>
+                      {{ Session::forget("fail") }}
+                  </div>
+              @endif
+          </div>
         </div>
         <div class="page-header alert alert-info null_top">
                 <ul class="pager">
@@ -111,9 +113,18 @@
                window.setTimeout(function() { alert.alert('close') }, delay);
             }
 
+            function notify_mes(result){
+                $("#notify_mes").html(result);
+            }
+
             function updatetable(){
                 oTable.fnReloadAjax();
                 oTable_activities.fnReloadAjax();
+                $.ajax({
+                  url:  "{{{ URL::to('admin/message') }}}",
+                  type:"POST",
+                  success: notify_mes,
+                });
             }
 
             function background() {

@@ -108,7 +108,7 @@ class UserAccountsController extends BaseController {
 	public function getDelete($id){
 		$user = UserAccount::find($id);
 		$string = Str::limit($user->username, 150, '...');
-		return View::make('backend.modals.delete_form', ['id'=>$user->id,'title'=>"thành viên",'item'=>"user-accounts",'content'=>$string]);
+		return View::make('backend.modals.delete_form', ['id'=>$user->id,'title'=>"thành viên",'item'=>"user-accounts",'content'=>$string,'counter'=>0]);
 	}
 
 	public function postDelete($id){
@@ -116,7 +116,17 @@ class UserAccountsController extends BaseController {
 		Session::put('success',"Đã xóa thành viên có ID: ".$id);
 		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Thành viên', $user->id,"Thành viên: ".$user->username);
 		UserAccount::destroy($id);
-		
+		$comments = Comment::where('id_user','=',$id)->get();
+	    foreach ($comments as $comment) {
+	        Comment::destroy($comment->id);
+	        UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Bình luận', $comment->id,"Nội dung: ".$comment->content);
+	    }
+	    $posts = Post::where('id_user','=',$id)->get();
+	    foreach ($posts as $post) {
+	        $post->id_user = Auth::user()->id;
+	        $post->save();
+	        UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Bài đăng', $post->id,"Thay đổi người đăng bài đăng có tiêu đề: ".$post->title);
+	    }
 		return Redirect::to("admin/user-accounts/index");
 	}
 
