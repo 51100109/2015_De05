@@ -261,4 +261,64 @@ h3 {
     }
 }
 
-
+/*css*/
+body {
+    background-image:  url(../imgs/body-bg7.png);
+    background-repeat: repeat;
+    color: #333;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.container{
+    background-color: #fff;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.container-fluid{
+    background-color: #FFEC94;
+}
+.masthead{
+    background-color: #70CAFF;
+    padding-bottom: 0px;
+}
+#home{
+    color: #116611;
+}
+#header-bg{
+    background-image:  url(../imgs/header-backgroup.jpg);
+    background-size: 100%;
+    height: 180px;
+    background-repeat: 0;
+}
+.content-subhead{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.btn-default{
+    margin-bottom: 10px;
+}
+.panel-heading{
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 20px;
+}
+.list-group{
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.list-group-item{
+    background-color: #FFEC94;
+}
+#sidebar {
+padding-right: 0px;
+}
+.navbar{
+    margin-bottom: 0px;
+}
+#bs-example-navbar-collapse-1 a{
+    color:  #116611;
+}
+#line1,#line2{
+    height: 3px;
+    background-color: red; 
+}
+.footer{
+    background-color: #70CAFF;
+}

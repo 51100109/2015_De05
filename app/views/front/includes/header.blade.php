@@ -1,6 +1,7 @@
+<link rel="stylesheet" type="text/css" href="<?php echo asset('assets/font-awesome/css/font-awesome.min.css'); ?>"  media="all" rel="stylesheet">
 <div class="masthead">
-		<h3 class="text-muted"> Softsharing </h3>
-		
+		<!-- <h3 class="text-muted"> Softsharing </h3> -->
+		<div id="header-bg"></div>
 		<nav class="navbar navbar-default">
 			  <div class="container-fluid">
 			    <!-- Brand and toggle get grouped for better mobile display -->
@@ -11,7 +12,7 @@
 			        <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>
 			      </button>
-			      <a class="navbar-brand" href="{{ URL::to('/') }}"> Trang chủ </a>
+			      <a class="navbar-brand" id="home" href="{{ URL::to('/') }}"><i class="fa fa-home"></i> Trang chủ </a>
 			    </div>
 
 			    <!-- Collect the nav links, forms, and other content for toggling -->
@@ -71,18 +72,18 @@
 <!-- 		            </li>           -->
 		             
 			        <li>
-			        	<a href="{{ URL::to('post') }}"> Bài đăng </a>
+			        	<a href="{{ URL::to('post') }}"><i class="fa fa-pencil-square-o"></i> Bài đăng </a>
 			        </li>	  
 			         
 			     </ul>			      
 			      
 			      <ul class="nav navbar-nav navbar-right">
                 	@if(Auth::check())
-                    <li><a href="{{ URL::to('profile') }}"><span>Hồ sơ</span></a></li>
-                    <li><a href="{{ URL::to('logout') }}"><span>Đăng xuất ({{Auth::user()->username}})</span></a></li>
+                    <li><a href="{{ URL::to('profile') }}"><i class="fa fa-user"></i><span> Hồ sơ</span></a></li>
+                    <li><a href="{{ URL::to('logout') }}"><i class="fa fa-sign-out"></i><span> Đăng xuất ({{Auth::user()->username}})</span></a></li>
                 	@else
-                	<li><a href="{{ URL::to('register') }}"><span>Đăng kí</span></a></li>
-                    <li><a href="{{ URL::to('login') }}"><span>Đăng nhập</span></a></li>
+                	<li><a href="{{ URL::to('register') }}"><i class="fa fa-user-plus"></i><span> Đăng kí</span></a></li>
+                    <li><a href="{{ URL::to('login') }}"><i class="fa fa-sign-in"></i><span> Đăng nhập</span></a></li>
                 	@endif
 			      </ul>		
 
@@ -90,12 +91,13 @@
 			        <div class="form-group">
 			          <input type="text" class="form-control" placeholder="Search">			          			          
 			        </div>
-			        <button type="submit" class="btn btn-default">Submit</button>
+			        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
 			       
 			      </form>      	
 
 			    </div><!-- /.navbar-collapse -->
 			  </div><!-- /.container-fluid -->
 		</nav>
+		<div class="col-mp-12" id="line1"></div>
 </div>
 
