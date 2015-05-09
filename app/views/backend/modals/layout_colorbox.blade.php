@@ -184,6 +184,19 @@
                       fixed:true,
                       onOpen: background,
               });
+              $(".edit_info_entry_100").colorbox({
+                      iframe:true, 
+                      width:"100%", 
+                      height:"100%",
+                      rel:'edit_info_entry', 
+                      current: "Entry {current} of {total}",
+                      previous: "Previous",
+                      next: "Next",
+                      close: "Close",
+                      onClosed: updatetable,
+                      fixed:true,
+                      onOpen: background,
+              });
               $(".delete_info_entry").colorbox({
                       iframe:true, 
                       width:700, 

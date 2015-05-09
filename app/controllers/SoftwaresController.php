@@ -95,32 +95,32 @@ class SoftwaresController extends BaseController {
                           ->edit_column(
                           		'image', 
                           		'<a href="{{{ URL::to(\'admin/softwares/information/\' . $id) }}}" class="show_info_entry close" style="float:left">
-									<img src="{{ $image }}" class="size40" alt="{{ $id }}">
+									                   <img src="{{ $image }}" class="size40" alt="{{ $id }}">
                           		</a>')	                      
                           ->edit_column('name', '{{{ Str::limit($name, 10, \'...\') }}}')
                           ->edit_column(
                           		'name_publisher', 
                           		' 	@if(!empty($name_publisher))
-                          				{{{ Str::limit($name_publisher, 10, \'...\') }}}
-									@else
-										[ ... ]
-									@endif
+                          				  {{{ Str::limit($name_publisher, 10, \'...\') }}}
+                									@else
+                										[ ... ]
+                									@endif
                           		')
                           ->edit_column(
                           		'name_system', 
                           		'	@if(!empty($name_system))
                           				{{{ Str::limit($name_system, 10, \'...\') }}}
                           			@else
-										[ ... ]
-									@endif
+              										[ ... ]
+              									@endif
                           		')
                           ->edit_column(
                           		'name_category', 
                           		'	@if(!empty($name_category))
                           				{{{ Str::limit($name_category, 10, \'...\') }}}
                           			@else
-										[ ... ]
-									@endif
+              										[ ... ]
+              									@endif
                           		')
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',7)	                      
                           ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',8)	                      
@@ -156,7 +156,7 @@ class SoftwaresController extends BaseController {
 										[ ... ]
 									@endif
                           		')
-                          ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',7)	                      
+                          ->add_column('edit', '<a class="close block edit_info_entry_100 em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',7)	                      
                           ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',8)	                      
 		                  ->make();
     }
@@ -190,7 +190,7 @@ class SoftwaresController extends BaseController {
 										[ ... ]
 									@endif
                           		')
-                          ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',7)	                      
+                          ->add_column('edit', '<a class="close block edit_info_entry_100 em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',7)	                      
                           ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',8)	                      
 		                  ->make();
     }
@@ -224,7 +224,7 @@ class SoftwaresController extends BaseController {
 										[ ... ]
 									@endif
                           		')
-                          ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',7)	                      
+                          ->add_column('edit', '<a class="close block edit_info_entry_100 em1_4" href="{{{ URL::to(\'admin/softwares/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',7)	                      
                           ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/softwares/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',8)	                      
 		                  ->make();
     }
