@@ -50,12 +50,19 @@ class PublishersController extends BaseController {
 	}
 
 	public function postEdit($id){
+		$validator = Validator::make($data = Input::all(), Publisher::$rules_edit);
+		if ($validator->fails()){
+			Session::put('fail',"Cập nhật không thành công");
+			return Redirect::back();
+		}
+		else{
 			$publisher = Publisher::find($id);
 			$infor =$publisher->name;
 			$publisher->update(Input::all());
 			UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Nhà phát hành', $publisher->id,"Cập nhật tên nhà phát hành ".$infor." thành ".$publisher->name);
 			Session::put('success',"Đã cập nhật nhà phát hành ".$publisher->name." có ID: ".$publisher->id);
 			return Redirect::back();
+		}
 	}
 
 	public function getDelete($id){
