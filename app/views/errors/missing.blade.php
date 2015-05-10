@@ -9,5 +9,5 @@
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
           </p>
        	<h2>404 Not Found</h2>
-       	<div>Trang bạn tìm hiện không có</div>
+       	<div>Trang bạn yêu cầu hiện không có</div>
 @endsection
