@@ -59,7 +59,7 @@
                         <div class="col-xs-9">{{ $show->content }}</div>
                     </div>
                     <div class="text-right">
-                    <a href="#" class="block"> Xem chi tiết <span class="glyphicon glyphicon-arrow-right"></span></a>
+                        <a href="{{{ URL::to('post/' . $show->id) }}}" class="block" target="_blank"> Đến bài đăng <span class="glyphicon glyphicon-arrow-right"></span></a>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
     
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3 class="panel-title">Hoạt động bài đăng</h3>
+            <h3 class="panel-title">Hoạt động thành viên</h3>
         </div>
         <div class="panel-body background_EB">
             <table class="display" id="activities_table">

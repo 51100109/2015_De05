@@ -36,37 +36,4 @@ class UserAccount extends Eloquent {
 	protected $fillable = ['id','username','password','admin','fullname','creenname','gender','email','birthday','address','phone'];
 	
 	public $table="user_accounts";
-
-	public static function check_login($user_input,$password){
-		$array1=array('user_input'=>$user_input);
-		$rules=array('user_input'=>'email');
-		if(Validator::make($array1,$rules)->fails()){
-			$check=UserAccount::where('username','=',$user_input)->where('password','=',$password)->get()->first();
-		}
-		else{
-			$check=UserAccount::where('email','=',$user_input)->where('password','=',$password)->get()->first();
-		}
-		if(!empty($check)){
-			Session::put('logined', 'true');
-			Session::put('admin', $check->admin);
-			Session::put('user', $check->id);
-			return true;
-		}
-		else
-			return false;
-	}
-
-	public static function check_username($username){
-		if(UserAccount::where('username','=',$username)->count() > 0)
-			return true;
-		else
-			return false;
-	}
-
-	public static function check_email($email){
-		if(UserAccount::where('email','=',$email)->count() > 0)
-			return true;
-		else
-			return false;
-	}
 }

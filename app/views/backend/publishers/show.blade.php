@@ -49,7 +49,7 @@
 
     <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Danh Sách Phần Mềm</h3>
+                        <h3 class="panel-title">Danh sách phần mềm</h3>
                     </div>
                     <div class="panel-body background_EB">
                         <table id="softwares_table" class="display" >
@@ -70,7 +70,7 @@
 
     <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Hoạt động nhà phát hành</h3>
+                <h3 class="panel-title">Hoạt động Administrator</h3>
             </div>
             <div class="panel-body background_EB">
                     <table class="display" id="activities_table">

@@ -3,6 +3,7 @@
 class PostsController extends BaseController {
 
 	public function __construct(){
+		$this->beforeFilter('auth');
     	$this->beforeFilter('check-admin');
 	}
 

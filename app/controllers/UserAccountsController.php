@@ -3,6 +3,7 @@
 class UserAccountsController extends BaseController {
 
 	public function __construct(){
+		$this->beforeFilter('auth');
     	$this->beforeFilter('check-admin');
 	}
 
@@ -114,7 +115,7 @@ class UserAccountsController extends BaseController {
 	public function postDelete($id){
 		$user = UserAccount::find($id);
 		Session::put('success',"Đã xóa thành viên có ID: ".$id);
-		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Thành viên', $user->id,"Thành viên: ".$user->username);
+		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Thành viên', $user->id,"Tài khoản: " .$user->username. " --- \n Tên: " .$user->fullname. " --- \n Tên hiển thị: " .$user->creenname);
 		UserAccount::destroy($id);
 		$comments = Comment::where('id_user','=',$id)->get();
 	    foreach ($comments as $comment) {

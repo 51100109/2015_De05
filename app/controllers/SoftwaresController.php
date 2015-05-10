@@ -2,6 +2,7 @@
 
 class SoftwaresController extends BaseController {
 	public function __construct(){
+      $this->beforeFilter('auth');
     	$this->beforeFilter('check-admin');
 	}
 
