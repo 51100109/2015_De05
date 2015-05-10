@@ -79,6 +79,10 @@
 			      
 			      <ul class="nav navbar-nav navbar-right">
                 	@if(Auth::check())
+                		<?php $user = Auth::user() ?>
+	                	@if($user->admin==1)
+	                		<li><a href="{{ URL::to('admin/home') }}"><i class="fa fa-user"></i><span> Quản lý</span></a></li>
+	                	@endif
                     <li><a href="{{ URL::to('profile') }}"><i class="fa fa-user"></i><span> Hồ sơ</span></a></li>
                     <li><a href="{{ URL::to('logout') }}"><i class="fa fa-sign-out"></i><span> Đăng xuất ({{Auth::user()->username}})</span></a></li>
                 	@else
