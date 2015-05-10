@@ -9,8 +9,8 @@ Các bài đăng - Softsharing
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
           </p>
    		 @if(Auth::check())
-   		 <p>
-   		 	<a href="{{ URL::to('post/new') }}" class="btn btn-primary pull-right" role="button">+ Đăng bài mới</a>
+   		 <p class="post-list">
+   		 	<a href="{{ URL::to('post/new') }}" class="btn btn-success pull-right" role="button"><i class="fa fa-file"></i> Đăng bài mới</a>
    		 	</p>
    		 @endif
         @if (count($posts) === 0)

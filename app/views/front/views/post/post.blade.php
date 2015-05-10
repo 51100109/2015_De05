@@ -12,14 +12,12 @@
 				@if (Auth::user()->id == $post->id_user)
 					<div class=text-right>
 						<a class="btn btn-primary" href={{ URL::to('/post/edit/'.$post->id) }} role="button"><span class="glyphicon glyphicon-pencil"></span> Sửa bài viết</a>
-						<a class="btn btn-primary" href={{ URL::to('/post/delete/'.$post->id) }} role="button"><span class="glyphicon glyphicon-remove"></span>  Xóa bài viết</a>
+						<a class="btn btn-danger" href={{ URL::to('/post/delete/'.$post->id) }} role="button"><i class="fa fa-trash"></i>  Xóa bài viết</a>
 					</div>	
 					
 				@endif
 		@endif
-		<h2>{{{$post->title}}}</h2>
-		<?php $user = User::find((int)$post->id_user) ?>
-		<div style="margin-top: 0px;margin-bottom: 10px;font-size: 12px;;color:grey">Đăng bởi: {{{$user->username}}}</div>
+		<h2 class="post-list-title1">{{{$post->title}}}</h2>
 		<div id="postcontent">
 			{{Purifier::clean($post->content)}}
 		</div>

@@ -22,15 +22,15 @@
 			CKEDITOR.config.resize_enabled = false;
 		</script>
 		<div class="form-group">
-			<label for="title"><h3>Tiêu đề</h3></label>
+			<label for="title"><h3 class="post-list-muc">Tiêu đề</h3></label>
 			<input type="text" class="form-control" id="title" name="title" placeholder="Tiêu đề">
 		</div>
 		<div class="form-group">
-			<label for="content"><h3>Nội dung</h3></label>
+			<label for="content"><h3 class="post-list-muc">Nội dung</h3></label>
 			<textarea class="ckeditor form-control" name="content" id="content"  style="resize: none"></textarea>
 		</div>
 		
-		<button type="submit" class="btn btn-primary pull-right">Đăng bài</button>
+		<button type="submit" class="btn btn-success pull-right post-list-edit-button"><i class="fa fa-plus"></i> Đăng bài</button>
 	</form>
 
 
