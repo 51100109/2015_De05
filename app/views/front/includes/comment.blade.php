@@ -37,8 +37,8 @@
 					</div>
 					<div class="col-md-2"
 						style="margin-bottom: 18px; position: absolute; bottom: 0; right: 0;">
-						<button type="button" class="btn btn-primary btn-block"
-							onclick="postComment(<?php echo $idUser.",".$isSoftware.",".$idTarget.","."'".$url."'" ?>)">Đăng</button>
+						<button type="button" class="btn btn-success btn-block"
+							onclick="postComment(<?php echo $idUser.",".$isSoftware.",".$idTarget.","."'".$url."'" ?>)"><i class="fa fa-plus"></i> Đăng</button>
 					</div>
 				</div>
 				@else
@@ -56,7 +56,7 @@
 		<div class="col-md-12">
 			<div class="detailBox">
 				<div class="titleBox">
-					<label>Các bình luận</label>
+					<label>Các bình luận:</label>
 				</div>
 
 				<div class="actionBox">

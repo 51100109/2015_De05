@@ -167,8 +167,104 @@ h3 {
     font-weight: 700;
 }
 
+.content-subhead-homepage {
+    margin-left: 25em;
+    margin-right: 2em;
+    margin-top: -0.1em;
+    padding-left: 1em;
+    padding-bottom: 0.8em;
+    padding-top: 0.8em;   
+    color: #6B6B47;
+    border-bottom: 2px solid #eee;
+    border-top: 2px solid #eee;
+    border-right: 2px solid #eee;
+    border-left: 2px solid #eee;    
+    -moz-border-radius: 10px 10px 0px 0px;
+    -webkit-border-radius: 10px 10px 0px 0px;
+    -ms-border-radius: 10px 10px 0px 0px;
+    -o-border-radius: 10px 10px 0px 0px;
+    border-radius: 10px 10px 0px 0px;
+    font-size: 1.2em;
+    font-weight: 700;
+}
+.content-subhead-homepage-clock {
+    color: #3366FF;
+}
+
+.content-subhead-homemain {
+    margin-left: 25em;
+    margin-right: 2em;
+    margin-top: -0.7em;
+    padding-left: 1em;
+    padding-bottom: 0.8em;
+    padding-top: 0.8em;   
+    color: #6B6B47;    
+    border-right: 2px solid #eee;
+    border-left: 2px solid #eee;        
+    font-size: 1.2em;
+    font-weight: 700;
+}
 .content {
     padding: 2em 1em 0;
+}
+
+
+
+.post-list{
+    margin-bottom: 3em;
+}
+
+.post-list-title {
+    font-size: 2em;
+    color: #6173eb;
+    padding-bottom: 0.2em;
+    padding-top: 0.2em;
+    padding-left: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: -0.5em;
+    margin-right: -0.5em;
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border: 0px solid #000000;
+    background: #faf8f5;
+}
+
+.post-list-title1 {
+    font-size: 2em;
+    color: #6173eb;
+    padding-bottom: 0.2em;
+    padding-top: 0.2em;
+    padding-left: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: -1.1em;
+    margin-right: -1.1em;
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border: 0px solid #000000;
+    background: #faf8f5;
+}
+
+.post-list-muc{
+    padding-bottom: 0.2em;
+    padding-top: 0.2em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border-radius: 26px 26px 26px 26px;
+    -moz-border-radius: 26px 26px 26px 26px;
+    -webkit-border-radius: 26px 26px 26px 26px;
+    border: 0px solid #000000;
+    background: #ebc986;
+}
+
+.post-list-edit{
+    font-size: 0.9em;
+    color: #3399FF;
+}
+
+.post-list-edit-button{
+    margin-bottom: 1em;
 }
 
 .post {
@@ -181,10 +277,34 @@ h3 {
     margin-bottom: 0.2em;
     margin-top: 0.2em;
 }
+
+.post-title-homepage {
+    font-size: 0.8em;
+    color: #aaa;
+    margin-bottom: 0.2em;
+    margin-top: 0.2em;
+    padding-left: 2.5em;
+}
+
+.post-date-homepage {
+    font-size: 0.8em;
+    color: #aaa;
+    margin-bottom: 0em;
+    margin-top: -1.6em;
+    padding-right: 1em;
+    float: right;
+}
+
 .post-avatar {
     border-radius: 50px;
     float: right;
     margin-right: 4em;
+}
+
+.post-avatar-homepage {
+    border-radius: 50px;
+    float: left;
+    margin-left: 0.1em;
 }
 .post-description {
     font-family: Georgia, "Cambria", serif;
