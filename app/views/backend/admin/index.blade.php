@@ -77,7 +77,7 @@
   </div>
 
    <div class="container" id="shadow"> 
-       <nav class="navbar navbar-default navbar-fixed-top" style="background:#bce8f1;">
+       <nav class="navbar navbar-default navbar-fixed-top" style="background:#f0f0f0;">
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
