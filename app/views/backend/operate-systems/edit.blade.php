@@ -33,7 +33,7 @@
                             <div class="col-xs-12 col-sm-6 margin10_top">
                                 <input type="checkbox" name="id_category[]" id="id_category" value="{{ $item->id }}" class="close check_box_20" style="float:left"
                                      <?php
-                                        foreach (explode("\n",$system->id_category) as $checked){
+                                        foreach (explode(PHP_EOL,$system->id_category) as $checked){
                                             if($checked == $item->id) echo "checked='checked'"; 
                                         }
                                      ?>

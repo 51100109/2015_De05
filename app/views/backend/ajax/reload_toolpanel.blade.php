@@ -4,8 +4,8 @@
               <div class="panel panel-info">
               <div class="panel-heading"><a data-toggle="collapse" data-parent="#stacked-menu" href="#{{ $item->id }}" class="block"><img src="{{ $item->image }}" class="size20" alt="icon"> {{ $item->name }} <span class="caret arrow right_top8"></span></a></div>
               <ul class="nav nav-pills nav-stacked collapse" id="{{ $item->id }}">
-                @foreach(explode("\n",$item->id_category) as $category)
-                    @if(!empty(Category::find($category)))
+                @foreach(explode(PHP_EOL,$item->id_category) as $category)
+                    @if(is_numeric($category))
                         <li><a href="{{{ URL::to('admin/softwares/category/'.$item->id.'/'.$category) }}}"><img src="{{ Category::find($category)->image }}" class="size20" alt="icon"> {{ Category::find($category)->name }} <span class="badge right">{{ Software::count($item->id,$category) }}</span></a></li>
                     @endif
                 @endforeach 

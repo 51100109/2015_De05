@@ -3,6 +3,7 @@
 class PublishersController extends BaseController {
 
 	public function __construct(){
+		$this->beforeFilter('auth');
     	$this->beforeFilter('check-admin');
 	}
 
@@ -87,7 +88,7 @@ class PublishersController extends BaseController {
                           		'<a href="{{{ URL::to(\'admin/publishers/information/\' . $id) }}}" class="show_info_entry close" style="float:left">
 									<img src="{{asset(\'assets/image/publishers/publisher_icon.png\')}}" class="size40" alt="{{ $id }}">    
                           		</a>',0)	                      
-                          ->edit_column('name', '{{{ Str::limit($name, 20, \'...\') }}}')
+                          ->edit_column('name', '{{{ Str::limit($name, 30, \'...\') }}}')
                           ->add_column('number', '{{ Software::where("id_publisher","=",$id)->count() }}',4)	      
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/publishers/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',5)	                      
                           ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/publishers/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',6)	                      

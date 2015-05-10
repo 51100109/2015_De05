@@ -80,7 +80,12 @@
                     @endif
                 </div>
             </div>
+            <br>
             <div class="col-xs-12">{{ $show->description }}</div>
+            <br>
+            <div class="text-right">
+                <a href="{{{ URL::to('software/' . $show->id) }}}" class="block" target="_blank"> Đến phần mềm <span class="glyphicon glyphicon-arrow-right"></span></a>
+            </div>
         </div>
     </div>
     
@@ -108,7 +113,7 @@
 
     <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Hoạt động</h3>
+                    <h3 class="panel-title">Hoạt động thành viên</h3>
                 </div>
                 <div class="panel-body background_EB">
                     <table class="display" id="activities_table">

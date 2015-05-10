@@ -3,6 +3,7 @@
 class CategoriesController extends BaseController {
 
 	public function __construct(){
+		$this->beforeFilter('auth');
     	$this->beforeFilter('check-admin');
 	}
 
@@ -72,10 +73,17 @@ class CategoriesController extends BaseController {
 
 	public function postDelete($id){
 		$category = Category::find($id);
-		Session::put('success',"Đã xóa danh mục có ID: ".$id);
+		$systems = OperateSystem::all();
+		foreach ($systems as $system) {
+	        $string1 = str_replace( $category->id, '', $system->id_category );
+	        $string2 = str_replace( PHP_EOL.PHP_EOL, PHP_EOL, $string1 );
+	        $system->id_category = $string2;
+	        $system->save();
+		}
+
+        Session::put('success',"Đã xóa danh mục có ID: ".$id);
 		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Danh mục', $category->id,"Danh mục: ".$category->name);
 		Category::destroy($id);
-		
 		return Redirect::to("admin/categories/index");
 	}
 
@@ -93,7 +101,7 @@ class CategoriesController extends BaseController {
                           		'<a href="{{{ URL::to(\'admin/categories/information/\' . $id) }}}" class="show_info_entry close" style="float:left">
 									<img src="{{ $image }}" class="size32" alt="{{ $id }}">    
                           		</a>',0)	                      
-                          ->edit_column('name', '{{{ Str::limit($name, 20, \'...\') }}}')
+                          ->edit_column('name', '{{{ Str::limit($name, 30, \'...\') }}}')
                           ->add_column('number', '{{ Software::where("id_category","=",$id)->count() }}',4)	                      
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/categories/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',5)	                      
                           ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/categories/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',6)	                      

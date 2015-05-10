@@ -77,7 +77,7 @@
   </div>
 
    <div class="container" id="shadow"> 
-       <nav class="navbar navbar-inverse navbar-fixed-top">
+       <nav class="navbar navbar-default navbar-fixed-top" style="background:#bce8f1;">
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -88,16 +88,15 @@
             </button>
             <a class="navbar-brand" href="{{{ URL::to('admin/home') }}}"><span class="glyphicon glyphicon-fire"></span> Administrator</a>
           </div>
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <div class="collapse navbar-collapse">
           @if(Auth::check())
-            <ul class="nav navbar-nav nav-tabs" id="reload_toolbar">
-              <li><a href="{{{ URL::to('admin/home') }}}"><span class="glyphicon glyphicon-home"></span> Trang chủ</a></li>
+            <ul class="nav navbar-nav" id="reload_toolbar">
               @foreach($system as $item)
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false"><img src="{{ $item->image }}" class="size20" alt="icon"> {{ $item->name }} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                  @foreach(explode("\n",$item->id_category) as $category)
-                      @if(!empty(Category::find($category)))
+                  @foreach(explode(PHP_EOL,$item->id_category) as $category)
+                      @if(is_numeric($category))
                           <li><a href="{{{ URL::to('admin/softwares/category/'.$item->id.'/'.$category) }}}"><img src="{{ Category::find($category)->image }}" class="size20" alt="icon">  {{ Category::find($category)->name }}</a></li>
                       @endif
                   @endforeach
@@ -156,8 +155,8 @@
               <div class="panel panel-info">
               <div class="panel-heading"><a data-toggle="collapse" data-parent="#stacked-menu" href="#{{ $item->id }}" class="block"><img src="{{ $item->image }}" class="size20" alt="icon"> {{ $item->name }} <span class="caret arrow right_top8"></span></a></div>
               <ul class="nav nav-pills nav-stacked collapse" id="{{ $item->id }}">
-                @foreach(explode("\n",$item->id_category) as $category)
-                    @if(!empty(Category::find($category)))
+                @foreach(explode(PHP_EOL,$item->id_category) as $category)
+                    @if(is_numeric($category))
                         <li><a href="{{{ URL::to('admin/softwares/category/'.$item->id.'/'.$category) }}}"><img src="{{ Category::find($category)->image }}" class="size20" alt="icon"> {{ Category::find($category)->name }} <span class="badge right">{{ Software::count($item->id,$category) }}</span></a></li>
                     @endif
                 @endforeach 
