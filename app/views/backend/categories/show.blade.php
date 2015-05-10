@@ -23,24 +23,29 @@
                 </div>
                 <div class="col-xs-9">
                     <div class="row rowbody">
-                        <div class="col-xs-2 color0">ID</div>
+                        <div class="col-xs-3 color0">ID</div>
                         <div class="col-xs-1">:</div>
-                        <div class="col-xs-9">{{ $show->id }}</div>
+                        <div class="col-xs-8">{{ $show->id }}</div>
                     </div>
                     <div class="row rowbody">
-                        <div class="col-xs-2 color0">Danh mục</div>
+                        <div class="col-xs-3 color0">Danh mục</div>
                         <div class="col-xs-1">:</div>
-                        <div class="col-xs-9">{{ $show->name }}</div>
+                        <div class="col-xs-8">{{ $show->name }}</div>
                     </div>
                     <div class="row rowbody">
-                        <div class="col-xs-2 color0">Ngày tạo</div>
+                        <div class="col-xs-3 color0">Ngày tạo</div>
                         <div class="col-xs-1">:</div>
-                        <div class="col-xs-9">{{ $show->created_at }}</div>
+                        <div class="col-xs-8">{{ $show->created_at }}</div>
                     </div>
                     <div class="row rowbody">
-                        <div class="col-xs-2 color0">Số Phần mềm</div>
+                        <div class="col-xs-3 color0">Cập nhật lần cuối</div>
                         <div class="col-xs-1">:</div>
-                        <div class="col-xs-9">{{ Software::where("id_category","=",$show->id)->count() }}</div>
+                        <div class="col-xs-8">{{ $show->updated_at }}</div>
+                    </div>
+                    <div class="row rowbody">
+                        <div class="col-xs-3 color0">Số Phần mềm</div>
+                        <div class="col-xs-1">:</div>
+                        <div class="col-xs-8">{{ Software::where("id_category","=",$show->id)->count() }}</div>
                     </div>
                 </div>
             </div>

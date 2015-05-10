@@ -30,7 +30,7 @@
 									<th class="col-xs-1">ID</th>
 									<th class="col-xs-3">Tiêu Đề</th>
 									<th class="col-xs-2">Người Đăng</th>
-									<th class="col-xs-3">Thời Gian</th>
+									<th class="col-xs-3">Ngày Tạo</th>
 									<th class="col-xs-1"></th>
 									<th class="col-xs-1"></th>
 								</tr>

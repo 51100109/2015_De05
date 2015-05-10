@@ -23,19 +23,19 @@
                 </div>
                 <div class="col-xs-9">
                     <div class="row rowbody">
-                        <div class="col-xs-2 color0">ID</div>
+                        <div class="col-xs-3 color0">ID</div>
                         <div class="col-xs-1">:</div>
-                        <div class="col-xs-9">{{ $show->id }}</div>
+                        <div class="col-xs-8">{{ $show->id }}</div>
                     </div>
                     <div class="row rowbody">
-                        <div class="col-xs-2 color0">Tiêu đề</div>
+                        <div class="col-xs-3 color0">Tiêu đề</div>
                         <div class="col-xs-1">:</div>
-                        <div class="col-xs-9">{{ $show->title }}</div>
+                        <div class="col-xs-8">{{ $show->title }}</div>
                     </div>
                     <div class="row rowbody">
-                        <div class="col-xs-2 color0">Người đăng</div>
+                        <div class="col-xs-3 color0">Người đăng</div>
                         <div class="col-xs-1">:</div>
-                        <div class="col-xs-9">
+                        <div class="col-xs-8">
                             @if(!empty( UserAccount::find($show->id_user)))
                                 <a href="{{{ URL::to('admin/user-accounts/information/'.$show->id_user) }}}" class="block">{{ UserAccount::find($show->id_user)->username }}</a>
                             @else
@@ -44,19 +44,29 @@
                         </div>
                     </div>
                     <div class="row rowbody">
-                        <div class="col-xs-2 color0">Lượt xem</div>
+                        <div class="col-xs-3 color0">Ngày Tạo</div>
                         <div class="col-xs-1">:</div>
-                        <div class="col-xs-9">{{ $view }}</div>
+                        <div class="col-xs-8">{{ $show->created_at }}</div>
                     </div>
                     <div class="row rowbody">
-                        <div class="col-xs-2 color0">Số bình luận</div>
+                        <div class="col-xs-3 color0">Cập nhật lần cuối</div>
                         <div class="col-xs-1">:</div>
-                        <div class="col-xs-9">{{ $number_comments }}</div>
+                        <div class="col-xs-8">{{ $show->updated_at }}</div>
                     </div>
                     <div class="row rowbody">
-                        <div class="col-xs-2 color0">Nội dung</div>
+                        <div class="col-xs-3 color0">Lượt xem</div>
                         <div class="col-xs-1">:</div>
-                        <div class="col-xs-9">{{ $show->content }}</div>
+                        <div class="col-xs-8">{{ $view }}</div>
+                    </div>
+                    <div class="row rowbody">
+                        <div class="col-xs-3 color0">Số bình luận</div>
+                        <div class="col-xs-1">:</div>
+                        <div class="col-xs-8">{{ $number_comments }}</div>
+                    </div>
+                    <div class="row rowbody">
+                        <div class="col-xs-3 color0">Nội dung</div>
+                        <div class="col-xs-1">:</div>
+                        <div class="col-xs-8">{{ $show->content }}</div>
                     </div>
                     <div class="text-right">
                         <a href="{{{ URL::to('post/' . $show->id) }}}" class="block" target="_blank"> Đến bài đăng <span class="glyphicon glyphicon-arrow-right"></span></a>

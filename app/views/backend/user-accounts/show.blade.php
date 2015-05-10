@@ -84,6 +84,16 @@
                         <div class="col-xs-1">:</div>
                         <div class="col-xs-8">{{ $show->phone }}</div>
                     </div>
+                    <div class="row rowbody">
+                        <div class="col-xs-3 color0">Ngày Tạo</div>
+                        <div class="col-xs-1">:</div>
+                        <div class="col-xs-8">{{ $show->created_at }}</div>
+                    </div>
+                    <div class="row rowbody">
+                        <div class="col-xs-3 color0">Cập nhật lần cuối</div>
+                        <div class="col-xs-1">:</div>
+                        <div class="col-xs-8">{{ $show->updated_at }}</div>
+                    </div>
                 </div>
             </div>
         </div>

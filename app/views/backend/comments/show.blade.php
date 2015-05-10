@@ -23,14 +23,14 @@
                 </div>
                 <div class="col-xs-9">
                     <div class="row rowbody">
-                        <div class="col-xs-2 color0">ID</div>
+                        <div class="col-xs-3 color0">ID</div>
                         <div class="col-xs-1">:</div>
-                        <div class="col-xs-9">{{ $show->id }}</div>
+                        <div class="col-xs-8">{{ $show->id }}</div>
                     </div>
                     <div class="row rowbody">
-                        <div class="col-xs-2 color0">Người đăng</div>
+                        <div class="col-xs-3 color0">Người đăng</div>
                         <div class="col-xs-1">:</div>
-                        <div class="col-xs-9">
+                        <div class="col-xs-8">
                             @if(!empty( UserAccount::find($show->id_user)))
                                 <a href="{{{ URL::to('admin/user-accounts/information/'.$show->id_user) }}}" class="block">{{ UserAccount::find($show->id_user)->username }}</a>
                             @else
@@ -39,9 +39,9 @@
                         </div>
                     </div>
                     <div class="row rowbody">
-                        <div class="col-xs-2 color0">Đối tượng</div>
+                        <div class="col-xs-3 color0">Đối tượng</div>
                         <div class="col-xs-1">:</div>
-                        <div class="col-xs-9">
+                        <div class="col-xs-8">
                             {{ $show->target }}
                             @if(($show->target == 'Bài đăng')&&(!empty( Post::find($show->id_target))))
                                 <a href="{{{ URL::to('admin/posts/information/'.$show->id_target) }}}" class="block"> {{ Post::find($show->id_target)->title }}</a>
@@ -53,14 +53,19 @@
                         </div>
                     </div>
                     <div class="row rowbody">
-                        <div class="col-xs-2 color0">Nội dung</div>
+                        <div class="col-xs-3 color0">Nội dung</div>
                         <div class="col-xs-1">:</div>
-                        <div class="col-xs-9">{{ $show->content }}</div>
+                        <div class="col-xs-8">{{ $show->content }}</div>
                     </div>
                     <div class="row rowbody">
-                        <div class="col-xs-2 color0">Thời gian</div>
+                        <div class="col-xs-3 color0">Thời gian</div>
                         <div class="col-xs-1">:</div>
-                        <div class="col-xs-9">{{ $show->created_at }}</div>
+                        <div class="col-xs-8">{{ $show->created_at }}</div>
+                    </div>
+                    <div class="row rowbody">
+                        <div class="col-xs-3 color0">Cập nhật lần cuối</div>
+                        <div class="col-xs-1">:</div>
+                        <div class="col-xs-8">{{ $show->updated_at }}</div>
                     </div>
                     <div class="text-right">
                         @if($show->target == 'Bài đăng')

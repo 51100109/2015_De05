@@ -38,9 +38,14 @@
                         <div class="col-xs-8">{{ $show->created_at }}</div>
                     </div>
                     <div class="row rowbody">
-                        <div class="col-xs-2 color0">Số Phần mềm</div>
+                        <div class="col-xs-3 color0">Cập nhật lần cuối</div>
                         <div class="col-xs-1">:</div>
-                        <div class="col-xs-9">{{ Software::where("id_publisher","=",$show->id)->count() }}</div>
+                        <div class="col-xs-8">{{ $show->updated_at }}</div>
+                    </div>
+                    <div class="row rowbody">
+                        <div class="col-xs-3 color0">Số Phần mềm</div>
+                        <div class="col-xs-1">:</div>
+                        <div class="col-xs-8">{{ Software::where("id_publisher","=",$show->id)->count() }}</div>
                     </div>
                 </div>
             </div>
