@@ -87,17 +87,23 @@
                 	@endif
 			      </ul>		
 
-			      <form class="navbar-form navbar-right" role="search">
-			        <div class="form-group">
-			          <input type="text" class="form-control" placeholder="Search">			          			          
-			        </div>
-			        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+<!-- 			      <form class="navbar-form navbar-right" role="search"> -->
+<!-- 			        <div class="form-group"> -->
+<!-- 			          <input type="text" class="form-control" placeholder="Search">			          			           -->
+<!-- 			        </div> -->
+<!-- 			        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button> -->
 			       
-			      </form>      	
+<!-- 			      </form>      	 -->
 
 			    </div><!-- /.navbar-collapse -->
 			  </div><!-- /.container-fluid -->
 		</nav>
 		<div class="col-mp-12" id="line1"></div>
 </div>
+
+        @if (Session::has('flash_notice'))
+	        <script>
+	        	$.notify("{{ Session::get('flash_notice') }}","success");
+	        </script>
+   		 @endif
 

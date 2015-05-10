@@ -13,8 +13,8 @@
 		 <script type="text/javascript" src="{{asset('assets/js/jquery-1.11.1.min.js')}}"></script>
 		 <script type="text/javascript" src="{{asset('assets/js/bootstrap.min.js')}}"></script>
 		 <script type="text/javascript" src="{{asset('assets/js/bootstrap-hover-dropdown.js')}}"></script>
-		 <script type="text/javascript" src="{{asset('assets/tablesorter/js/jquery.tablesorter.js')}}"></script>
-		 <script type="text/javascript" src="{{asset('assets/tablesorter/js/tables.js')}}"></script>
+<!-- 		 <script type="text/javascript" src="{{asset('assets/tablesorter/js/jquery.tablesorter.js')}}"></script> -->
+<!-- 		 <script type="text/javascript" src="{{asset('assets/tablesorter/js/tables.js')}}"></script> -->
 
 
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>

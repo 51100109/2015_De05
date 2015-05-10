@@ -100,6 +100,10 @@ class ActionController extends BaseController {
 		UserActivity::addActivity($idUser, 2,2,$post->id,'deletepost');
 		$post->delete();
 		
+		//delete comment
+		$commentlist = Comment::where('target', '=', 'Bài đăng')->where('id_target','=',$post->id)->delete();
+		//----------------------
+		
 		return Redirect::route('post')
 		->with('flash_notice', 'Xóa bài thành công!');
 	}

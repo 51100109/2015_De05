@@ -29,9 +29,6 @@
 		@if (Session::has('flash_error'))
         <div class="bg-danger">{{ Session::get('flash_error') }}</div>
     	@endif
-    	@if (Session::has('flash_notice'))
-        <div class="alert alert-success">{{ Session::get('flash_notice') }}</div>
-    	@endif
 		
 		
 		<input type="text" name="username" id="username" placeholder="Username" class="form-control"/>

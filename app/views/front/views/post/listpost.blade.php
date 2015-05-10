@@ -8,9 +8,6 @@ Các bài đăng - Softsharing
  <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
           </p>
-        @if (Session::has('flash_notice'))
-        <div class="bg-success">{{ Session::get('flash_notice') }}</div>
-   		 @endif
    		 @if(Auth::check())
    		 <p>
    		 	<a href="{{ URL::to('post/new') }}" class="btn btn-primary pull-right" role="button">+ Đăng bài mới</a>
