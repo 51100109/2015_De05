@@ -11,12 +11,9 @@
 @stop
 
 @section('modals')
-    @include('backend.modals.delete_confirm')
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <form method="POST" action="{{{ URL::to('admin/user-accounts/detroy-id/'.$show->id.'/next') }}}" style="display:inline">
-                <a class="close deleteWhite em1_4" data-toggle="modal" href="#confirmDelete" data-title="Xóa thành viên" data-message="Bạn chắc chắn muốn xóa thành viên {{ $show->username}} có ID: {{ $show->id }} ?"><span class="glyphicon glyphicon-trash"></span></a>
-            </form>
+            <a class="close deleteWhite delete_info_entry_close em1_4" href="{{{ URL::to('admin/user-accounts/delete/' . $show->id) }}}"><span class="glyphicon glyphicon-trash"></span></a>
             <h3 class="panel-title">Thông tin</h3>
         </div>
         <div class="panel-body">
@@ -115,9 +112,6 @@
 
 @section('scripts_activities')
     <script type="text/javascript">
-        var oTable_activities;
-        var length = window.innerHeight * 0.7;
-
         $(document).ready(function() {
             oTable_activities =   $('#activities_table').dataTable({
                 "scrollY":        length,

@@ -11,12 +11,9 @@
 @stop
 
 @section('modals')
-    @include('backend.modals.delete_confirm')
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <form method="POST" action="{{{ URL::to('admin/categories/detroy-id/'.$show->id.'/next') }}}" style="display:inline">
-                <a class="close deleteWhite em1_4" data-toggle="modal" href="#confirmDelete" data-title="Xóa danh mục" data-message="Bạn chắc chắn muốn xóa danh mục có ID: {{ $show->id }} ?"><span class="glyphicon glyphicon-trash"></span></a>
-            </form>
+            <a class="close deleteWhite delete_info_entry_close em1_4" href="{{{ URL::to('admin/categories/delete/' . $show->id) }}}"><span class="glyphicon glyphicon-trash"></span></a>
             <h3 class="panel-title">Thông tin</h3>
         </div>
         <div class="panel-body">
@@ -50,10 +47,8 @@
         </div>
     </div>
     
-    <form method="POST" action="{{{ URL::to('admin/softwares/detroy') }}}" style="display:inline">
-                <div class="panel panel-primary">
+    <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <a class="close deleteWhite em1_4" data-toggle="modal" href="#confirmDelete" data-title="Xóa phần mềm" data-message="Bạn chắc chắn muốn xóa các phần mềm đã chọn ?"><span class="glyphicon glyphicon-trash"></span></a>
                         <h3 class="panel-title">Danh Sách Phần Mềm</h3>
                     </div>
                     <div class="panel-body background_EB">
@@ -71,8 +66,7 @@
                             </thead>
                         </table>
                     </div>
-                </div>
-    </form>
+    </div>
 
     <div class="panel panel-primary">
             <div class="panel-heading">
@@ -97,10 +91,6 @@
 
 @section('scripts_activities')
     <script type="text/javascript">
-        var oTable;
-        var oTable_activities;
-        var length = window.innerHeight * 0.7;
-
         $(document).ready(function() {
             oTable =   $('#softwares_table').dataTable({
                 "scrollY":        length,
@@ -114,6 +104,7 @@
                     "sLoadingRecords": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
                     "sProcessing": '<img src="{{asset('assets/image/background/Loading.gif')}}" alt="loading">',
                 },
+                "fnDrawCallback": colorbox_show,
             });
 
             oTable_activities =   $('#activities_table').dataTable({

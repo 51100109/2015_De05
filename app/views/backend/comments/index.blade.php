@@ -13,13 +13,10 @@
 @stop
 
 @section('content')
-	@include('backend.modals.delete_confirm') 
     <div class="row">
         <div class="col-xs-12">
-			<form method="POST" action="{{{ URL::to('admin/comments/detroy') }}}" style="display:inline">
-				<div class="panel panel-primary">
+			<div class="panel panel-primary">
 			        <div class="panel-heading">
-						<a class="close deleteWhite em1_4" data-toggle="modal" href="#confirmDelete" data-title="Xóa bình luận" data-message="Bạn chắc chắn muốn xóa các bình luận đã chọn ?"><span class="glyphicon glyphicon-trash"></span></a>
 			            <h3 class="panel-title">Danh Sách Bình Luận</h3>
 			        </div>
 					<div class="panel-body background_EB">
@@ -28,16 +25,16 @@
 									<tr>
 										<th class="col-xs-1"><div class="icon0"></div></th>
 										<th class="col-xs-1">ID</th>
-										<th class="col-xs-4">Bình Luận</th>
+										<th class="col-xs-3">Bình Luận</th>
 										<th class="col-xs-2">Người Đăng</th>
 										<th class="col-xs-3">Thời Gian</th>
+										<th class="col-xs-1"></th>
 										<th class="col-xs-1"></th>
 									</tr>
 								</thead>
 							</table>
 					</div>
-				</div>
-			</form>
+			</div>
 
 			<div class="panel panel-primary">
 				<div class="panel-heading">
@@ -69,7 +66,7 @@
            oTable =   $('#comments_table').dataTable({
                 "scrollY":        length,
                 "scrollCollapse": true,
-                "order": [[ 1, "desc" ]],
+                "order": [[ 4, "asc" ]],
                 "bProcessing": true,
 		        "bServerSide": true,
 		        "sAjaxSource": "{{{ URL::to('admin/comments/data') }}}",

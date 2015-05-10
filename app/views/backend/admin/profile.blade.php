@@ -9,7 +9,6 @@
 @stop
 
 @section('modals')
-    @include('backend.modals.delete_confirm')
 	<form method="POST" action="{{{ URL::to('admin/user-accounts/edit-admin/'.$user->id) }}}" class="container edit-user"> 
             <div class="row">
                 <div class="col-xs-4">
@@ -74,7 +73,9 @@
                                 </div><br>
                                 <div class="form-group">
                                     <div class="text-right">
-                                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                        <button type="submit" class="btn btn-primary width100">Xác nhận</button>
+                                        <button type="reset" class="btn btn-warning width100">Tạo lại</button>
+                                        <button type="button" class="btn btn-default close_colorbox width100">Đóng</button>
                                     </div>
                                 </div>
                 </div>

@@ -13,16 +13,13 @@
 @stop
 
 @section('content')
-	@include('backend.modals.delete_confirm')
 	<div class="width50_bottom10">
  		<a class="close add_info" href="{{{ URL::to('admin/user-accounts/create') }}}"><img src="{{asset('assets/image/background/add_icon.png')}}" class="image_size300" alt="add"></a>
  	</div>
 	<div class="row">
 		<div class="col-xs-12">
-			<form method="POST" action="{{{ URL::to('admin/user-accounts/detroy') }}}" style="display:inline">
-				<div class="panel panel-primary">
+			<div class="panel panel-primary">
 			        <div class="panel-heading">
-						<a class="close deleteWhite em1_4" data-toggle="modal" href="#confirmDelete" data-title="Xóa thành viên" data-message="Bạn chắc chắn muốn xóa các thành viên đã chọn ?"><span class="glyphicon glyphicon-trash"></span></a>
 			            <h3 class="panel-title">Danh Sách Administrator</h3>
 			        </div>
 					<div class="panel-body background_EB">
@@ -40,12 +37,10 @@
 							</thead>
 						</table>
 					</div>
-				</div>
-			</form>
-			<form method="POST" action="{{{ URL::to('admin/user-accounts/detroy') }}}" style="display:inline">
-				<div class="panel panel-primary">
+			</div>
+
+			<div class="panel panel-primary">
 			        <div class="panel-heading">
-						<a class="close deleteWhite em1_4" data-toggle="modal" href="#confirmDelete" data-title="Xóa thành viên" data-message="Bạn chắc chắn muốn xóa các thành viên đã chọn ?"><span class="glyphicon glyphicon-trash"></span></a>
 			            <h3 class="panel-title">Danh Sách Thành Viên</h3>
 			        </div>
 					<div class="panel-body background_EB">
@@ -63,8 +58,7 @@
 							</thead>
 						</table>
 					</div>
-				</div>
-			</form>
+			</div>
 
 			<div class="panel panel-primary">
 				<div class="panel-heading">

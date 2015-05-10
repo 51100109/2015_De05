@@ -105,38 +105,29 @@ class UserAccountsController extends BaseController {
         }
     }
 
-	public function postDetroyId($id,$back){
-		$user = UserAccount::findOrFail($id);
-		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Thành viên', $user->id,"Tài khoản: " .$user->username. " --- \n Tên: " .$user->fullname. " --- \n Tên hiển thị: " .$user->creenname);
-		Session::put('success',"Đã xóa thành viên ".$user->username." có ID: ".$user->id);
-		UserAccount::destroy($id);
-		$find = UserAccount::get()->first();
-		if($back=='back'){
-			return Redirect::back();
-		}
-		else if($back=='next'){
-			if(!empty($find))
-				return Redirect::to("admin/user-accounts/information/{$find->id}");
-			else
-				return Redirect::to("admin/user-accounts/create");
-		}
+	public function getDelete($id){
+		$user = UserAccount::find($id);
+		$string = Str::limit($user->username, 150, '...');
+		return View::make('backend.modals.delete_form', ['id'=>$user->id,'title'=>"thành viên",'item'=>"user-accounts",'content'=>$string,'counter'=>0]);
 	}
 
-	public function postDetroy(){
-		$id = Input::get('id');
-		if($id == 0){
-			Session::put('fail',"Chọn thành viên cần xóa");
-			return Redirect::back();
-		}
-		else{
-			foreach ($id as $key) {
-				$user = UserAccount::findOrFail($key);
-				UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Thành viên', $user->id,"Tài khoản: " .$user->username. " --- \n Tên: " .$user->fullname. " --- \n Tên hiển thị: " .$user->creenname);
-				UserAccount::destroy($key);
-			}
-			Session::put('success',"Đã xóa các thành viên vừa chọn");
-			return Redirect::back();
-		}
+	public function postDelete($id){
+		$user = UserAccount::find($id);
+		Session::put('success',"Đã xóa thành viên có ID: ".$id);
+		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Thành viên', $user->id,"Thành viên: ".$user->username);
+		UserAccount::destroy($id);
+		$comments = Comment::where('id_user','=',$id)->get();
+	    foreach ($comments as $comment) {
+	        Comment::destroy($comment->id);
+	        UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Bình luận', $comment->id,"Nội dung: ".$comment->content);
+	    }
+	    $posts = Post::where('id_user','=',$id)->get();
+	    foreach ($posts as $post) {
+	        $post->id_user = Auth::user()->id;
+	        $post->save();
+	        UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Bài đăng', $post->id,"Thay đổi người đăng bài đăng có tiêu đề: ".$post->title);
+	    }
+		return Redirect::to("admin/user-accounts/index");
 	}
 
 	public function getInformation($id){
@@ -164,7 +155,7 @@ class UserAccountsController extends BaseController {
                           ->edit_column('fullname', '{{{ Str::limit($fullname, 20, \'...\') }}}')
                           ->edit_column('creenname', '{{{ Str::limit($creenname, 20, \'...\') }}}')
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/user-accounts/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',6)	                      
-                          ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',7)	                      
+                          ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/user-accounts/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',7)	                      
 		                  ->remove_column('admin')
                           ->remove_column('gender')
 		                  ->make();

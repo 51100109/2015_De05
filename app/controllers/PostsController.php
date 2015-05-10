@@ -11,38 +11,65 @@ class PostsController extends BaseController {
 		return View::make('backend.posts.index', compact('system'));
 	}
 
-	public function postDetroyId($id,$back){
-		$post = Post::findOrFail($id);
-		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Bài đăng', $post->id,"Tiêu đề: ".$post->title);
-		Session::put('success',"Đã xóa bài đăng có ID: ".$post->id);
-		Post::destroy($id);
-		$find = Post::get()->first();
-		if($back=='back'){
-			return Redirect::back();
-		}
-		else if($back=='next'){
-			if(!empty($find))
-				return Redirect::to("admin/posts/information/{$find->id}");
-			else
-				return View::make('backend.modals.null', ['item'=>"bài đăng"]);
-		}
+	public function getCreate(){
+		return View::make('backend.posts.create');
 	}
 
-	public function postDetroy(){
-		$id = Input::get('id');
-		if($id == 0){
-			Session::put('fail',"Chọn bài đăng cần xóa");
+	public function postCreate(){
+		$validator = Validator::make($data = Input::all(), Post::$rules);
+		if ($validator->fails()){
+			Session::put('fail',"Vui lòng nhập nội dung bài đăng");
 			return Redirect::back();
 		}
 		else{
-			foreach ($id as $key) {
-				$post = Post::findOrFail($key);
-				UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Bài đăng', $post->id,"Tiêu đề: ".$post->title);
-				Post::destroy($key);
-			}
-			Session::put('success',"Đã xóa các bài đăng vừa chọn");
+			$post = new Post;
+			$post->id_user = Auth::user()->id;
+			$post->title = Input::get('title');
+			$post->content = Input::get('content');
+			$post->save();
+			UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Bài đăng', $post->id,"Bài đăng ".$post->title." có ID: ".$post->id);
+			Session::put('success',"Đã thêm bài đăng ".$post->title." có ID: ".$post->id);
 			return Redirect::back();
 		}
+	}
+
+	public function getEdit($id){
+		$post=Post::findOrFail($id);
+		return View::make('backend.posts.edit',compact('post'));
+	}
+
+	public function postEdit($id){
+		$validator = Validator::make($data = Input::all(), Post::$rules);
+		if ($validator->fails()){
+			Session::put('fail',"Vui lòng nhập nội dung bài đăng");
+			return Redirect::back();
+		}
+		else{
+			$post = Post::find($id);
+			$post->update($data);
+			UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Bài đăng', $post->id,"Cập nhật bài đăng ".$post->title." có ID: ".$post->id);
+			Session::put('success',"Đã cập nhật bài đăng ".$post->title." có ID: ".$post->id);
+			return Redirect::back();
+		}
+	}
+
+	public function getDelete($id){
+		$post = Post::find($id);
+		$string = Str::limit($post->title, 150, '...');
+		return View::make('backend.modals.delete_form', ['id'=>$post->id,'title'=>"bài đăng",'item'=>"posts",'content'=>$string,'counter'=>0]);
+	}
+
+	public function postDelete($id){
+		$post = Post::find($id);
+		Session::put('success',"Đã xóa bài đăng có ID: ".$id);
+		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Bài đăng', $post->id,"Tiêu đề: ".$post->title);
+		Post::destroy($id);
+		$comments = Comment::where('target','=','Bài đăng')->where('id_target','=',$id)->get();
+	    foreach ($comments as $comment) {
+	        UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Bình luận', $comment->id,"Nội dung: ".$comment->content);
+	        Comment::destroy($comment->id);
+	    }
+		return Redirect::to("admin/posts/index");
 	}
 
 	public function getInformation($id){
@@ -70,16 +97,17 @@ class PostsController extends BaseController {
 											<img src="{{asset(\'assets/image/comments/user_comment.png\')}}" class="size40" alt="{{ $id }}">
 						                @endif
                           		</a>',0)	                      
-                          ->edit_column('title', '{{{ Str::limit($title, 40, \'...\') }}}')
+                          ->edit_column('title', '{{{ Str::limit($title, 20, \'...\') }}}')
                           ->edit_column(
                           		'username', 
                           		' 	@if(!empty($id_user))
-					                    <a href="{{{ URL::to(\'admin/user-accounts/information/\' . $id_user) }}}" class="block show_info"> {{{ Str::limit($username, 20, \'...\') }}}</a>
+					                    <a href="{{{ URL::to(\'admin/user-accounts/information/\' . $id_user) }}}" class="block show_info"> {{{ Str::limit($username, 15, \'...\') }}}</a>
 					             	@else
 					                    [ ... ]
 					             	@endif 
                           		')
-                          ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',8)	                      
+                          ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/posts/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',8)	                      
+                          ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/posts/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',9)	                      
        					  ->remove_column('id_user')
        					  ->remove_column('admin')
        					  ->remove_column('gender')

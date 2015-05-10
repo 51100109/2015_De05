@@ -23,19 +23,21 @@
   </head>
 
   <body>
-        <div class="message" style="right:0px;">
-            @if(Session::has('success'))
-                <div class="alert alert-success alert-dismissable alert-message">
-                    <label class="success"><span class="glyphicon glyphicon-ok"></span> {{Session::get('success')}}</label>
-                    {{ Session::forget("success") }}
-                </div>
-            @endif
-            @if(Session::has('fail'))
-                <div class="alert alert-danger alert-dismissable alert-message">
-                    <label class="success"><span class="glyphicon glyphicon-exclamation-sign"></span> {{Session::get('fail')}}</label>
-                    {{ Session::forget("fail") }}
-                </div>
-            @endif
+        <div id="notify_mes">
+          <div class="message" style="right:0px;">
+             @if(Session::has('success'))
+              <div class="alert alert-success alert-dismissable alert-message">
+                  <label class="success"><span class="glyphicon glyphicon-ok"></span> {{Session::get('success')}}</label>
+                  {{ Session::forget("success") }}
+              </div>
+              @endif
+              @if(Session::has('fail'))
+                  <div class="alert alert-danger alert-dismissable alert-message">
+                      <label class="success"><span class="glyphicon glyphicon-exclamation-sign"></span> {{Session::get('fail')}}</label>
+                      {{ Session::forget("fail") }}
+                  </div>
+              @endif
+          </div>
         </div>
         <div class="page-header alert alert-info null_top">
                 <ul class="pager">
@@ -54,11 +56,18 @@
         <script type="text/javascript" src="{{asset('assets/data-table/js/jquery.dataTables.min.js')}}"></script>
         <script type="text/javascript" src="{{asset('assets/data-table/js/dataTables.bootstrap.js')}}"></script>
         <script type="text/javascript" src="{{asset('assets/colorbox/js/jquery.colorbox.js')}}"></script>
+        <script type="text/javascript" src="{{asset('assets/colorbox/js/jquery.easing.min.js')}}"></script>
         <script type="text/javascript" src="{{asset('assets/ckeditor/ckeditor.js')}}"></script>
 
         <script type='text/javascript' src="{{asset('assets/js/jquery-ui.js')}}"></script>
         <script type='text/javascript' src="{{asset('assets/jquery-validation/jquery.validate.js')}}"></script>
+        <script type="text/javascript" src="{{asset('assets/data-table/js/datatables.fnReloadAjax.js')}}"></script>
+
         <script type="text/javascript">
+            var oTable;
+            var oTable_activities;
+            var length = window.innerHeight * 0.7;
+
             function goBack() {
                 window.history.back();
             }
@@ -87,26 +96,150 @@
                 }
             }
 
+            function selecled_system(){
+                var selecled_system = document.getElementById('id_system').value; 
+                var origin = document.location.origin;
+                $.ajax({
+                    url:  origin+"/2015_De05/public/admin/category/"+selecled_system,
+                    type:"POST",
+                    success: function (result){
+                            $("#select_category").html(result);
+                    },
+                });
+            }
+
             function createAutoClosingAlert(selector, delay) {
                var alert = $(selector).alert();
                window.setTimeout(function() { alert.alert('close') }, delay);
             }
 
+            function notify_mes(result){
+                $("#notify_mes").html(result);
+            }
+
+            function updatetable(){
+                oTable.fnReloadAjax();
+                oTable_activities.fnReloadAjax();
+                $.ajax({
+                  url:  "{{{ URL::to('admin/message') }}}",
+                  type:"POST",
+                  success: notify_mes,
+                });
+            }
+
+            function background() {
+                $('#cboxOverlay').css({ 'opacity': 0.6,'background': 'white'});
+            }
+
+            function openDelete() {
+                          var effects_1 = {
+                                              height: $(document).height(),
+                                              width: $(document).width(),
+                                              opacity: 0.5,
+                                          };
+                          var effects_2 = {
+                                              'visibility': 'visible',
+                                              'width': 0,
+                                              'height': 0,
+                                              'opacity': 0,
+                                              'cursor': 'pointer',
+                                              'background': 'black'
+                                          };
+
+                          $('#cboxOverlay,#colorbox').css('visibility', 'hidden');
+
+                          $('#cboxOverlay').css(effects_2).animate(effects_1, 500,
+                          function() {
+                              var $cB = $('#colorbox');
+                              var cbW = $cB.height();
+                              var cbT = $cB.position().top;
+                              $('#colorbox').css({
+                                  visibility: 'visible',
+                                  height: 0,
+                                  opacity: 0,
+                                  top: (cbT - 50) + 'px'
+                              }).animate({
+                                  height: cbW + 'px',
+                                  opacity: 1,
+                                  top: cbT + 'px'
+                              },
+                              {
+                                  duration: 1000,
+                                  easing: 'easeOutElastic'
+                              });
+                          });
+                      }  
+
+            function colorbox_show(oSettings){
+              $(".edit_info_entry").colorbox({
+                      iframe:true, 
+                      width:"60%", 
+                      height:"80%",
+                      rel:'edit_info_entry', 
+                      current: "Entry {current} of {total}",
+                      previous: "Previous",
+                      next: "Next",
+                      close: "Close",
+                      onClosed: updatetable,
+                      fixed:true,
+                      onOpen: background,
+              });
+              $(".edit_info_entry_100").colorbox({
+                      iframe:true, 
+                      width:"100%", 
+                      height:"100%",
+                      rel:'edit_info_entry', 
+                      current: "Entry {current} of {total}",
+                      previous: "Previous",
+                      next: "Next",
+                      close: "Close",
+                      onClosed: updatetable,
+                      fixed:true,
+                      onOpen: background,
+              });
+              $(".delete_info_entry").colorbox({
+                      iframe:true, 
+                      width:700, 
+                      height:300,
+                      close: "Close",
+                      onClosed: updatetable,
+                      fixed:true,
+                      opacity : 0,
+                      onOpen:   openDelete,
+              });
+            }    
+
             $(document).ready(function(){
-                createAutoClosingAlert(".alert-message", 3000);
+                createAutoClosingAlert(".alert-message", 1000);
 
-                $('#confirmDelete').on('show.bs.modal', function (e) {
-                  $message = $(e.relatedTarget).attr('data-message');
-                  $(this).find('.modal-body p').text($message);
-                  $title = $(e.relatedTarget).attr('data-title');
-                  $(this).find('.modal-title').text($title);
-
-                  var form = $(e.relatedTarget).closest('form');
-                  $(this).find('.modal-footer #confirm').data('form', form);
+                $(".add_info").colorbox({
+                    iframe:true, 
+                    width:"60%", 
+                    height:"80%",
+                    close: "Close",
+                    onClosed: updatetable,
+                    fixed:true,
+                    onOpen: background,
                 });
 
-                $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
-                    $(this).data('form').submit();
+                $(".delete_info_entry_close").colorbox({
+                      iframe:true, 
+                      width:700, 
+                      height:300,
+                      close: "Close",
+                      onClosed: function(){
+                          parent.jQuery.colorbox.close();
+                      },
+                      fixed:true,
+                      opacity : 0,
+                      onOpen:   openDelete,
+                });
+
+                $('.close_colorbox').click(function(){
+                    parent.jQuery.colorbox.close();
+                });
+                $('.deleteForm').submit(function(event) {
+                    parent.jQuery.colorbox.close();
                 });
             });
 

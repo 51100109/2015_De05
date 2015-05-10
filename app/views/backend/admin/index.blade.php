@@ -88,8 +88,8 @@
             </button>
             <a class="navbar-brand" href="{{{ URL::to('admin/home') }}}"><span class="glyphicon glyphicon-fire"></span> Administrator</a>
           </div>
-          
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          @if(Auth::check())
             <ul class="nav navbar-nav nav-tabs" id="reload_toolbar">
               <li><a href="{{{ URL::to('admin/home') }}}"><span class="glyphicon glyphicon-home"></span> Trang chủ</a></li>
               @foreach($system as $item)
@@ -127,6 +127,7 @@
                   <li class="divider"></li>
                 </ul>
               </li>
+             
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{ Auth::user()->username }}<b class="caret"></b></a>
                 <ul class="dropdown-menu" role="menu">
@@ -136,10 +137,17 @@
                 </ul>
               </li>
             </ul>
+            @else
+             <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ URL::to('register') }}"><span>Đăng ký</span></a></li>
+                <li><a href="{{ URL::to('login') }}"><span>Đăng nhập</span></a></li>
+              </ul>
+            @endif
           </div>
         </div>
       </nav>
- 
+
+    @if(Auth::check())
     <div class="row">
         <div class="col-xs-3" id="reload_toolpanel">
           <ul class="nav nav-pills nav-stacked">
@@ -199,7 +207,11 @@
           </div>
         </div>
       </div>
-
+    @else
+      <div class="heigh800">
+          <center><h2>Vui lòng đăng nhập</h2></center>
+      </div>
+    @endif
   </div> 
 
   <footer id="theme-footer">
@@ -218,12 +230,13 @@
   </div>
  <!-- <div id="topcontrol" class="fa fa-angle-up" title="Scroll To Top" style="bottom: 10px;"></div>
   <div id="fb-root"></div>-->
+  <div id="notify_mes">
     <div class="message" style="right:0px;">
         @if(Session::has('success'))
-        <div class="alert alert-success alert-dismissable alert-message">
-            <label class="success"><span class="glyphicon glyphicon-ok"></span> {{Session::get('success')}}</label>
-            {{ Session::forget("success") }}
-        </div>
+          <div class="alert alert-success alert-dismissable alert-message">
+              <label class="success"><span class="glyphicon glyphicon-ok"></span> {{Session::get('success')}}</label>
+              {{ Session::forget("success") }}
+          </div>
         @endif
         @if(Session::has('fail'))
             <div class="alert alert-danger alert-dismissable alert-message">
@@ -232,13 +245,12 @@
             </div>
         @endif
     </div>
-
+</div>
     <script type="text/javascript" src="{{asset('assets/js/jquery-1.11.1.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/bootstrap-hover-dropdown.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/prettify.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/data-table/js/jquery.dataTables.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('assets/data-table/js/jquery.dataTables.rowGrouping.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/data-table/js/dataTables.bootstrap.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/colorbox/js/jquery.colorbox.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/colorbox/js/jquery.easing.min.js')}}"></script>
@@ -262,25 +274,6 @@
             window.history.forward();
         }
 
-        function check_highlight(element, errorClass, validClass) {
-            if (element.type === "radio") {
-                this.findByName(element.name).addClass(errorClass).removeClass(validClass);
-            } else {
-                $(element).closest('.form-group').removeClass('has-success has-feedback').addClass('has-error has-feedback');
-                $(element).closest('.form-group').find('i.fa').remove();
-                $(element).closest('.form-group').append('<i class="fa fa-exclamation fa-lg form-control-feedback"></i>');
-            }
-        }
-        function check_unhighlight(element, errorClass, validClass) {
-            if (element.type === "radio") {
-                this.findByName(element.name).removeClass(errorClass).addClass(validClass);
-            } else {
-                $(element).closest('.form-group').removeClass('has-error has-feedback').addClass('has-success has-feedback');
-                $(element).closest('.form-group').find('i.fa').remove();
-                $(element).closest('.form-group').append('<i class="fa fa-check fa-lg form-control-feedback"></i>');
-            }
-        }
-
         function createAutoClosingAlert(selector, delay) {
            var alert = $(selector).alert();
            window.setTimeout(function() { alert.alert('close') }, delay);
@@ -292,6 +285,10 @@
 
         function toolbar(result){
             $("#reload_toolbar").html(result);
+        }
+
+        function notify_mes(result){
+            $("#notify_mes").html(result);
         }
 
         function updatetable(){
@@ -307,12 +304,21 @@
                   type:"POST",
                   success: toolbar,
             });
+             $.ajax({
+                  url:  "{{{ URL::to('admin/message') }}}",
+                  type:"POST",
+                  success: notify_mes,
+            });
+        }
+
+        function background() {
+            $('#cboxOverlay').css({ 'opacity': 0.6,'background': 'white'});
         }
 
         function colorbox_activity( oSettings ) {
                 $(".show_info_activity").colorbox({
                       iframe:true, 
-                      width:"70%", 
+                      width:"80%", 
                       height:"100%",
                       rel:'show_info_activity', 
                       current: "Activity {current} of {total}",
@@ -321,21 +327,23 @@
                       close: "Close",
                       onClosed: updatetable,
                       fixed:true,
+                      onOpen: background,
                 });
                 $(".show_info").colorbox({
                       iframe:true, 
-                      width:"70%", 
+                      width:"80%", 
                       height:"100%",
                       close: "Close",
                       onClosed: updatetable,
                       fixed:true,
+                      onOpen: background,
                 });
           }
 
         function colorbox_show(oSettings){
               $(".show_info_entry").colorbox({
                       iframe:true, 
-                      width:"70%", 
+                      width:"80%", 
                       height:"100%",
                       rel:'show_info_entry', 
                       current: "Entry {current} of {total}",
@@ -344,7 +352,31 @@
                       close: "Close",
                       onClosed: updatetable,
                       fixed:true,
-              /*        opacity : 0,
+                      onOpen: background,
+              });
+
+              $(".edit_info_entry").colorbox({
+                      iframe:true, 
+                      width:"80%", 
+                      height:"100%",
+                      rel:'edit_info_entry', 
+                      current: "Entry {current} of {total}",
+                      previous: "Previous",
+                      next: "Next",
+                      close: "Close",
+                      onClosed: updatetable,
+                      fixed:true,
+                      onOpen: background,
+              });
+
+              $(".delete_info_entry").colorbox({
+                      iframe:true, 
+                      width:700, 
+                      height:300,
+                      close: "Close",
+                      onClosed: updatetable,
+                      fixed:true,
+                      opacity : 0,
                       onOpen: function() {
                           var effects_1 = {
                                               height: $(document).height(),
@@ -362,7 +394,7 @@
 
                           $('#cboxOverlay,#colorbox').css('visibility', 'hidden');
 
-                          $('#cboxOverlay').css(effects_2).animate(effects_1, 1200,
+                          $('#cboxOverlay').css(effects_2).animate(effects_1, 500,
                           function() {
                               var $cB = $('#colorbox');
                               var cbW = $cB.height();
@@ -378,53 +410,33 @@
                                   top: cbT + 'px'
                               },
                               {
-                                  duration: 4000,
+                                  duration: 1000,
                                   easing: 'easeOutElastic'
                               });
                           });
-                      }    */
-              });
-
-              $(".edit_info_entry").colorbox({
-                      iframe:true, 
-                      width:"70%", 
-                      height:"100%",
-                      rel:'edit_info_entry', 
-                      current: "Entry {current} of {total}",
-                      previous: "Previous",
-                      next: "Next",
-                      close: "Close",
-                      onClosed: updatetable,
-                      fixed:true,
+                      }    
               });
             }    
 
         $(document).ready(function() {
-              createAutoClosingAlert(".alert-message", 3000);
+              createAutoClosingAlert(".alert-message", 1000);
       
               $(".add_info").colorbox({
                   iframe:true, 
-                  width:"70%", 
+                  width:"80%", 
                   height:"100%",
                   close: "Close",
                   onClosed: updatetable,
                   fixed:true,
+                  onOpen: background,
               });
 
-              $('#confirmDelete').on('show.bs.modal', function (e) {
-                    $message = $(e.relatedTarget).attr('data-message');
-                    $(this).find('.modal-body p').text($message);
-                    $title = $(e.relatedTarget).attr('data-title');
-                    $(this).find('.modal-title').text($title);
-
-                    var form = $(e.relatedTarget).closest('form');
-                    $(this).find('.modal-footer #confirm').data('form', form);
-                  });
-
-              $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
-                      $(this).data('form').submit();
-                  });
-   
+              $('.close_colorbox').click(function(){
+                    parent.jQuery.colorbox.close();
+                });
+              $('.deleteForm').submit(function(event) {
+                    parent.jQuery.colorbox.close();
+                });
           });
   </script>
       @yield('scripts')

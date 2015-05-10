@@ -432,7 +432,7 @@ class UserActivitiesController extends BaseController {
             ->select(array('user_activities.id as id', 'user_accounts.id as id_user','user_accounts.username as username','user_activities.activity as activity','user_activities.id_target as id_target','user_activities.infor as infor','user_activities.created_at as created_at'));
         }
         else{
-            $activities = UserActivity::where('target','=','Thành viên')->where('id_user','=',$id)->leftjoin('user_accounts', 'user_accounts.id', '=','user_activities.id_user')
+            $activities = UserActivity::where('id_user','=',$id)->leftjoin('user_accounts', 'user_accounts.id', '=','user_activities.id_user')
             ->select(array('user_activities.id as id', 'user_accounts.id as id_user','user_accounts.username as username','user_activities.activity as activity','user_activities.id_target as id_target','user_activities.infor as infor','user_activities.created_at as created_at'));
         }
         

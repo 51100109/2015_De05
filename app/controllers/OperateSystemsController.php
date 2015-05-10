@@ -76,38 +76,20 @@ class OperateSystemsController extends BaseController {
 		}
 	}
 
-	public function postDetroyId($id,$back){
-		$system = OperateSystem::findOrFail($id);
-		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Hệ điều hành', $system->id,"Hệ điều hành ".$system->name." có ID: ".$system->id);
-		Session::put('success',"Đã xóa hệ điều hành ".$system->name." có ID: ".$system->id);
-		OperateSystem::destroy($id);
-		$find = OperateSystem::get()->first();
-		if($back=='back'){
-			return Redirect::back();
-		}
-		else if($back=='next'){
-			if(!empty($find))
-				return Redirect::to("admin/operate-systems/information/{$find->id}");
-			else
-				return Redirect::to("admin/operate-systems/create");
-		}
+	public function getDelete($id){
+		$system = OperateSystem::find($id);
+		$string = Str::limit($system->name, 150, '...');
+		$counter = Software::where('id_system','=',$id)->count();
+		return View::make('backend.modals.delete_form', ['id'=>$system->id,'title'=>"hệ điều hành",'item'=>"operate-systems",'content'=>$string,'counter'=>$counter]);
 	}
 
-	public function postDetroy(){
-		$id = Input::get('id');
-		if($id == 0){
-			Session::put('fail',"Chọn hệ điều hành cần xóa");
-			return Redirect::back();
-		}
-		else{
-			foreach ($id as $key) {
-				$system = OperateSystem::findOrFail($key);
-				UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Hệ điều hành', $system->id,"Hệ điều hành ".$system->name." có ID: ".$system->id);
-				OperateSystem::destroy($key);
-			}
-			Session::put('success',"Đã xóa các hệ điều hành vừa chọn");
-			return Redirect::back();
-		}
+	public function postDelete($id){
+		$system = OperateSystem::find($id);
+		Session::put('success',"Đã xóa hệ điều hành có ID: ".$id);
+		UserActivity::addActivity(Auth::user()->id, 'Xóa', 'Hệ điều hành', $system->id,"Hệ điều hành: ".$system->name);
+		OperateSystem::destroy($id);
+		
+		return Redirect::to("admin/operate-systems/index");
 	}
 
 	public function getInformation($id){
@@ -124,10 +106,10 @@ class OperateSystemsController extends BaseController {
                           		'<a href="{{{ URL::to(\'admin/operate-systems/information/\' . $id) }}}" class="show_info_entry close" style="float:left">
 									<img src="{{ $image }}" class="size40" alt="{{ $id }}">    
                           		</a>',0)	                      
-                          ->edit_column('name', '{{{ Str::limit($name, 40, \'...\') }}}')
+                          ->edit_column('name', '{{{ Str::limit($name, 20, \'...\') }}}')
                           ->add_column('number', '{{ Software::where("id_system","=",$id)->count() }}',4)	      
                           ->add_column('edit', '<a class="close block edit_info_entry em1_4" href="{{{ URL::to(\'admin/operate-systems/edit/\' . $id) }}}"><span class="glyphicon glyphicon-edit"></span></a>',5)	                      
-                          ->add_column('delete', '<input type="checkbox" name="id[]" id="id" value="{{$id}}" class="close check_box_20">',6)	                      
+                          ->add_column('delete', '<a class="close delete delete_info_entry em1_4" href="{{{ URL::to(\'admin/operate-systems/delete/\' . $id) }}}"><span class="glyphicon glyphicon-trash"></span></a>',6)	                      
 		                  ->make();
     }
 }
