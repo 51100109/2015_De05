@@ -37,6 +37,8 @@ Route::get('category/{category}', array('as' => 'category/{category}', 'uses' =>
 //view software
 Route::model('software', 'Software');
 
+Route::get('softwares', array('as' => 'softwares', 'uses' => 'HomeController@showpostSoftware'));
+
 Route::get('software/{software}', array('as' => 'software/{software}', 'uses' => 'HomeController@showSoftware'));
 //--------------------------------
 

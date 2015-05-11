@@ -22,9 +22,16 @@ class HomeController extends BaseController {
 // 	}
 
 	public function showHome()
+		{
+			$posts = Post::orderBy('updated_at', 'DESC')->paginate(HomeController::$itemPerPage);		
+			$softwares = Software::orderBy('updated_at', 'DESC')->paginate(HomeController::$itemPerPage);
+			return View::make('front.views.home',['softwares'=>$softwares,'posts'=>$posts]);
+		}
+		
+	public function showpostSoftware()
 	{
-		$softwares = Software::orderBy('created_at', 'DESC')->paginate(HomeController::$itemPerPage);
-		return View::make('front.views.home',['softwares'=>$softwares]);
+		$softwares = Software::orderBy('updated_at', 'DESC')->paginate(HomeController::$itemPerPage);
+		return View::make('front.views.softwares',['softwares'=>$softwares]);
 	}
 	
 	public function showLoginPage()

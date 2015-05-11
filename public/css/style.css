@@ -166,14 +166,19 @@ h3 {
     font-size: 1.5em;
     font-weight: 700;
 }
+.show-grid {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    background-color: rgba(86, 61, 124, .15);
+    border: 1px solid rgba(86, 61, 124, .15);
+}
 
-.content-subhead-homepage {
-    margin-left: 25em;
-    margin-right: 2em;
-    margin-top: -0.1em;
-    padding-left: 1em;
+.content-subhead-homepage {    
     padding-bottom: 0.8em;
-    padding-top: 0.8em;   
+    padding-top: 0.8em; 
+
     color: #6B6B47;
     border-bottom: 2px solid #eee;
     border-top: 2px solid #eee;
@@ -187,7 +192,89 @@ h3 {
     font-size: 1.2em;
     font-weight: 700;
 }
+
+
+.table-curved {
+   border-collapse: separate;
+   border: solid #ddd 1px;
+   border-radius: 6px;
+   border-left: 0px;
+   border-top: 0px;
+}
+.table-curved > thead:first-child > tr:first-child > th {
+    border-bottom: 0px;
+    border-top: solid #ddd 1px;
+}
+.table-curved td, .table-curved th {
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+}
+.table-curved > :first-child > :first-child > :first-child {
+    border-top-left-radius: 6px;
+}
+.table-curved > :first-child > :first-child > :last-child {
+    border-top-right-radius: 6px;
+}
+.table-curved > :last-child > :last-child > :first-child {
+    border-bottom-left-radius: 6px;
+}
+.table-curved > :last-child > :last-child > :last-child {
+    border-bottom-right-radius: 6px;
+}
+
+.content-subhead-homepage2{
+    float: right;
+    padding-right: 1em;
+}
+
+.content-subhead-homepage1 {
+    margin-left: 29.99em;
+    margin-right: 2.4em;
+    margin-top: -0.1em;
+    padding-left: 2.5em;
+    padding-bottom: 0.2em;
+    padding-top: 0.2em;   
+    color: #6B6B47;
+    border-bottom: 2px solid #eee;
+    border-top: 2px solid #eee;
+    border-right: 2px solid #eee;
+    border-left: 2px solid #eee;    
+    -moz-border-radius: 0px 0px 10px 10px;
+    -webkit-border-radius: 0px 0px 10px 10px;
+    -ms-border-radius: 0px 0px 10px 10px;
+    -o-border-radius: 0px 0px 10px 10px;
+    border-radius: 0px 0px 10px 10px;
+    font-size: 1em;
+    font-weight: 700;
+}
+
 .content-subhead-homepage-clock {
+    padding-left: 0.5em;
+    color: #3366FF;
+}
+
+.soft-date-homepage_1 {
+    font-size: 1.1em;
+    color: #000000;
+    margin-bottom: 0.5em;
+    margin-top: 0.2em;
+    padding-left: 0.8em;
+    padding-right:0.8em;
+    width: 8em;
+}
+
+.soft-date-homepage {
+    font-size: 1.1em;
+    color: #000000;
+    margin-bottom: 0.5em;
+    margin-top: 0.2em;   
+}
+
+.view-more{
+    padding-left: 11em;
+}
+
+.content-subhead-homepage-ca{
     color: #3366FF;
 }
 
@@ -280,19 +367,20 @@ h3 {
 
 .post-title-homepage {
     font-size: 0.8em;
-    color: #aaa;
+    color: #0000FF;
     margin-bottom: 0.2em;
     margin-top: 0.2em;
-    padding-left: 2.5em;
+    padding-left: 0.8em;
+    padding-right:0.8em;
 }
 
 .post-date-homepage {
     font-size: 0.8em;
-    color: #aaa;
-    margin-bottom: 0em;
-    margin-top: -1.6em;
-    padding-right: 1em;
-    float: right;
+    color: #0000FF;
+     margin-bottom: 0.2em;
+    margin-top: 0.2em;
+    padding-left: 3em;
+    
 }
 
 .post-avatar {
