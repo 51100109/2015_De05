@@ -5,11 +5,12 @@
 @endsection
 
 @section('content')
-	<h1>Đăng nhập</h1>
+	
 
     
 
     {{Form::open(array('url' => 'login'))}}
+    <h2>Đăng nhập</h2>
     <!-- check for login error flash var -->
     @if (Session::has('flash_error'))
         <div class="bg-danger">{{ Session::get('flash_error') }}</div>
