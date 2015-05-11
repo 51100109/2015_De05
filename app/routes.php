@@ -27,6 +27,11 @@ Route::get('register',array('as' => 'register', 'uses' => 'HomeController@showRe
 
 Route::post('register_action', 'AuthController@storeRegisterInfo');
 
+// change password
+Route::get('changepass', array('as' => 'changepass', 'uses' => 'HomeController@showChangepassPage'))->before('auth');
+
+Route::post('changepass', 'AuthController@doChangepass')->before('auth');
+
 // Category view
 Route::model('category', 'Category');
 
@@ -67,6 +72,8 @@ Route::get('post/edit/{post}', array('as' => 'post/edit/{post}', 'uses' => 'Home
 Route::post('post/edit/{post}','ActionController@saveEditPost')->before('auth');
 
 Route::get('post/delete/{post}','ActionController@deletePost')->before('auth');
+
+
 
 //---------------Backend Group--------------------------------------------------
 Route::group(array("prefix"=>"admin"),function(){

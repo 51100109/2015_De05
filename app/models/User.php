@@ -27,5 +27,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		DB::table('user_accounts')->insert($data);
 	}
+	
+	public static function updatePassword($userid,$pass)
+	{
+		date_default_timezone_set("Asia/Ho_Chi_Minh");
+		$date=new DateTime();
+		 
+		$user = User::find($userid);
+		$user->password = $pass;
+		$user->updated_at=$date->format("Y-m-d H:i:s");
+		$user->save();
+	}
 
 }

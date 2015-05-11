@@ -34,6 +34,11 @@ class HomeController extends BaseController {
 		return View::make('front.views.softwares',['softwares'=>$softwares]);
 	}
 	
+	public function showChangepassPage()
+	{
+		return View::make('front.views.changepass');
+	}
+	
 	public function showLoginPage()
 	{
 		return View::make('front.views.login');

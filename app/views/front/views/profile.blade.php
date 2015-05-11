@@ -16,6 +16,11 @@ Profile - Softsharing
                         <div class="col-xs-8">{{ $user->username }}</div>
                     </div>
                     <div class="row rowbody">
+                        <div class="col-xs-3 color0">Mật khẩu</div>
+                        <div class="col-xs-1">:</div>
+                        <div class="col-xs-8"><a href="{{asset('changepass')}}">Đổi mật khẩu</a></div>
+                    </div>
+                    <div class="row rowbody">
                         <div class="col-xs-3 color0">Tên thành viên</div>
                         <div class="col-xs-1">:</div>
                         <div class="col-xs-8">{{ $user->fullname }}</div>

@@ -93,4 +93,36 @@ class AuthController extends BaseController {
                             ->with('flash_notice', 'Data inserted');;
             }
 	}
+	
+	public function doChangepass()
+	{
+		$data =  Input::except(array('_token')) ;
+		$rule  =  array(
+				'password'   => 'required|min:6|same:cpassword',
+				'cpassword'  => 'required|min:6'
+		) ;
+		
+		$message = array(
+				'cpassword.required' => 'The confirm password field is required.',
+				'cpassword.min'      => 'The confirm password must be at least 6 characters',
+				'password.same'      => 'The password and confirm password field must match.',
+		);
+		$validator = Validator::make($data,$rule,$message);
+
+		if ($validator->fails())
+		{
+			return Redirect::to('changepass')
+			->withErrors($validator->messages());
+		}
+		else
+		{
+			$insertData = Input::except(array('_token','cpassword'));
+			$insertData['password'] = Hash::make($insertData['password']);
+			$curUser = Auth::user();
+			User::updatePassword($curUser->id,$insertData['password']);
+		
+			return Redirect::to('changepass')
+			->with('flash_notice', 'Đổi mật khẩu thành công');;
+		}
+	}
 }

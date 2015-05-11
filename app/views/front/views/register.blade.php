@@ -46,7 +46,7 @@
 		<input type="date" name="birthday" id="birthday" placeholder="Birthday" class="form-control"/>
 		<input type="text" name="address" id="address" placeholder="Address" class="form-control"/>
 <!-- 		<input type="text" name="nationality" id="nationality" placeholder="Nationality" class="form-control"/> -->
-		<input type="number" name="phone" id="phone" placeholder="Phone" class="form-control"/>
+		<input type="text" name="phone" id="phone" placeholder="Phone" class="form-control"/>
 		<p>{{ Form::submit('Register',array('class' => 'btn btn-md btn-primary btn-block')) }}</p>
 	{{ Form::close() }}
 	
