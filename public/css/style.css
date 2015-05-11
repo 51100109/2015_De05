@@ -499,9 +499,9 @@ body {
 }
 #header-bg{
     background-image:  url(../imgs/header-backgroup.jpg);
-    background-size: 100%;
+    background-size: cover;
     height: 180px;
-    background-repeat: 0;
+    background-repeat: no-repeat;
 }
 .content-subhead{
     margin-top: 10px;
