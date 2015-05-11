@@ -18,6 +18,8 @@
 				@endif
 		@endif
 		<h2 class="post-list-title1">{{{$post->title}}}</h2>
+		<?php $user = User::find((int)$post->id_user) ?>
+		<div style="margin-top: 0px;margin-bottom: 10px;font-size: 12px;;color:grey">Đăng bởi: {{{$user->username}}}</div>
 		<div id="postcontent">
 			{{Purifier::clean($post->content)}}
 		</div>
