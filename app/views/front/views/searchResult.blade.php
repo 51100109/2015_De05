@@ -16,6 +16,6 @@ Kết quả tìm kiếm - Softsharing
     		@foreach ($softwares as $software)
     			@include('front.includes.softwareItem',['softwareItem'=>$software])
 			@endforeach
-			<div class="pull-right">{{ $softwares->links() }}</div>			
+			<div class="pull-right">{{ $softwares->appends(array('query' => $keyword))->links() }}</div>			
 		@endif 
 @endsection
