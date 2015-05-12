@@ -90,7 +90,8 @@
           </div>
           <div class="collapse navbar-collapse">
           @if(Auth::check())
-            <ul class="nav navbar-nav" id="reload_toolbar">
+            <div id="reload_toolbar">
+            <ul class="nav navbar-nav">
               @foreach($system as $item)
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false"><img src="{{ $item->image }}" class="size20" alt="icon"> {{ $item->name }} <span class="caret"></span></a>
@@ -105,6 +106,7 @@
               </li>
               @endforeach
             </ul>
+            </div>
            <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false"> Phần mềm<span class="caret"></span></a>
@@ -284,6 +286,9 @@
 
         function toolbar(result){
             $("#reload_toolbar").html(result);
+            $("#reload_toolbar").find("script").each(function(i) {
+                    eval($(this).text());
+             });
         }
 
         function notify_mes(result){

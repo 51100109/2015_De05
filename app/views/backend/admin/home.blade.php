@@ -53,6 +53,25 @@
 
 @section('scripts')
     <script type="text/javascript">
+        function updatetable(){
+            parent.oTable_activities.fnReloadAjax();
+            $.ajax({
+                  url:  "{{{ URL::to('admin/reload-toolpanel') }}}",
+                  type:"POST",
+                  success: toolpanel,
+            });
+            $.ajax({
+                  url:  "{{{ URL::to('admin/reload-toolbar') }}}",
+                  type:"POST",
+                  success: toolbar,
+            });
+             $.ajax({
+                  url:  "{{{ URL::to('admin/message') }}}",
+                  type:"POST",
+                  success: notify_mes,
+            });
+        }
+        
         $(document).ready(function() {
              oTable_activities =   $('#activities_table').dataTable({
                 "scrollY":        length,

@@ -100,6 +100,11 @@
                   type:"POST",
                   success: toolbar,
             });
+            $.ajax({
+                  url:  "{{{ URL::to('admin/message') }}}",
+                  type:"POST",
+                  success: notify_mes,
+            });
         }
 
 		$(document).ready(function() {
