@@ -107,4 +107,14 @@ class ActionController extends BaseController {
 		return Redirect::route('post')
 		->with('flash_notice', 'Xóa bài thành công!');
 	}
+	
+	
+	public function searchSoftware()
+	{
+		$search = Input::get('query');
+		
+		$result = Software::search($search)->paginate(15);
+		
+		return View::make('front.views.searchResult',['keyword'=>$search,'softwares'=>$result]);
+	}
 }

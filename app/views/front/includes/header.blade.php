@@ -91,13 +91,13 @@
                 	@endif
 			      </ul>		
 
-<!-- 			      <form class="navbar-form navbar-right" role="search"> -->
-<!-- 			        <div class="form-group"> -->
-<!-- 			          <input type="text" class="form-control" placeholder="Search">			          			           -->
-<!-- 			        </div> -->
-<!-- 			        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button> -->
+			      <form class="navbar-form navbar-right" role="search" action="{{URL::to('search')}}" >
+			        <div class="form-group">
+			          <input type="text" name="query" class="form-control" placeholder="Tìm phần mềm">			          			          
+			        </div>
+			        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
 			       
-<!-- 			      </form>      	 -->
+			      </form>      	
 
 			    </div><!-- /.navbar-collapse -->
 			  </div><!-- /.container-fluid -->

@@ -1,4 +1,6 @@
 <?php
+use Nicolaslopezj\Searchable\SearchableTrait;
+
 
 class Software extends Eloquent {
 
@@ -13,6 +15,20 @@ class Software extends Eloquent {
 		'id_category' => 'required',
 		'id_system' => 'required',
 		'id_publisher' => 'required',
+	];
+	
+	use SearchableTrait;
+	
+	/**
+	 * Searchable rules.
+	 *
+	 * @var array
+	 */
+	protected $searchable = [
+			'columns' => [
+					'name' => 10,
+					'description' => 2,
+			],
 	];
 
 	// Don't forget to fill this array

@@ -73,6 +73,10 @@ Route::post('post/edit/{post}','ActionController@saveEditPost')->before('auth');
 
 Route::get('post/delete/{post}','ActionController@deletePost')->before('auth');
 
+// Search software
+
+Route::get('search','ActionController@searchSoftware');
+
 
 
 //---------------Backend Group--------------------------------------------------

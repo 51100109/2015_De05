@@ -10,7 +10,8 @@
 		"artdarek/oauth-4-laravel": "dev-master",
 		"cartalyst/sentry": "2.1.*",
 		"mews/purifier": "dev-master-l4",
-		"bllim/datatables": "~1.3"
+		"bllim/datatables": "~1.3",
+		"nicolaslopezj/searchable": "1.*"
 	},
 	"minimum-stability": "dev",
 	"require-dev": {
