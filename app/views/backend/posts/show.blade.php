@@ -63,11 +63,11 @@
                         <div class="col-xs-1">:</div>
                         <div class="col-xs-8">{{ $number_comments }}</div>
                     </div>
-                    <div class="row rowbody">
-                        <div class="col-xs-3 color0">Nội dung</div>
-                        <div class="col-xs-1">:</div>
-                        <div class="col-xs-8">{{ $show->content }}</div>
-                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <br>
+                    {{ $show->content }}
+                    <br>
                     <div class="text-right">
                         <a href="{{{ URL::to('post/' . $show->id) }}}" class="block" target="_blank"> Đến bài đăng <span class="glyphicon glyphicon-arrow-right"></span></a>
                     </div>

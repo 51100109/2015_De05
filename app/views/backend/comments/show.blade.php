@@ -53,11 +53,6 @@
                         </div>
                     </div>
                     <div class="row rowbody">
-                        <div class="col-xs-3 color0">Nội dung</div>
-                        <div class="col-xs-1">:</div>
-                        <div class="col-xs-8">{{ $show->content }}</div>
-                    </div>
-                    <div class="row rowbody">
                         <div class="col-xs-3 color0">Thời gian</div>
                         <div class="col-xs-1">:</div>
                         <div class="col-xs-8">{{ $show->created_at }}</div>
@@ -66,6 +61,11 @@
                         <div class="col-xs-3 color0">Cập nhật lần cuối</div>
                         <div class="col-xs-1">:</div>
                         <div class="col-xs-8">{{ $show->updated_at }}</div>
+                    </div>
+                    <div class="row rowbody">
+                        <div class="col-xs-3 color0">Nội dung</div>
+                        <div class="col-xs-1">:</div>
+                        <div class="col-xs-8">{{ $show->content }}</div>
                     </div>
                     <div class="text-right">
                         @if($show->target == 'Bài đăng')
