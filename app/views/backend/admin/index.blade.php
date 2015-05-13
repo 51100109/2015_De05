@@ -94,7 +94,7 @@
             <ul class="nav navbar-nav">
               @foreach($system as $item)
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false"><img src="{{ $item->image }}" class="size20" alt="icon"> {{ $item->name }} <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false"><img src="{{ $item->image }}" class="size20" alt="icon"> {{ $item->name }} <b class="caret"></b></a>
                 <ul class="dropdown-menu" role="menu">
                   @foreach(explode(PHP_EOL,$item->id_category) as $category)
                       @if(is_numeric($category))
@@ -109,22 +109,22 @@
             </div>
            <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false"> Phần mềm<span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false"> Phần mềm<b class="caret"></b></a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="{{{ URL::to('admin/softwares/index') }}}"><span class="glyphicon glyphicon-cog"></span> Phần mềm</a></li>
-                  <li><a href="{{{ URL::to('admin/categories/index') }}}"><span class="glyphicon glyphicon-cog"></span> Danh mục</a></li>
-                  <li><a href="{{{ URL::to('admin/operate-systems/index') }}}"><span class="glyphicon glyphicon-cog"></span> Hệ điều hành</a></li>
-                  <li><a href="{{{ URL::to('admin/publishers/index') }}}"><span class="glyphicon glyphicon-cog"></span> Nhà phát hành</a></li>
+                  <li><a href="{{{ URL::to('admin/softwares/index') }}}"><i class="fa fa-cog fa-spin"></i> Phần mềm</a></li>
+                  <li><a href="{{{ URL::to('admin/categories/index') }}}"><i class="fa fa-cog fa-spin"></i> Danh mục</a></li>
+                  <li><a href="{{{ URL::to('admin/operate-systems/index') }}}"><i class="fa fa-cog fa-spin"></i> Hệ điều hành</a></li>
+                  <li><a href="{{{ URL::to('admin/publishers/index') }}}"><i class="fa fa-cog fa-spin"></i> Nhà phát hành</a></li>
                   <li class="divider"></li>
                 </ul>
               </li>
                <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false"> Thành viên<span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" role="button" aria-expanded="false"> Thành viên<b class="caret"></b></a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="{{{ URL::to('admin/activities/index') }}}"><span class="glyphicon glyphicon-cog"></span> Hoạt động</a></li>
-                  <li><a href="{{{ URL::to('admin/user-accounts/index') }}}"><span class="glyphicon glyphicon-cog"></span> Thành viên</a></li>
-                  <li><a href="{{{ URL::to('admin/posts/index') }}}"><span class="glyphicon glyphicon-cog"></span> Bài đăng</a></li>
-                  <li><a href="{{{ URL::to('admin/comments/index') }}}"><span class="glyphicon glyphicon-cog"></span> Bình luận</a></li>
+                  <li><a href="{{{ URL::to('admin/activities/index') }}}"><i class="fa fa-cog fa-spin"></i> Hoạt động</a></li>
+                  <li><a href="{{{ URL::to('admin/user-accounts/index') }}}"><i class="fa fa-cog fa-spin"></i> Thành viên</a></li>
+                  <li><a href="{{{ URL::to('admin/posts/index') }}}"><i class="fa fa-cog fa-spin"></i> Bài đăng</a></li>
+                  <li><a href="{{{ URL::to('admin/comments/index') }}}"><i class="fa fa-cog fa-spin"></i> Bình luận</a></li>
                   <li class="divider"></li>
                 </ul>
               </li>
@@ -155,7 +155,7 @@
             @foreach($system as $item)
             <li>
               <div class="panel panel-info">
-              <div class="panel-heading"><a data-toggle="collapse" data-parent="#stacked-menu" href="#{{ $item->id }}" class="block"><img src="{{ $item->image }}" class="size20" alt="icon"> {{ $item->name }} <span class="caret arrow right_top8"></span></a></div>
+              <div class="panel-heading"><a data-toggle="collapse" data-parent="#stacked-menu" href="#{{ $item->id }}" class="block"><img src="{{ $item->image }}" class="size20" alt="icon"> {{ $item->name }} <b class="caret arrow right_top8"></b></a></div>
               <ul class="nav nav-pills nav-stacked collapse" id="{{ $item->id }}">
                 @foreach(explode(PHP_EOL,$item->id_category) as $category)
                     @if(is_numeric($category))
@@ -249,7 +249,6 @@
 </div>
     <script type="text/javascript" src="{{asset('assets/js/jquery-1.11.1.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/bootstrap.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('assets/js/bootstrap-hover-dropdown.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/prettify.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/data-table/js/jquery.dataTables.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/data-table/js/dataTables.bootstrap.js')}}"></script>
@@ -414,7 +413,7 @@
                                   top: cbT + 'px'
                               },
                               {
-                                  duration: 1000,
+                                  duration: 500,
                                   easing: 'easeOutElastic'
                               });
                           });
@@ -441,6 +440,18 @@
               $('.deleteForm').submit(function(event) {
                     parent.jQuery.colorbox.close();
                 });
+
+              $(".dropdown").hover(            
+                  function() {
+                      $('.dropdown-menu', this).stop( true, true ).fadeIn("low");
+                      $(this).toggleClass('open');
+                      $('b', this).toggleClass("caret caret-up");                
+                  },
+                  function() {
+                      $('.dropdown-menu', this).stop( true, true ).fadeOut("low");
+                      $(this).toggleClass('open');
+                      $('b', this).toggleClass("caret caret-up");                
+                  });
           });
   </script>
       @yield('scripts')
