@@ -22,7 +22,7 @@
 
                         <p class="post-meta">
                         	<a class="btn btn-success" href={{ URL::to('/software/'.$softwareItem->id) }}>
-  							<i class="fa fa-download"></i> Download</a>                           	                        	
+  							<i class="fa fa-book"></i> Xem chi tiết</a>                           	                        	
                         </p>
                         <p class="post-info">
                         	<i class="fa fa-info fa-lg"> {{{$softwareItem->filesize}}}MB ({{{$softwareItem->license}}})</i>

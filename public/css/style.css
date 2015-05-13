@@ -480,7 +480,7 @@ body {
     background-image:  url(../imgs/body-bg7.png);
     background-repeat: repeat;
     color: #333;
-    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 .container{
     background-color: #fff;
@@ -489,6 +489,7 @@ body {
 }
 .container-fluid{
     background-color: #FFEC94;
+    height:52px;
 }
 .masthead{
     background-color: #70CAFF;
@@ -511,11 +512,9 @@ body {
     margin-bottom: 10px;
 }
 .panel-heading{
-    font-family: "Comic Sans MS", cursive, sans-serif;
     font-size: 20px;
 }
 .list-group{
-    font-family: "Comic Sans MS", cursive, sans-serif;
 }
 .list-group-item{
     background-color: #FFEC94;
@@ -525,6 +524,7 @@ padding-right: 0px;
 }
 .navbar{
     margin-bottom: 0px;
+    height:52px;
 }
 #bs-example-navbar-collapse-1 a{
     color:  #116611;
@@ -532,6 +532,7 @@ padding-right: 0px;
 #line1,#line2{
     height: 3px;
     background-color: red; 
+    margin-bottom:0px;
 }
 .footer{
     background-color: #70CAFF;
