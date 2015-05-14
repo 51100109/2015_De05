@@ -114,15 +114,27 @@
             },
             fullname:{
               required:true,
+              remote:{
+                url: "{{{ URL::to('admin/user-accounts/check-fullname') }}}",
+                type: "POST"
+              }
             },
             creenname:{
               required:true,
+              remote:{
+                url: "{{{ URL::to('admin/user-accounts/check-creenname') }}}",
+                type: "POST"
+              }
             },
             birthday:{
               required:true,
             },
             address:{
               required:true,
+              remote:{
+                url: "{{{ URL::to('admin/user-accounts/check-address') }}}",
+                type: "POST"
+              }
             },
             phone:{
               required:true,
@@ -139,7 +151,7 @@
             username:{
               required:"Vui lòng nhập tên tài khoản",
               minlength:"Tên tài khoản phải có 3 ký tự trở lên",
-              remote:"Tài khoản đã tồn tại"
+              remote:"Tài khoản đã tồn tại hoặc không hợp lệ"
             },
             password:{
               required:"Vui lòng nhập mật khẩu",
@@ -155,20 +167,23 @@
               remote:"Email đã được sử dụng"
             },
             fullname:{
-              required:"Vui lòng nhập họ và tên"
+              required:"Vui lòng nhập họ và tên",
+              remote:"Họ và tên không hợp lệ"
             },
             creenname:{
-              required:"Vui lòng nhập tên hiển thị"
+              required:"Vui lòng nhập tên hiển thị",
+              remote:"Tên hiển thị không hợp lệ"
             },
             birthday:{
               required:"Vui lòng nhập ngày sinh"
             },
             address:{
-              required:"Vui lòng nhập địa chỉ"
+              required:"Vui lòng nhập địa chỉ",
+              remote:"Địa chỉ không hợp lệ"
             },
             phone:{
               required:"Vui lòng nhập số điện thoại",
-              number:"Số điện thoại không đúng định dạng"
+              number:"Số điện thoại không đúng định dạng",
             },
             gender:{
               required:"Vui lòng chọn giới tính",

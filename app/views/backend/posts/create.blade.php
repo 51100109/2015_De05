@@ -39,6 +39,10 @@
 		        rules:{
 		            title:{
 		              	required:true,
+		              	remote:{
+			                url: "{{{ URL::to('admin/posts/check-title') }}}",
+			                type: "POST"
+			              }
 		            },
 		            content:{
 		              	required:true,
@@ -47,6 +51,7 @@
 		        messages:{
 		            title:{
 		                required:"Vui lòng nhập tên tiêu đề",
+		                remote:"Tiêu đề không hợp lệ",
 		            },
 		        },
 		        errorElement: 'span',

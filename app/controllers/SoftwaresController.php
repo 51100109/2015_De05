@@ -6,6 +6,27 @@ class SoftwaresController extends BaseController {
     	$this->beforeFilter('check-admin');
 	}
 
+  public function postCheckImage(){
+    if( strip_tags(Purifier::clean(Input::get('image'))) !=  Input::get('image'))
+      return "false";
+    else
+      return "true";
+  }
+
+  public function postCheckDownload(){
+    if( strip_tags(Purifier::clean(Input::get('download'))) !=  Input::get('download'))
+      return "false";
+    else
+      return "true";
+  }
+
+  public function postCheckName(){
+    if( strip_tags(Purifier::clean(Input::get('name'))) !=  Input::get('name'))
+      return "false";
+    else
+      return "true";
+  }
+
 	public function getIndex(){
 		$system = OperateSystem::all();
 		return View::make('backend.softwares.index', compact('system'));
@@ -25,17 +46,27 @@ class SoftwaresController extends BaseController {
 	}
 
 	public function postCreate(){
-		$validator = Validator::make($data = Input::all(), Software::$rules);
-		if ($validator->fails()){
-			Session::put('fail',"Khởi tạo không thành công");
-			return Redirect::back();
-		}
-		else{
-			$software = Software::create($data);
-			UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Phần mềm', $software->id,"Phần mềm ".$software->name." có ID: ".$software->id);
-			Session::put('success',"Đã thêm phần mềm ".$software->name." có ID: ".$software->id);
-			return Redirect::back();
-		}
+    $data = Input::all();
+    $data["download"]=strip_tags(Purifier::clean($data["download"]));
+    $data["name"]=strip_tags(Purifier::clean($data["name"]));
+    $data["image"]=strip_tags(Purifier::clean($data["image"]));
+    if(($data["download"] != Input::get('download')) || ($data["name"] != Input::get('name')) || ($data["image"] != Input::get('image'))){
+      Session::put('fail',"Khởi tạo không thành công");
+      return Redirect::back();
+    }
+    else{
+  		$validator = Validator::make($data, Software::$rules);
+  		if ($validator->fails()){
+  			Session::put('fail',"Khởi tạo không thành công");
+  			return Redirect::back();
+  		}
+  		else{
+  			$software = Software::create($data);
+  			UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Phần mềm', $software->id,"Phần mềm ".$software->name." có ID: ".$software->id);
+  			Session::put('success',"Đã thêm phần mềm ".$software->name." có ID: ".$software->id);
+  			return Redirect::back();
+  		}
+    }
 	}
 
 	public function getEdit($id){
@@ -46,18 +77,28 @@ class SoftwaresController extends BaseController {
 	}
 
 	public function postEdit($id){
-		$validator = Validator::make($data = Input::all(), Software::$rules);
-		if ($validator->fails()){
-			Session::put('fail',"Cập nhật không thành công");
-			return Redirect::back();
-		}
-		else{
-			$software = Software::findOrFail($id);
-			$software->update($data);
-			UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Phần mềm', $software->id,"Cập nhật phần mềm ".$software->name." có ID: ".$software->id);
-			Session::put('success',"Đã cập nhật phần mềm có ID: ".$software->id);
-			return Redirect::back();
-		}
+    $data = Input::all();
+    $data["download"]=strip_tags(Purifier::clean($data["download"]));
+    $data["name"]=strip_tags(Purifier::clean($data["name"]));
+    $data["image"]=strip_tags(Purifier::clean($data["image"]));
+   if(($data["download"] != Input::get('download')) || ($data["name"] != Input::get('name')) || ($data["image"] != Input::get('image'))){
+      Session::put('fail',"Cập nhật không thành công");
+      return Redirect::back();
+    }
+    else{
+  		$validator = Validator::make($data, Software::$rules);
+  		if ($validator->fails()){
+  			Session::put('fail',"Cập nhật không thành công");
+  			return Redirect::back();
+  		}
+  		else{
+  			$software = Software::findOrFail($id);
+  			$software->update($data);
+  			UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Phần mềm', $software->id,"Cập nhật phần mềm ".$software->name." có ID: ".$software->id);
+  			Session::put('success',"Đã cập nhật phần mềm có ID: ".$software->id);
+  			return Redirect::back();
+  		}
+    }
 	}
 
 	public function getDelete($id){

@@ -16,21 +16,36 @@ class PostsController extends BaseController {
 		return View::make('backend.posts.create');
 	}
 
+	public function postCheckTitle(){
+		if( strip_tags(Purifier::clean(Input::get('title'))) !=  Input::get('title'))
+			return "false";
+		else
+			return "true";
+	}
+
 	public function postCreate(){
-		$validator = Validator::make($data = Input::all(), Post::$rules);
-		if ($validator->fails()){
-			Session::put('fail',"Vui lòng nhập nội dung bài đăng");
+		$data = Input::all();
+		$data["title"]=strip_tags(Purifier::clean($data["title"]));
+		if($data["title"] != Input::get('title')){
+			Session::put('fail',"Khởi tạo không thành công");
 			return Redirect::back();
 		}
 		else{
-			$post = new Post;
-			$post->id_user = Auth::user()->id;
-			$post->title = Input::get('title');
-			$post->content = Input::get('content');
-			$post->save();
-			UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Bài đăng', $post->id,"Bài đăng ".$post->title." có ID: ".$post->id);
-			Session::put('success',"Đã thêm bài đăng ".$post->title." có ID: ".$post->id);
-			return Redirect::back();
+			$validator = Validator::make($data, Post::$rules);
+			if ($validator->fails()){
+				Session::put('fail',"Khởi tạo không thành công");
+				return Redirect::back();
+			}
+			else{
+				$post = new Post;
+				$post->id_user = Auth::user()->id;
+				$post->title = $data["title"];
+				$post->content = $data["content"];
+				$post->save();
+				UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Bài đăng', $post->id,"Bài đăng ".$post->title." có ID: ".$post->id);
+				Session::put('success',"Đã thêm bài đăng ".$post->title." có ID: ".$post->id);
+				return Redirect::back();
+			}
 		}
 	}
 
@@ -40,17 +55,27 @@ class PostsController extends BaseController {
 	}
 
 	public function postEdit($id){
-		$validator = Validator::make($data = Input::all(), Post::$rules);
-		if ($validator->fails()){
-			Session::put('fail',"Vui lòng nhập nội dung bài đăng");
+		$data = Input::all();
+		$data["title"]=strip_tags(Purifier::clean($data["title"]));
+		if($data["title"] != Input::get('title')){
+			Session::put('fail',"Cập nhật không thành công");
 			return Redirect::back();
 		}
 		else{
-			$post = Post::find($id);
-			$post->update($data);
-			UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Bài đăng', $post->id,"Cập nhật bài đăng ".$post->title." có ID: ".$post->id);
-			Session::put('success',"Đã cập nhật bài đăng ".$post->title." có ID: ".$post->id);
-			return Redirect::back();
+			$validator = Validator::make($data, Post::$rules);
+			if ($validator->fails()){
+				Session::put('fail',"Vui lòng nhập nội dung bài đăng");
+				return Redirect::back();
+			}
+			else{
+				$post = Post::find($id);
+				$post->title = $data["title"];
+				$post->content = $data["content"];
+				$post->save();
+				UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Bài đăng', $post->id,"Cập nhật bài đăng ".$post->title." có ID: ".$post->id);
+				Session::put('success',"Đã cập nhật bài đăng ".$post->title." có ID: ".$post->id);
+				return Redirect::back();
+			}
 		}
 	}
 

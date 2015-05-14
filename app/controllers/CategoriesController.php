@@ -7,15 +7,22 @@ class CategoriesController extends BaseController {
     	$this->beforeFilter('check-admin');
 	}
 
+	public function postCheckJs(){
+	    if( strip_tags(Purifier::clean(Input::get('image'))) !=  Input::get('image'))
+	      return "false";
+	    else
+	      return "true";
+	  }
+
 	public function postCheckName(){
-		if(Category::where('name','=', Input::get('name'))->count() > 0)
+		if((Category::where('name','=', Input::get('name'))->count() > 0)||(strip_tags(Purifier::clean(Input::get('name'))) !=  Input::get('name')))
 			return "false";
 		else
 			return "true";
 	}
 
 	public function postCheckEditname($id){
-		if(Category::where('name','=', Input::get('name'))->whereNotIn('id', array($id))->count() > 0)
+		if((Category::where('name','=', Input::get('name'))->whereNotIn('id', array($id))->count() > 0)||(strip_tags(Purifier::clean(Input::get('name'))) !=  Input::get('name')))
 			return "false";
 		else
 			return "true";
@@ -31,16 +38,25 @@ class CategoriesController extends BaseController {
 	}
 
 	public function postCreate(){
-		$validator = Validator::make($data = Input::all(), Category::$rules);
-		if ($validator->fails()){
+		$data = Input::all();
+	    $data["image"]=strip_tags(Purifier::clean($data["image"]));
+	    $data["name"]=strip_tags(Purifier::clean($data["name"]));
+		if(($data["image"] != Input::get('image')) || ($data["name"] != Input::get('name'))){
 			Session::put('fail',"Khởi tạo không thành công");
 			return Redirect::back();
 		}
 		else{
-			$category = Category::create($data);
-			UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Danh mục', $category->id,"Danh mục ".$category->name." có ID: ".$category->id);
-			Session::put('success',"Đã thêm danh mục ".$category->name." có ID: ".$category->id);
-			return Redirect::back();
+			$validator = Validator::make($data, Category::$rules);
+			if ($validator->fails()){
+				Session::put('fail',"Khởi tạo không thành công");
+				return Redirect::back();
+			}
+			else{
+				$category = Category::create($data);
+				UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Danh mục', $category->id,"Danh mục ".$category->name." có ID: ".$category->id);
+				Session::put('success',"Đã thêm danh mục ".$category->name." có ID: ".$category->id);
+				return Redirect::back();
+			}
 		}
 	}
 
@@ -50,17 +66,26 @@ class CategoriesController extends BaseController {
 	}
 
 	public function postEdit($id){
-		$validator = Validator::make($data = Input::all(), Category::$rules_edit);
-		if ($validator->fails()){
+		$data = Input::all();
+	    $data["image"]=strip_tags(Purifier::clean($data["image"]));
+	    $data["name"]=strip_tags(Purifier::clean($data["name"]));
+		if(($data["image"] != Input::get('image')) || ($data["name"] != Input::get('name'))){
 			Session::put('fail',"Cập nhật không thành công");
 			return Redirect::back();
 		}
 		else{
-			$category = Category::find($id);
-			$category->update($data);
-			UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Danh mục', $category->id,"Cập nhật danh mục ".$category->name." có ID: ".$category->id);
-			Session::put('success',"Đã cập nhật danh mục ".$category->name." có ID: ".$category->id);
-			return Redirect::back();
+			$validator = Validator::make($data, Category::$rules_edit);
+			if ($validator->fails()){
+				Session::put('fail',"Cập nhật không thành công");
+				return Redirect::back();
+			}
+			else{
+				$category = Category::find($id);
+				$category->update($data);
+				UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Danh mục', $category->id,"Cập nhật danh mục ".$category->name." có ID: ".$category->id);
+				Session::put('success',"Đã cập nhật danh mục ".$category->name." có ID: ".$category->id);
+				return Redirect::back();
+			}
 		}
 	}
 

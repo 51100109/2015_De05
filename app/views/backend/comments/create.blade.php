@@ -14,7 +14,7 @@
                 <div class="col-xs-12">
 			        <div class="form-group">
 			            <label class="control-label" for="content">Nội dung</label> 
-			            <textarea type="text" name="content" id="content" class="form-control" style="height:200px;"></textarea>
+			            <textarea type="text" name="content" id="content" class="form-control ckeditor"></textarea>
 			        </div> 
 			        <div class="form-group">
 			        	<div class="text-right">
@@ -26,4 +26,13 @@
 			    </div>
 		</div>
     </form>
+@stop
+
+@section('scripts')
+ 		<script type="text/javascript">
+			CKEDITOR.config.height = 200;
+			CKEDITOR.config.resize_enabled = false;
+            CKEDITOR.config.skin = 'office2013';
+            CKEDITOR.config.toolbar = [] ;
+       </script>
 @stop

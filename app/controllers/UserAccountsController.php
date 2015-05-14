@@ -7,8 +7,30 @@ class UserAccountsController extends BaseController {
     	$this->beforeFilter('check-admin');
 	}
 
+	public function postCheckFullname(){
+	    if( strip_tags(Purifier::clean(Input::get('fullname'))) !=  Input::get('fullname'))
+	      return "false";
+	    else
+	      return "true";
+	  }
+
+	  public function postCheckCreenname(){
+	    if( strip_tags(Purifier::clean(Input::get('creenname'))) !=  Input::get('creenname'))
+	      return "false";
+	    else
+	      return "true";
+	  }
+
+	 public function postCheckAddress(){
+	    if( strip_tags(Purifier::clean(Input::get('address'))) !=  Input::get('address'))
+	      return "false";
+	    else
+	      return "true";
+	  }
+
+
 	public function postCheckUsername(){
-		if(UserAccount::where('username','=', Input::get('username'))->count() > 0)
+		if((UserAccount::where('username','=', Input::get('username'))->count() > 0)||(strip_tags(Purifier::clean(Input::get('username'))) !=  Input::get('username')))
 			return "false";
 		else
 			return "true";
@@ -22,7 +44,7 @@ class UserAccountsController extends BaseController {
     }
 
     public function postCheckEditusername($id){
-		if(UserAccount::where('username','=', Input::get('username'))->whereNotIn('id', array($id))->count() > 0)
+		if((UserAccount::where('username','=', Input::get('username'))->whereNotIn('id', array($id))->count() > 0)||(strip_tags(Purifier::clean(Input::get('username'))) !=  Input::get('username')))
 			return "false";
 		else
 			return "true";
@@ -45,17 +67,32 @@ class UserAccountsController extends BaseController {
 	}
 
 	public function postCreate(){
-		$validator = Validator::make($data = Input::all(), UserAccount::$rules_create);
-		if ($validator->fails()){
-			Session::put('success',"Khởi tạo không thành công");
+		$data = Input::all();
+	    $data["username"]=strip_tags(Purifier::clean($data["username"]));
+	    $data["fullname"]=strip_tags(Purifier::clean($data["fullname"]));
+	    $data["creenname"]=strip_tags(Purifier::clean($data["creenname"]));
+	    $data["address"]=strip_tags(Purifier::clean($data["address"]));
+		if( ($data["username"] != Input::get('username'))||
+			($data["fullname"] != Input::get('fullname'))||
+			($data["creenname"] != Input::get('creenname'))||
+			($data["address"] != Input::get('address')))
+		{
+			Session::put('fail',"Khởi tạo không thành công");
 			return Redirect::back();
 		}
 		else{
-			$data['password'] = Hash::make($data['password']);
-			$user = UserAccount::create($data);
-			UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Thành viên', $user->id,"Tài khoản: " .$user->username. " --- \n Tên: " .$user->fullname. " --- \n Tên hiển thị: " .$user->creenname);
-			Session::put('success',"Đã thêm thành viên ".$user->username." có ID: ".$user->id);
-			return Redirect::back();
+			$validator = Validator::make($data, UserAccount::$rules_create);
+			if ($validator->fails()){
+				Session::put('success',"Khởi tạo không thành công");
+				return Redirect::back();
+			}
+			else{
+				$data['password'] = Hash::make($data['password']);
+				$user = UserAccount::create($data);
+				UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Thành viên', $user->id,"Tài khoản: " .$user->username. " --- \n Tên: " .$user->fullname. " --- \n Tên hiển thị: " .$user->creenname);
+				Session::put('success',"Đã thêm thành viên ".$user->username." có ID: ".$user->id);
+				return Redirect::back();
+			}
 		}
 	}
 
@@ -66,22 +103,22 @@ class UserAccountsController extends BaseController {
 	}
 
 	public function postEdit($id){
-		$validator = Validator::make($data = Input::all(), UserAccount::$rules_edit);
-		if ($validator->fails()){
-			Session::put('fail',"Cập nhật không thành công");
-			return Redirect::back();
-		}
-		else{
-			$user = UserAccount::find($id);
-			$user->update($data);
-			if($user->admin == 1 )
-				$infor = "Administrator";
-			else
-				$infor = "Thành viên";
-			UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Thành viên', $user->id,"Thay đổi quyền sử dụng thành viên " .$user->username. " thành: " .$infor);
-			Session::put('success',"Đã thay đổi quyền sử dụng của thành viên ".$user->username." có ID: ".$user->id);
-			return Redirect::back();
-		}
+			$validator = Validator::make($data = Input::all(), UserAccount::$rules_edit);
+			if ($validator->fails()){
+				Session::put('fail',"Cập nhật không thành công");
+				return Redirect::back();
+			}
+			else{
+				$user = UserAccount::find($id);
+				$user->update($data);
+				if($user->admin == 1 )
+					$infor = "Administrator";
+				else
+					$infor = "Thành viên";
+				UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Thành viên', $user->id,"Thay đổi quyền sử dụng thành viên " .$user->username. " thành: " .$infor);
+				Session::put('success',"Đã thay đổi quyền sử dụng của thành viên ".$user->username." có ID: ".$user->id);
+				return Redirect::back();
+			}
 	}
 
 	public function getEditAdmin($id){
@@ -91,20 +128,35 @@ class UserAccountsController extends BaseController {
     }
 
     public function postEditAdmin($id){
-        $validator = Validator::make($data = Input::all(), UserAccount::$rules_edit_admin);
-        if ($validator->fails()){
-            Session::put('fail',"Cập nhật không thành công");
-            return Redirect::back();
-        }
-        else{
-            $user = UserAccount::find($id);
-            $data['password'] = Hash::make($data['password']);
-            $user->update($data);
-            UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Thành viên', $user->id,$user->username. " cập nhật thông tin cá nhân");
-            Session::put('success',"Cập nhật thông tin thành công");
-            return Redirect::back();
-        }
-    }
+    	$data = Input::all();
+	    $data["username"]=strip_tags(Purifier::clean($data["username"]));
+	    $data["fullname"]=strip_tags(Purifier::clean($data["fullname"]));
+	    $data["creenname"]=strip_tags(Purifier::clean($data["creenname"]));
+	    $data["address"]=strip_tags(Purifier::clean($data["address"]));
+		if( ($data["username"] != Input::get('username'))||
+			($data["fullname"] != Input::get('fullname'))||
+			($data["creenname"] != Input::get('creenname'))||
+			($data["address"] != Input::get('address')))
+		{
+			Session::put('fail',"Cập nhật không thành công");
+			return Redirect::back();
+		}
+		else{
+	        $validator = Validator::make($data, UserAccount::$rules_edit_admin);
+	        if ($validator->fails()){
+	            Session::put('fail',"Cập nhật không thành công");
+	            return Redirect::back();
+	        }
+	        else{
+	            $user = UserAccount::find($id);
+	            $data['password'] = Hash::make($data['password']);
+	            $user->update($data);
+	            UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Thành viên', $user->id,$user->username. " cập nhật thông tin cá nhân");
+	            Session::put('success',"Cập nhật thông tin thành công");
+	            return Redirect::back();
+	        }
+	    }
+	  }
 
 	public function getDelete($id){
 		$user = UserAccount::find($id);

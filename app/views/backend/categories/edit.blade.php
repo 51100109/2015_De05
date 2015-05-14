@@ -47,21 +47,26 @@
                     name:{
                         required:true,
                         remote:{
-                            url: "{{{ URL::to('admin/categories/check-editname/'.$category->id) }}}",
+                            url: "{{{ URL::to('admin/categories/check-name') }}}",
                             type: "POST",
                         },
                     },
                     image:{
                         required:true,
+                        remote:{
+                            url: "{{{ URL::to('admin/categories/check-js') }}}",
+                            type: "POST",
+                        },
                     },
                 },
                 messages:{
                     name:{
                         required:"Vui lòng nhập tên danh mục phần mềm",
-                        remote:"Danh mục phần mềm đã tồn tại",
+                        remote:"Danh mục phần mềm đã tồn tại hoặc không hơp lệ",
                     },
                     image:{
                         required:"Vui lòng nhập hình ảnh danh mục",
+                        remote:"Hình ảnh không hợp lệ",
                     },
                 },
                 errorElement: 'span',

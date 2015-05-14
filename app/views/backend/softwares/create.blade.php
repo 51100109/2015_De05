@@ -99,6 +99,10 @@
           rules:{
             name:{
               required:true,
+              remote:{
+                    url: "{{{ URL::to('admin/softwares/check-name') }}}",
+                    type: "POST"
+                }
             },
             filesize:{
               required:true,
@@ -121,9 +125,17 @@
             },
             image:{
               required:true,
+              remote:{
+                    url: "{{{ URL::to('admin/softwares/check-image') }}}",
+                    type: "POST"
+                }
             }, 
             download:{
               required:true,
+              remote:{
+                url: "{{{ URL::to('admin/softwares/check-download') }}}",
+                type: "POST"
+                }
             },
             description:{
               required:true,
@@ -132,6 +144,7 @@
           messages:{
             name:{
               required:"Vui lòng nhập tên phần mềm",
+              remote:"Tên phần mềm không hợp lệ",
             },
             filesize:{
               required:"Vui lòng nhập dung lượng phần mềm",
@@ -154,9 +167,11 @@
             },
             image:{
               required:"Vui lòng thêm hình ảnh phần mềm",
+              remote:"Hình ảnh không hợp lệ",
             }, 
             download:{
               required:"Vui lòng nhập liên kết tải phần mềm",
+              remote:"Liên kết không hợp lệ",
             },
             description:{
               required:"Vui lòng nhập thông tin mô tả phần mềm",

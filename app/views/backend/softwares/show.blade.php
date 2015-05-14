@@ -35,7 +35,7 @@
             <div class="row rowbody">
                 <div class="col-xs-3 color0">Tải về</div>
                 <div class="col-xs-1">:</div>
-                <div class="col-xs-8"><a href="{{{ $show->download }}}" target="_blank">{{ $show->download }}</a></div>
+                <div class="col-xs-8"><a href="{{{ $show->download }}}" target="_blank">{{ Purifier::clean($show->download) }}</a></div>
             </div>
             <div class="row rowbody">
                 <div class="col-xs-3 color0">Ngôn ngữ</div>

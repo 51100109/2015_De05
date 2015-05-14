@@ -7,15 +7,23 @@ class OperateSystemsController extends BaseController {
     	$this->beforeFilter('check-admin');
 	}
 
+	public function postCheckJs(){
+	    if( strip_tags(Purifier::clean(Input::get('image'))) !=  Input::get('image'))
+	      return "false";
+	    else
+	      return "true";
+	  }
+
+
 	public function postCheckName(){
-		if(OperateSystem::where('name','=', Input::get('name'))->count() > 0)
+		if((OperateSystem::where('name','=', Input::get('name'))->count() > 0)||(strip_tags(Purifier::clean(Input::get('name'))) !=  Input::get('name')))
 			return "false";
 		else
 			return "true";
 	}
 
 	public function postCheckEditname($id){
-		if(OperateSystem::where('name','=', Input::get('name'))->whereNotIn('id', array($id))->count() > 0)
+		if((OperateSystem::where('name','=', Input::get('name'))->whereNotIn('id', array($id))->count() > 0)||(strip_tags(Purifier::clean(Input::get('name'))) !=  Input::get('name')))
 			return "false";
 		else
 			return "true";
@@ -32,22 +40,31 @@ class OperateSystemsController extends BaseController {
 	}
 
 	public function postCreate(){
-		$validator = Validator::make($data = Input::all(), OperateSystem::$rules);
-		if ($validator->fails()){
-			Session::put('fail',"Vui lòng chọn danh mục");
+		$data = Input::all();
+	    $data["image"]=strip_tags(Purifier::clean($data["image"]));
+	    $data["name"]=strip_tags(Purifier::clean($data["name"]));
+		if(($data["image"] != Input::get('image')) || ($data["name"] != Input::get('name'))){
+			Session::put('fail',"Khởi tạo không thành công");
 			return Redirect::back();
 		}
 		else{
-			$id_nums = Input::get('id_category');
-			$id_nums = implode(PHP_EOL, $id_nums);
-			$system = new OperateSystem;
-			$system->name = Input::get('name');
-			$system->image = Input::get('image');
-			$system->id_category = $id_nums;
-			$system->save();
-			UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Hệ điều hành', $system->id,"Hệ điều hành ".$system->name." có ID: ".$system->id);
-			Session::put('success',"Đã thêm hệ điều hành ".$system->name." có ID: ".$system->id);
-			return Redirect::back();
+			$validator = Validator::make($data, OperateSystem::$rules);
+			if ($validator->fails()){
+				Session::put('fail',"Vui lòng chọn danh mục");
+				return Redirect::back();
+			}
+			else{
+				$id_nums = Input::get('id_category');
+				$id_nums = implode(PHP_EOL, $id_nums);
+				$system = new OperateSystem;
+				$system->name =  $data["name"];
+				$system->image =  $data["image"];
+				$system->id_category = $id_nums;
+				$system->save();
+				UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Hệ điều hành', $system->id,"Hệ điều hành ".$system->name." có ID: ".$system->id);
+				Session::put('success',"Đã thêm hệ điều hành ".$system->name." có ID: ".$system->id);
+				return Redirect::back();
+			}
 		}
 	}
 
@@ -58,22 +75,31 @@ class OperateSystemsController extends BaseController {
 	}
 
 	public function postEdit($id){
-		$validator = Validator::make($data = Input::all(), OperateSystem::$rules_edit);
-		if ($validator->fails()){
-			Session::put('fail',"Vui lòng chọn danh mục");
+		$data = Input::all();
+	    $data["image"]=strip_tags(Purifier::clean($data["image"]));
+	    $data["name"]=strip_tags(Purifier::clean($data["name"]));
+		if(($data["image"] != Input::get('image')) || ($data["name"] != Input::get('name'))){
+			Session::put('fail',"Cập nhật không thành công");
 			return Redirect::back();
 		}
 		else{
-			$id_nums = Input::get('id_category');
-			$id_nums = implode(PHP_EOL, $id_nums);
-			$system = OperateSystem::findOrFail($id);
-			$system->name = Input::get('name');
-			$system->image = Input::get('image');
-			$system->id_category = $id_nums;
-			$system->save();
-			UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Hệ điều hành', $system->id,"Cập nhật hệ điều hành ".$system->name." có ID: ".$system->id);
-			Session::put('success',"Đã cập nhật hệ điều hành ".$system->name." có ID: ".$system->id);
-			return Redirect::back();
+			$validator = Validator::make($data, OperateSystem::$rules_edit);
+			if ($validator->fails()){
+				Session::put('fail',"Vui lòng chọn danh mục");
+				return Redirect::back();
+			}
+			else{
+				$id_nums = Input::get('id_category');
+				$id_nums = implode(PHP_EOL, $id_nums);
+				$system = OperateSystem::findOrFail($id);
+				$system->name = $data["name"];
+				$system->image = $data["image"];
+				$system->id_category = $id_nums;
+				$system->save();
+				UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Hệ điều hành', $system->id,"Cập nhật hệ điều hành ".$system->name." có ID: ".$system->id);
+				Session::put('success',"Đã cập nhật hệ điều hành ".$system->name." có ID: ".$system->id);
+				return Redirect::back();
+			}
 		}
 	}
 

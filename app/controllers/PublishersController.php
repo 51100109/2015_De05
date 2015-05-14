@@ -8,14 +8,14 @@ class PublishersController extends BaseController {
 	}
 
 	public function postCheckName(){
-		if(Publisher::where('name','=', Input::get('name'))->count() > 0)
+		if((Publisher::where('name','=', Input::get('name'))->count() > 0)||(strip_tags(Purifier::clean(Input::get('name'))) !=  Input::get('name')))
 			return "false";
 		else
 			return "true";
 	}
 
 	public function postCheckEditname($id){
-		if(Publisher::where('name','=', Input::get('name'))->whereNotIn('id', array($id))->count() > 0)
+		if((Publisher::where('name','=', Input::get('name'))->whereNotIn('id', array($id))->count() > 0)||(strip_tags(Purifier::clean(Input::get('name'))) !=  Input::get('name')))
 			return "false";
 		else
 			return "true";
@@ -31,16 +31,24 @@ class PublishersController extends BaseController {
 	}
 
 	public function postCreate(){
-		$validator = Validator::make($data = Input::all(), Publisher::$rules);
-		if ($validator->fails()){
+		$data = Input::all();
+	    $data["name"]=strip_tags(Purifier::clean($data["name"]));
+		if($data["name"] != Input::get('name')){
 			Session::put('fail',"Khởi tạo không thành công");
 			return Redirect::back();
 		}
 		else{
-			$publisher = Publisher::create($data);
-			UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Nhà phát hành', $publisher->id,"Nhà phát hành ".$publisher->name." có ID: ".$publisher->id);
-			Session::put('success',"Đã thêm nhà phát hành ".$publisher->name." có ID: ".$publisher->id);
-			return Redirect::back();
+			$validator = Validator::make($data, Publisher::$rules);
+			if ($validator->fails()){
+				Session::put('fail',"Khởi tạo không thành công");
+				return Redirect::back();
+			}
+			else{
+				$publisher = Publisher::create($data);
+				UserActivity::addActivity(Auth::user()->id, 'Thêm', 'Nhà phát hành', $publisher->id,"Nhà phát hành ".$publisher->name." có ID: ".$publisher->id);
+				Session::put('success',"Đã thêm nhà phát hành ".$publisher->name." có ID: ".$publisher->id);
+				return Redirect::back();
+			}
 		}
 	}
 
@@ -50,18 +58,26 @@ class PublishersController extends BaseController {
 	}
 
 	public function postEdit($id){
-		$validator = Validator::make($data = Input::all(), Publisher::$rules_edit);
-		if ($validator->fails()){
+		$data = Input::all();
+	    $data["name"]=strip_tags(Purifier::clean($data["name"]));
+		if($data["name"] != Input::get('name')){
 			Session::put('fail',"Cập nhật không thành công");
 			return Redirect::back();
 		}
 		else{
-			$publisher = Publisher::find($id);
-			$infor =$publisher->name;
-			$publisher->update(Input::all());
-			UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Nhà phát hành', $publisher->id,"Cập nhật tên nhà phát hành ".$infor." thành ".$publisher->name);
-			Session::put('success',"Đã cập nhật nhà phát hành ".$publisher->name." có ID: ".$publisher->id);
-			return Redirect::back();
+			$validator = Validator::make($data, Publisher::$rules_edit);
+			if ($validator->fails()){
+				Session::put('fail',"Cập nhật không thành công");
+				return Redirect::back();
+			}
+			else{
+				$publisher = Publisher::find($id);
+				$infor =$publisher->name;
+				$publisher->update(Input::all());
+				UserActivity::addActivity(Auth::user()->id, 'Chỉnh sửa', 'Nhà phát hành', $publisher->id,"Cập nhật tên nhà phát hành ".$infor." thành ".$publisher->name);
+				Session::put('success',"Đã cập nhật nhà phát hành ".$publisher->name." có ID: ".$publisher->id);
+				return Redirect::back();
+			}
 		}
 	}
 

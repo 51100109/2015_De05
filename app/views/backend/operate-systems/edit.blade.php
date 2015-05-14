@@ -62,21 +62,26 @@
                     name:{
                         required:true,
                         remote:{
-                            url: "{{{ URL::to('admin/operate-systems/check-editname/'.$system->id) }}}",
+                            url: "{{{ URL::to('admin/operate-systems/check-name') }}}",
                             type: "POST",
                         },
                     },
                     image:{
                         required:true,
+                        remote:{
+                            url: "{{{ URL::to('admin/operate-systems/check-js') }}}",
+                            type: "POST",
+                        },
                     },
                 },
                 messages:{
                     name:{
                         required:"Vui lòng nhập tên hệ điều hành",
-                        remote:"Hệ điều hành đã tồn tại",
+                        remote:"Hệ điều hành đã tồn tại hoặc không hợp lệ",
                     },
                     image:{
                         required:"Vui lòng nhập hình ảnh hệ điều hành",
+                        remote:"Hình ảnh không hợp lệ",
                     },
                 },
                 errorElement: 'span',

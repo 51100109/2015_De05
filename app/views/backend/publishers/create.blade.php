@@ -47,7 +47,7 @@
 		        messages:{
 		            name:{
 		                required:"Vui lòng nhập tên nhà phát hành",
-		                remote:"Nhà phát hành đã tồn tại",
+		                remote:"Nhà phát hành đã tồn tại hoặc không hợp lệ",
 		            },
 		        },
 		        errorElement: 'span',
